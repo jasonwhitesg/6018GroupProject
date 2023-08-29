@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="29904d26-70c4-4167-9c1e-e160dc9b4266" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HelloWorld/app/src/main/java/com/example/helloworld/MainActivity2.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HelloWorld/app/src/main/res/layout/activity_main2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6011/Week5/Day22/AndroidChatClient/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6011/Week5/Day22/AndroidChatClient/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6011/Week5/Day22/AndroidChatClient/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6011/Week5/Day22/AndroidChatClient/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6011/Week5/Day22/AndroidChatClient/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6011/Week5/Day22/AndroidChatClient/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6011/Week5/Day22/HelloAndroid/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6011/Week5/Day22/HelloAndroid/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6011/Week5/Day22/HelloAndroid/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6011/Week5/Day22/HelloAndroid/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6011/Week5/Day22/HelloAndroid/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6011/Week5/Day22/HelloAndroid/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/.vs/LMS/xs/UserPrefs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/.vs/LMS/xs/UserPrefs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/.vs/LMS/xs/project-cache/LMS-Debug.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/.vs/LMS/xs/project-cache/LMS-Debug.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/.vs/LMS/xs/project-cache/LMSControllerTests-Debug.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/.vs/LMS/xs/project-cache/LMSControllerTests-Debug.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Areas/Identity/Pages/Account/Register.cshtml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Areas/Identity/Pages/Account/Register.cshtml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Controllers/AdministratorController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Controllers/AdministratorController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Controllers/CommonController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Controllers/CommonController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Controllers/ProfessorController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Controllers/ProfessorController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Controllers/StudentController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Controllers/StudentController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Models/LMSModels/ApplicationUser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Models/LMSModels/ApplicationUser.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Models/LMSModels/Assignment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Models/LMSModels/Assignment.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Models/LMSModels/AssignmentCategory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Models/LMSModels/AssignmentCategory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Models/LMSModels/Class.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Models/LMSModels/Class.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Models/LMSModels/Course.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Models/LMSModels/Course.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Models/LMSModels/Department.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Models/LMSModels/Department.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Models/LMSModels/Enrolled.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Models/LMSModels/Enrolled.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Models/LMSModels/ErrorViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Models/LMSModels/ErrorViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Models/LMSModels/LMSContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Models/LMSModels/LMSContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Models/LMSModels/Professor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Models/LMSModels/Professor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Models/LMSModels/Student.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Models/LMSModels/Student.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Models/LMSModels/Submission.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Models/LMSModels/Submission.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/bin/Debug/net7.0/LMS" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/bin/Debug/net7.0/LMS" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/bin/Debug/net7.0/LMS.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/bin/Debug/net7.0/LMS.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/obj/Debug/net7.0/LMS.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/obj/Debug/net7.0/LMS.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/obj/Debug/net7.0/LMS.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/obj/Debug/net7.0/LMS.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/obj/Debug/net7.0/LMS.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/obj/Debug/net7.0/LMS.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/obj/Debug/net7.0/apphost" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/obj/Debug/net7.0/apphost" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/obj/LMS.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/obj/LMS.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMS/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMSControllerTests/obj/Debug/net7.0/LMSControllerTests.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMSControllerTests/obj/Debug/net7.0/LMSControllerTests.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMSControllerTests/obj/Debug/net7.0/LMSControllerTests.csproj.FileListAbsolute.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMSControllerTests/obj/LMSControllerTests.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMSControllerTests/obj/LMSControllerTests.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMSControllerTests/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMSControllerTests/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMSControllerTests/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../../../CS6016/Week11/Phase3/LMSHandout/LMSControllerTests/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS.sln" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Areas/Identity/Data/LMSIdentityDbContext.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Areas/Identity/Data/SeedRoles.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Areas/Identity/Pages/Account/Login.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Areas/Identity/Pages/Account/Login.cshtml.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Areas/Identity/Pages/Account/Logout.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Areas/Identity/Pages/Account/Logout.cshtml.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Areas/Identity/Pages/Account/Manage/ChangePassword.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Areas/Identity/Pages/Account/Manage/ChangePassword.cshtml.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Areas/Identity/Pages/Account/Manage/ManageNavPages.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Areas/Identity/Pages/Account/Manage/_ManageNav.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Areas/Identity/Pages/Account/Manage/_ViewImports.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Areas/Identity/Pages/Account/Register.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Areas/Identity/Pages/Account/Register.cshtml.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Areas/Identity/Pages/Account/_ViewImports.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Areas/Identity/Pages/_ValidationScriptsPartial.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Areas/Identity/Pages/_ViewImports.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Areas/Identity/Pages/_ViewStart.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Controllers/AdministratorController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Controllers/CommonController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Controllers/HomeController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Controllers/ProfessorController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Controllers/StudentController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Enums/Roles.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/LMS.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Models/ApplicationUser.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Models/ErrorViewModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Models/LMSModels/LMSContext.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Program.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Properties/launchSettings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Views/Administrator/Course.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Views/Administrator/Department.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Views/Administrator/Index.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Views/Home/Index.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Views/Home/Privacy.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Views/Professor/Assignment.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Views/Professor/CatAssignments.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Views/Professor/Categories.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Views/Professor/Class.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Views/Professor/Grade.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Views/Professor/Index.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Views/Professor/Students.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Views/Professor/Submissions.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Views/Shared/Assignment.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Views/Shared/Error.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Views/Shared/_Layout.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Views/Shared/_Layout.cshtml.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Views/Shared/_LoginPartial.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Views/Shared/_ValidationScriptsPartial.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Views/Student/Catalog.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Views/Student/Class.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Views/Student/ClassListings.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Views/Student/Index.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Views/_ViewImports.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/Views/_ViewStart.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/appsettings.Development.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/appsettings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/css/site.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/js/site.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.min.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.min.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.min.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/js/bootstrap.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/js/bootstrap.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/js/bootstrap.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/bootstrap/dist/js/bootstrap.min.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/jquery-validation-unobtrusive/LICENSE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/jquery-validation/LICENSE.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/jquery-validation/dist/additional-methods.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/jquery-validation/dist/additional-methods.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/jquery-validation/dist/jquery.validate.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/jquery-validation/dist/jquery.validate.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/jquery/LICENSE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/jquery/dist/jquery.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/jquery/dist/jquery.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMS/wwwroot/lib/jquery/dist/jquery.min.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMSControllerTests/LMSControllerTests.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMSControllerTests/UnitTest1.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../CS6017/Week11/Phase3/LMSHandout/LMSControllerTests/Usings.cs" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[/Users/jasonwhite/.android/avd/Pixel_3a_API_33_arm64-v8a.avd]" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="ProjectId" id="2URKaIBTrwdt5XfdlCr5uDbHCiv" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "cidr.known.project.marker": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App">
+      <module name="GroupHelloWorld.app.main" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ALL_USERS" value="false" />
+      <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
+      <option name="CLEAR_APP_STORAGE" value="false" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="INSPECTION_WITHOUT_ACTIVITY_RESTART" value="false" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Hybrid>
+      <Java>
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Java>
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Java/Kotlin Method Sample (legacy)" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
+      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="29904d26-70c4-4167-9c1e-e160dc9b4266" name="Changes" comment="" />
+      <created>1692897014905</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1692897014905</updated>
+    </task>
+    <servers />
+  </component>
+</project>
