@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context="com.example.phase1.LetsDraw">
+
+    <!-- Left-side vertical Tools Panel -->
+    <LinearLayout
+        android:id="@+id/leftToolsPanel"
+        android:layout_width="45dp"
+        android:layout_height="match_parent"
+        android:background="#E0E0E0"
+        android:orientation="vertical"
+        android:padding="1dp">
+
+
+        <!-- The ImageView displaying your image -->
+        <ImageView
+            android:id="@+id/my_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitStart"
+            android:src="@drawable/dot" />
+
+        <!-- The Button overlaying the ImageView -->
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:drawableTop="@drawable/dot"
+            android:text="Button" />
+
+    </LinearLayout>
+
+    <!-- Main area which includes the CustomView and horizontal toolbars -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!-- Top horizontal toolbar -->
+        <LinearLayout
+            android:id="@+id/topToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Add your top toolbar contents here -->
+
+        </LinearLayout>
+
+        <!-- Custom Drawing View -->
+        <com.example.phase1.CustomView
+            android:id="@+id/customView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- Bottom horizontal toolbar -->
+<!--        <LinearLayout-->
+<!--            android:id="@+id/bottomToolbar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal">-->
+
+            <!-- Add your bottom toolbar contents here -->
+
+
+    </LinearLayout>
+
+</LinearLayout>
+
+
