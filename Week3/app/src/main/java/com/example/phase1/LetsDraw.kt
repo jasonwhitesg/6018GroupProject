@@ -59,9 +59,12 @@ class LetsDraw : Fragment() {
         //on touch color picker button
         colorPickerButton.setOnClickListener {
             bitmap = binding.customView.getCurrentBitmap()
-// Update ViewModel with the final drawing
+            // Update ViewModel with the final drawing
             binding.bottomMenuContainer.visibility = View.GONE
             binding.colorPickerContainer.visibility = View.VISIBLE
+
+            viewModel.updateBitmap(bitmap)
+
         }
 
         //On touch center of color picker
@@ -99,10 +102,12 @@ class LetsDraw : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        bitmap = binding.customView.getCurrentBitmap()
         viewModel.updateBitmap(bitmap)
         if(binding.colorPickerContainer.visibility == View.VISIBLE){
             closeColorPicker()
         }
     }
+
 
 }

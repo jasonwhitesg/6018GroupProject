@@ -20,14 +20,6 @@ class ClickFragment : Fragment() {
         val binding = FragmentClickBinding.inflate(inflater, container, false)
 
         binding.button.setOnClickListener {
-            // Check if circles are null or empty
-//            if (viewModel.circlesLiveData.value != null || viewModel.circlesLiveData.value!!.isNotEmpty()) {
-//                viewModel.clearCircles(requireContext())
-//            }
-
-
-            // Generate a random color (if needed)
-            viewModel.randomColor()
 
             // Transition to DrawFragment
             val drawFragment = LetsDraw()
