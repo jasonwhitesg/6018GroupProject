@@ -2,6 +2,7 @@ package com.example.phase1
 
 import android.R
 import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -46,7 +47,7 @@ class LetsDraw : Fragment() {
                 val imageView = binding.imageView
                 binding.customView.paint.color = color
                 // Do whatever you want with the color
-                imageView.background.setColorFilter(color, PorterDuff.Mode.MULTIPLY)
+                imageView.background.colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN)
             }
         })
 
