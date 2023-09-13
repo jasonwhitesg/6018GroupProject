@@ -1,12 +1,18 @@
 package com.example.phase1
 
+import android.R
+import android.graphics.PorterDuff
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.phase1.databinding.FragmentLetsDrawBinding
+import com.madrapps.pikolo.ColorPicker
+import com.madrapps.pikolo.HSLColorPicker
+import com.madrapps.pikolo.listeners.SimpleColorSelectionListener
+
 
 class LetsDraw : Fragment() {
 
@@ -34,6 +40,16 @@ class LetsDraw : Fragment() {
 //        viewModel.circlesLiveData.observe(viewLifecycleOwner) { circles ->
 //            binding.customView.drawCircles(circles)
 //        }
+        val colorPicker = binding.colorPicker
+        colorPicker.setColorSelectionListener(object : SimpleColorSelectionListener() {
+            override fun onColorSelected(color: Int) {
+                val imageView = binding.imageView
+                binding.customView.paint.color = color
+                // Do whatever you want with the color
+                imageView.background.setColorFilter(color, PorterDuff.Mode.MULTIPLY)
+            }
+        })
+
 
         return binding.root
     }

@@ -58,5 +58,6 @@ dependencies {
     //Fragment stuff
     implementation("androidx.fragment:fragment-ktx:1.6.1")
     implementation("com.google.code.gson:gson:2.8.8")
-
+    implementation("com.github.antonpopoff:colorwheel:1.1.13")
+    implementation("com.github.madrapps:pikolo:2.0.2")
 }
