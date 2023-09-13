@@ -21,7 +21,7 @@ class ClickFragment : Fragment() {
 
         binding.button.setOnClickListener {
             // Check if circles are null or empty
-            if (viewModel.circlesLiveData.value == null || viewModel.circlesLiveData.value!!.isEmpty()) {
+            if (viewModel.circlesLiveData.value != null || viewModel.circlesLiveData.value!!.isNotEmpty()) {
                 viewModel.clearCircles(requireContext())
             }
 

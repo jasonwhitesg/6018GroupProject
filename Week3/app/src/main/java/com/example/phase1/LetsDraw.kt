@@ -1,6 +1,5 @@
 package com.example.phase1
 
-import android.R
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
@@ -10,8 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.phase1.databinding.FragmentLetsDrawBinding
-import com.madrapps.pikolo.ColorPicker
-import com.madrapps.pikolo.HSLColorPicker
 import com.madrapps.pikolo.listeners.SimpleColorSelectionListener
 
 
@@ -32,9 +29,20 @@ class LetsDraw : Fragment() {
 //        // Load saved circles when the view is created (if any exist)
 //        viewModel.loadCircles(requireContext()) // Load circles from ViewModel
 //
+
         // Observe changes in bitmap from ViewModel
         viewModel.bitmap.observe(viewLifecycleOwner) { bitmap ->
             binding.customView.setBitmap(bitmap)
+        }
+        val button = binding.button3
+        button.setOnClickListener {
+            binding.bottomMenuContainer.visibility = View.GONE
+            binding.colorPickerContainer.visibility = View.VISIBLE
+        }
+        val imageView = binding.imageView
+        imageView.setOnClickListener{
+            binding.bottomMenuContainer.visibility = View.VISIBLE
+            binding.colorPickerContainer.visibility = View.GONE
         }
 
 //        // Observe changes in circles from ViewModel and draw them
@@ -44,7 +52,6 @@ class LetsDraw : Fragment() {
         val colorPicker = binding.colorPicker
         colorPicker.setColorSelectionListener(object : SimpleColorSelectionListener() {
             override fun onColorSelected(color: Int) {
-                val imageView = binding.imageView
                 binding.customView.paint.color = color
                 // Do whatever you want with the color
                 imageView.background.colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN)

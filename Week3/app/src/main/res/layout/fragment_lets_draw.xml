@@ -19,6 +19,7 @@
 
 
         <!-- The ImageView displaying your image -->
+
         <ImageView
             android:id="@+id/my_image"
             android:layout_width="match_parent"
@@ -46,7 +47,17 @@
 
         <!-- Top horizontal toolbar -->
 
+        <!-- Custom Drawing View -->
+
+        <com.example.phase1.CustomView
+            android:id="@+id/customView"
+            android:layout_width="match_parent"
+            android:layout_height="260dp"
+            android:layout_weight="1" />
+
         <FrameLayout
+            android:id="@+id/colorPickerContainer"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="293dp"
             android:gravity="center">
@@ -55,9 +66,9 @@
                 android:id="@+id/colorPicker"
                 android:layout_width="356dp"
                 android:layout_height="286dp"
+                android:layout_gravity="center"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:layout_gravity="center"
                 android:padding="0dp"
                 app:layout_constraintBottom_toTopOf="@+id/randomColorButton"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -65,10 +76,10 @@
                 app:layout_constraintTop_toTopOf="parent"
                 pikolo:arc_length="110"
                 pikolo:hue_start_angle="30"
+                pikolo:indicator_stroke_color="@color/white"
                 pikolo:lightness_indicator_stroke_width="0dp"
                 pikolo:lightness_start_angle="270"
                 pikolo:radius_offset="20dp"
-                pikolo:indicator_stroke_color="@color/white"
                 pikolo:saturation_start_angle="150"
                 tools:layout_constraintBottom_creator="1"
                 tools:layout_constraintLeft_creator="1"
@@ -79,31 +90,32 @@
                 android:id="@+id/imageView"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:layout_gravity="center"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                android:layout_gravity="center"
                 android:background="@drawable/bg_circle"
                 tools:ignore="ContentDescription" />
         </FrameLayout>
 
         <LinearLayout
-            android:id="@+id/topToolbar"
+            android:id="@+id/bottomMenuContainer"
+            android:visibility="visible"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="62dp"
+            android:gravity="center"
             android:orientation="horizontal">
 
-            <!-- Add your top toolbar contents here -->
-
+            <Button
+                android:id="@+id/button3"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="58dp"
+                app:backgroundTint="@color/black"
+                android:textColor="@color/white"
+                android:text="Color Picker"/>
         </LinearLayout>
-
-        <!-- Custom Drawing View -->
-        <com.example.phase1.CustomView
-            android:id="@+id/customView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
 
         <!-- Bottom horizontal toolbar -->
 <!--        <LinearLayout-->
