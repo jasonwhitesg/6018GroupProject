@@ -21,9 +21,9 @@ class ClickFragment : Fragment() {
 
         binding.button.setOnClickListener {
             // Check if circles are null or empty
-            if (viewModel.circlesLiveData.value != null || viewModel.circlesLiveData.value!!.isNotEmpty()) {
-                viewModel.clearCircles(requireContext())
-            }
+//            if (viewModel.circlesLiveData.value != null || viewModel.circlesLiveData.value!!.isNotEmpty()) {
+//                viewModel.clearCircles(requireContext())
+//            }
 
 
             // Generate a random color (if needed)

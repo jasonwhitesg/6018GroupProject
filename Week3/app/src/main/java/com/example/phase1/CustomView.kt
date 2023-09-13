@@ -21,8 +21,9 @@ class CustomView(context: Context, attrs: AttributeSet,) : View(context, attrs) 
 
     init {
         paint.color = Color.BLACK
-        paint.style = Paint.Style.STROKE
+        paint.style = Paint.Style.FILL_AND_STROKE
         paint.strokeWidth = 10f
+
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -41,18 +42,9 @@ class CustomView(context: Context, attrs: AttributeSet,) : View(context, attrs) 
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        //paint.color = Color.WHITE
-        //canvas?.drawRect(0f, 0f, width.toFloat(), height.toFloat(), paint)
         canvas?.drawBitmap(bitmap, 0f, 0f, null)
     }
 
-//    fun drawCircles(circles: List<SimpleView.Circle>) {
-//        circles.forEach { circle ->
-//            paint.color = circle.color
-//            bitmapCanvas.drawCircle(circle.x, circle.y, 50f, paint)
-//        }
-//        invalidate()
-//    }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val x = event.x
@@ -80,8 +72,8 @@ class CustomView(context: Context, attrs: AttributeSet,) : View(context, attrs) 
         bitmap = newBitmap
         invalidate()
     }
-//    fun getCurrentBitmap(): Bitmap {
-//        return bitmap
-//    }
+    fun getCurrentBitmap(): Bitmap {
+        return bitmap
+    }
 
 }

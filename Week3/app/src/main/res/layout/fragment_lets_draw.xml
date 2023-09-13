@@ -9,34 +9,6 @@
     tools:context="com.example.phase1.LetsDraw">
 
     <!-- Left-side vertical Tools Panel -->
-    <LinearLayout
-        android:id="@+id/leftToolsPanel"
-        android:layout_width="45dp"
-        android:layout_height="match_parent"
-        android:background="#E0E0E0"
-        android:orientation="vertical"
-        android:padding="1dp">
-
-
-        <!-- The ImageView displaying your image -->
-
-        <ImageView
-            android:id="@+id/my_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitStart"
-            android:src="@drawable/dot" />
-
-        <!-- The Button overlaying the ImageView -->
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:drawableTop="@drawable/dot"
-            android:text="Button" />
-
-    </LinearLayout>
 
     <!-- Main area which includes the CustomView and horizontal toolbars -->
     <LinearLayout
@@ -57,10 +29,10 @@
 
         <FrameLayout
             android:id="@+id/colorPickerContainer"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="293dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="gone">
 
             <com.madrapps.pikolo.HSLColorPicker
                 android:id="@+id/colorPicker"
@@ -101,20 +73,26 @@
 
         <LinearLayout
             android:id="@+id/bottomMenuContainer"
-            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="62dp"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="visible">
 
             <Button
                 android:id="@+id/button3"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="58dp"
-                app:backgroundTint="@color/black"
+                android:layout_gravity="center"
+                android:text="Color Picker"
                 android:textColor="@color/white"
-                android:text="Color Picker"/>
+                app:backgroundTint="@color/black" />
+
+            <SeekBar
+                android:id="@+id/sizeSlider"
+                android:layout_width="wrap_content"
+                android:layout_height="46dp"
+                android:layout_weight="1" />
         </LinearLayout>
 
         <!-- Bottom horizontal toolbar -->
