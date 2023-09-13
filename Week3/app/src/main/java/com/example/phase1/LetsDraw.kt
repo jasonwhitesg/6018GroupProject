@@ -22,18 +22,18 @@ class LetsDraw : Fragment() {
         // Link CustomView with ViewModel
         binding.customView.viewModel = viewModel
 
-        // Load saved circles when the view is created (if any exist)
-        viewModel.loadCircles(requireContext()) // Load circles from ViewModel
-
+//        // Load saved circles when the view is created (if any exist)
+//        viewModel.loadCircles(requireContext()) // Load circles from ViewModel
+//
         // Observe changes in bitmap from ViewModel
         viewModel.bitmap.observe(viewLifecycleOwner) { bitmap ->
             binding.customView.setBitmap(bitmap)
         }
 
-        // Observe changes in circles from ViewModel and draw them
-        viewModel.circlesLiveData.observe(viewLifecycleOwner) { circles ->
-            binding.customView.drawCircles(circles)
-        }
+//        // Observe changes in circles from ViewModel and draw them
+//        viewModel.circlesLiveData.observe(viewLifecycleOwner) { circles ->
+//            binding.customView.drawCircles(circles)
+//        }
 
         return binding.root
     }

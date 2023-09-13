@@ -16,6 +16,15 @@ class CustomView(context: Context, attrs: AttributeSet,) : View(context, attrs) 
 
     var viewModel: SimpleView? = null
 
+    private var previousX = 0f
+    private var previousY = 0f
+
+    init {
+        paint.color = Color.BLACK
+        paint.style = Paint.Style.STROKE
+        paint.strokeWidth = 10f
+    }
+
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
 
@@ -29,44 +38,50 @@ class CustomView(context: Context, attrs: AttributeSet,) : View(context, attrs) 
 
         viewModel?.updateBitmap(bitmap) // ensure that ViewModel is updated with new bitmap
     }
+
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        paint.color = Color.WHITE
-        canvas?.drawRect(0f, 0f, width.toFloat(), height.toFloat(), paint)
+        //paint.color = Color.WHITE
+        //canvas?.drawRect(0f, 0f, width.toFloat(), height.toFloat(), paint)
         canvas?.drawBitmap(bitmap, 0f, 0f, null)
     }
 
-
-    fun drawCircles(circles: List<SimpleView.Circle>) {
-        circles.forEach { circle ->
-            paint.color = circle.color
-            bitmapCanvas.drawCircle(circle.x, circle.y, 50f, paint)
-        }
-        invalidate()
-    }
+//    fun drawCircles(circles: List<SimpleView.Circle>) {
+//        circles.forEach { circle ->
+//            paint.color = circle.color
+//            bitmapCanvas.drawCircle(circle.x, circle.y, 50f, paint)
+//        }
+//        invalidate()
+//    }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
+        val x = event.x
+        val y = event.y
+
         when (event.action) {
-            MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE -> {
-                viewModel?.addCircle(event.x, event.y)  // Update ViewModel
-                return true
+            MotionEvent.ACTION_DOWN -> {
+                previousX = x
+                previousY = y
+            }
+            MotionEvent.ACTION_MOVE -> {
+                bitmapCanvas.drawLine(previousX, previousY, x, y, paint)
+                previousX = x
+                previousY = y
+                invalidate()
             }
             MotionEvent.ACTION_UP -> {
-                return true
+                // Save the drawing state when the touch event ends
+                viewModel?.updateBitmap(bitmap) // Update ViewModel with the final drawing
             }
         }
-        return super.onTouchEvent(event)
+        return true
     }
-
-
     fun setBitmap(newBitmap: Bitmap) {
         bitmap = newBitmap
         invalidate()
     }
-
-    fun getCurrentBitmap(): Bitmap {
-        return bitmap
-    }
-
+//    fun getCurrentBitmap(): Bitmap {
+//        return bitmap
+//    }
 
 }
