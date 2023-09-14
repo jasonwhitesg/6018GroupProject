@@ -102,10 +102,12 @@ class LetsDraw : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        bitmap = binding.customView.getCurrentBitmap()
-        viewModel.updateBitmap(bitmap)
         if(binding.colorPickerContainer.visibility == View.VISIBLE){
             closeColorPicker()
+        }
+        else{
+            bitmap = binding.customView.getCurrentBitmap()
+            viewModel.updateBitmap(bitmap)
         }
     }
 
