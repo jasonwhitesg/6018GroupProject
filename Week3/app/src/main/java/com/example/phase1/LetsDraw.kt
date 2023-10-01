@@ -13,7 +13,7 @@ import androidx.fragment.app.activityViewModels
 import com.example.phase1.databinding.FragmentLetsDrawBinding
 import com.madrapps.pikolo.listeners.SimpleColorSelectionListener
 import android.graphics.Canvas
-
+import java.io.ByteArrayOutputStream
 
 
 class LetsDraw : Fragment() {
@@ -40,6 +40,8 @@ class LetsDraw : Fragment() {
         binding.colorPickerContainer.visibility = View.GONE
         viewModel.updateBitmap(bitmap)
     }
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

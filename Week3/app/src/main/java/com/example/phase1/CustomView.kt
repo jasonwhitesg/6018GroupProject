@@ -8,6 +8,9 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import android.os.Handler
+
+
 
 class CustomView(context: Context, attrs: AttributeSet,) : View(context, attrs) {
     private var bitmap: Bitmap = Bitmap.createBitmap(800, 800, Bitmap.Config.ARGB_8888)
@@ -18,6 +21,18 @@ class CustomView(context: Context, attrs: AttributeSet,) : View(context, attrs) 
 
     private var previousX = 0f
     private var previousY = 0f
+
+    // Handler to handle idle state
+    private val handler = Handler()
+    private val idleRunnable = Runnable {
+        // Code to run when view is idle
+    }
+    init {
+        paint.color = Color.BLACK
+        paint.style = Paint.Style.FILL_AND_STROKE
+        paint.strokeWidth = 10f
+    }
+
 
     init {
         paint.color = Color.BLACK
@@ -64,10 +79,12 @@ class CustomView(context: Context, attrs: AttributeSet,) : View(context, attrs) 
             MotionEvent.ACTION_UP -> {
                 // Save the drawing state when the touch event ends
                 viewModel?.updateBitmap(bitmap) // Update ViewModel with the final drawing
+                handler.postDelayed(idleRunnable, 2000) // wait for 2 seconds to consider idle
             }
         }
         return true
     }
+
     fun setBitmap(newBitmap: Bitmap) {
         bitmap = newBitmap
         invalidate()

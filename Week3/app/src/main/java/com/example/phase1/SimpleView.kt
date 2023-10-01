@@ -12,9 +12,6 @@ import com.google.gson.reflect.TypeToken
 
 class SimpleView : ViewModel() {
 
-    data class Circle(val x: Float, val y: Float, val color: Int)
-
-
     private val _bitmap = MutableLiveData<Bitmap>()
     val bitmap: LiveData<Bitmap> get() = _bitmap
 
@@ -22,6 +19,4 @@ class SimpleView : ViewModel() {
     fun updateBitmap(newBitmap: Bitmap) {
         _bitmap.value = newBitmap
     }
-
-
 }
