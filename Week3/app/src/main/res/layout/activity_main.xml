@@ -7,13 +7,19 @@
     android:layout_height="match_parent"
     tools:context="com.example.phase1.MainActivity">
 
+<!--    <androidx.fragment.app.FragmentContainerView-->
+<!--        android:id="@+id/fragmentContainerView"-->
+<!--        android:name="com.example.phase1.ClickFragment"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"/>-->
+<!--    &lt;!&ndash;        tools:layout="@layout/fragment_click" />&ndash;&gt;-->
+<!--    &lt;!&ndash; Custom views go here &ndash;&gt;-->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
-        android:name="com.example.phase1.ClickFragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        app:navGraph="@navigation/nav_graph"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-    <!--        tools:layout="@layout/fragment_click" />-->
-    <!-- Custom views go here -->
 
     <com.madrapps.pikolo.HSLColorPicker
     android:id="@+id/colorPicker"

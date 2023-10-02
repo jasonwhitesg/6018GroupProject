@@ -11,7 +11,6 @@ import android.view.View
 import android.os.Handler
 
 
-
 class CustomView(context: Context, attrs: AttributeSet,) : View(context, attrs) {
     private var bitmap: Bitmap = Bitmap.createBitmap(800, 800, Bitmap.Config.ARGB_8888)
     private val bitmapCanvas = Canvas(bitmap)

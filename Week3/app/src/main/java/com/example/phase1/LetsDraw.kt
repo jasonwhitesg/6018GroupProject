@@ -13,6 +13,8 @@ import androidx.fragment.app.activityViewModels
 import com.example.phase1.databinding.FragmentLetsDrawBinding
 import com.madrapps.pikolo.listeners.SimpleColorSelectionListener
 import android.graphics.Canvas
+import androidx.activity.OnBackPressedCallback
+import androidx.navigation.fragment.findNavController
 import java.io.ByteArrayOutputStream
 
 
@@ -66,7 +68,6 @@ class LetsDraw : Fragment() {
             binding.colorPickerContainer.visibility = View.VISIBLE
 
             viewModel.updateBitmap(bitmap)
-
         }
 
         //On touch center of color picker
@@ -101,7 +102,18 @@ class LetsDraw : Fragment() {
 
         return binding.root
     }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        // Handle back button press
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Navigate back to ClickFragment
+                findNavController().navigateUp()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         if(binding.colorPickerContainer.visibility == View.VISIBLE){
