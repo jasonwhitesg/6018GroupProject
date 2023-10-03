@@ -1,20 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.phase1.app-mergeDebugResources-39:/values-v16/values-v16.xml",
+            "outputFile": "com.example.drawingapp-mergeDebugResources-69:/values-v16/values-v16.xml",
             "map": [
                 {
-                    "source": "/Users/keegan/.gradle/caches/transforms-3/2d8370ab804368c05fed14bf1c544e95/transformed/core-1.10.1/res/values-v16/values-v16.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "65",
-                        "endOffsets": "116"
-                    }
-                },
-                {
-                    "source": "/Users/keegan/.gradle/caches/transforms-3/60c55cbef2e6cdef5b8f3b785c00f588/transformed/appcompat-1.6.1/res/values-v16/values-v16.xml",
+                    "source": "/Users/keegan/.gradle/caches/transforms-3/0e4db3637ac47adfe42a917d83a20af6/transformed/appcompat-1.6.1/res/values-v16/values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -30,6 +20,16 @@
                         "endLines": "6",
                         "endColumns": "12",
                         "endOffsets": "289"
+                    }
+                },
+                {
+                    "source": "/Users/keegan/.gradle/caches/transforms-3/6d3c342eb9183f93e0f9a6d7a29ab7a1/transformed/core-1.10.1/res/values-v16/values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "65",
+                        "endOffsets": "116"
                     }
                 }
             ]

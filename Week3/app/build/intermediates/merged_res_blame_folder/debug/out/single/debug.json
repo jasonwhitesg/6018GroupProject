@@ -1,94 +1,110 @@
 [
     {
-        "merged": "com.example.phase1.app-merged_res-41:/layout_fragment_lets_draw.xml.flat",
-        "source": "com.example.phase1.app-main-43:/layout/fragment_lets_draw.xml"
+        "merged": "com.example.drawingapp-merged_res-71:/navigation_nav_graph.xml.flat",
+        "source": "com.example.drawingapp-main-73:/navigation/nav_graph.xml"
     },
     {
-        "merged": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-merged_res-41:/menu_drawer_menu.xml.flat",
-        "source": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-main-43:/menu/drawer_menu.xml"
+        "merged": "com.example.drawingapp-merged_res-71:/mipmap-anydpi_ic_launcher.xml.flat",
+        "source": "com.example.drawingapp-main-73:/mipmap-anydpi/ic_launcher.xml"
     },
     {
-        "merged": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-merged_res-41:/mipmap-anydpi_ic_launcher.xml.flat",
-        "source": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-main-43:/mipmap-anydpi/ic_launcher.xml"
+        "merged": "com.example.drawingapp-merged_res-71:/menu_drawer_menu.xml.flat",
+        "source": "com.example.drawingapp-main-73:/menu/drawer_menu.xml"
     },
     {
-        "merged": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-merged_res-41:/mipmap-mdpi_ic_launcher_round.webp.flat",
-        "source": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-main-43:/mipmap-mdpi/ic_launcher_round.webp"
+        "merged": "com.example.drawingapp-merged_res-71:/xml_actions.xml.flat",
+        "source": "com.example.drawingapp-main-73:/xml/actions.xml"
     },
     {
-        "merged": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-merged_res-41:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
-        "source": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-main-43:/mipmap-xxhdpi/ic_launcher_round.webp"
+        "merged": "com.example.drawingapp-merged_res-71:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "com.example.drawingapp-main-73:/mipmap-hdpi/ic_launcher.webp"
     },
     {
-        "merged": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-merged_res-41:/mipmap-xhdpi_ic_launcher_round.webp.flat",
-        "source": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-main-43:/mipmap-xhdpi/ic_launcher_round.webp"
+        "merged": "com.example.drawingapp-merged_res-71:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "com.example.drawingapp-main-73:/mipmap-xxxhdpi/ic_launcher.webp"
     },
     {
-        "merged": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-merged_res-41:/layout_fragment_lets_draw.xml.flat",
-        "source": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-main-43:/layout/fragment_lets_draw.xml"
+        "merged": "com.example.drawingapp-merged_res-71:/layout_activity_main.xml.flat",
+        "source": "com.example.drawingapp-main-73:/layout/activity_main.xml"
     },
     {
-        "merged": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-merged_res-41:/drawable_dot.jpg.flat",
-        "source": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-main-43:/drawable/dot.jpg"
+        "merged": "com.example.drawingapp-merged_res-71:/layout_fragment_landing.xml.flat",
+        "source": "com.example.drawingapp-main-73:/layout/fragment_landing.xml"
     },
     {
-        "merged": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-merged_res-41:/drawable_ic_launcher_background.xml.flat",
-        "source": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-main-43:/drawable/ic_launcher_background.xml"
+        "merged": "com.example.drawingapp-merged_res-71:/mipmap-anydpi_ic_launcher_round.xml.flat",
+        "source": "com.example.drawingapp-main-73:/mipmap-anydpi/ic_launcher_round.xml"
     },
     {
-        "merged": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-merged_res-41:/mipmap-xxhdpi_ic_launcher.webp.flat",
-        "source": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-main-43:/mipmap-xxhdpi/ic_launcher.webp"
+        "merged": "com.example.drawingapp-merged_res-71:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.drawingapp-main-73:/mipmap-mdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-merged_res-41:/layout_activity_main.xml.flat",
-        "source": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-main-43:/layout/activity_main.xml"
+        "merged": "com.example.drawingapp-merged_res-71:/layout_fragment_drawing.xml.flat",
+        "source": "com.example.drawingapp-main-73:/layout/fragment_drawing.xml"
     },
     {
-        "merged": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-merged_res-41:/mipmap-hdpi_ic_launcher.webp.flat",
-        "source": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-main-43:/mipmap-hdpi/ic_launcher.webp"
+        "merged": "com.example.drawingapp-merged_res-71:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.drawingapp-main-73:/mipmap-hdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-merged_res-41:/layout_fragment_click.xml.flat",
-        "source": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-main-43:/layout/fragment_click.xml"
+        "merged": "com.example.drawingapp-merged_res-71:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.drawingapp-main-73:/mipmap-xxhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-merged_res-41:/mipmap-mdpi_ic_launcher.webp.flat",
-        "source": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-main-43:/mipmap-mdpi/ic_launcher.webp"
+        "merged": "com.example.drawingapp-merged_res-71:/layout_activity_splash.xml.flat",
+        "source": "com.example.drawingapp-main-73:/layout/activity_splash.xml"
     },
     {
-        "merged": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-merged_res-41:/mipmap-xxxhdpi_ic_launcher.webp.flat",
-        "source": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-main-43:/mipmap-xxxhdpi/ic_launcher.webp"
+        "merged": "com.example.drawingapp-merged_res-71:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "com.example.drawingapp-main-73:/mipmap-xxhdpi/ic_launcher.webp"
     },
     {
-        "merged": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-merged_res-41:/mipmap-anydpi_ic_launcher_round.xml.flat",
-        "source": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-main-43:/mipmap-anydpi/ic_launcher_round.xml"
+        "merged": "com.example.drawingapp-merged_res-71:/drawable_splashscreen.jpg.flat",
+        "source": "com.example.drawingapp-main-73:/drawable/splashscreen.jpg"
     },
     {
-        "merged": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-merged_res-41:/xml_data_extraction_rules.xml.flat",
-        "source": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-main-43:/xml/data_extraction_rules.xml"
+        "merged": "com.example.drawingapp-merged_res-71:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.drawingapp-main-73:/mipmap-xxxhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-merged_res-41:/mipmap-xhdpi_ic_launcher.webp.flat",
-        "source": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-main-43:/mipmap-xhdpi/ic_launcher.webp"
+        "merged": "com.example.drawingapp-merged_res-71:/drawable_splash_screen.xml.flat",
+        "source": "com.example.drawingapp-main-73:/drawable/splash_screen.xml"
     },
     {
-        "merged": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-merged_res-41:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
-        "source": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-main-43:/mipmap-xxxhdpi/ic_launcher_round.webp"
+        "merged": "com.example.drawingapp-merged_res-71:/drawable_dot.jpg.flat",
+        "source": "com.example.drawingapp-main-73:/drawable/dot.jpg"
     },
     {
-        "merged": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-merged_res-41:/drawable_ic_launcher_foreground.xml.flat",
-        "source": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-main-43:/drawable/ic_launcher_foreground.xml"
+        "merged": "com.example.drawingapp-merged_res-71:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "com.example.drawingapp-main-73:/mipmap-xhdpi/ic_launcher.webp"
     },
     {
-        "merged": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-merged_res-41:/mipmap-hdpi_ic_launcher_round.webp.flat",
-        "source": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-main-43:/mipmap-hdpi/ic_launcher_round.webp"
+        "merged": "com.example.drawingapp-merged_res-71:/xml_data_extraction_rules.xml.flat",
+        "source": "com.example.drawingapp-main-73:/xml/data_extraction_rules.xml"
     },
     {
-        "merged": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-merged_res-41:/xml_actions.xml.flat",
-        "source": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-main-43:/xml/actions.xml"
+        "merged": "com.example.drawingapp-merged_res-71:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "com.example.drawingapp-main-73:/mipmap-mdpi/ic_launcher.webp"
     },
     {
-        "merged": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-merged_res-41:/xml_backup_rules.xml.flat",
-        "source": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-main-43:/xml/backup_rules.xml"
+        "merged": "com.example.drawingapp-merged_res-71:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.example.drawingapp-main-73:/drawable/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "com.example.drawingapp-merged_res-71:/xml_backup_rules.xml.flat",
+        "source": "com.example.drawingapp-main-73:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "com.example.drawingapp-merged_res-71:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.example.drawingapp-main-73:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.example.drawingapp-merged_res-71:/drawable_bg_circle.xml.flat",
+        "source": "com.example.drawingapp-main-73:/drawable/bg_circle.xml"
+    },
+    {
+        "merged": "com.example.drawingapp-merged_res-71:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.drawingapp-main-73:/mipmap-xhdpi/ic_launcher_round.webp"
     }
 ]

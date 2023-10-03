@@ -1,18 +1,18 @@
 [
     {
-        "merged": "com.example.phase1.app-mergeDebugResources-40:/layout/fragment_lets_draw.xml",
-        "source": "com.example.phase1.app-main-43:/layout/fragment_lets_draw.xml"
+        "merged": "com.example.drawingapp-mergeDebugResources-70:/layout/fragment_drawing.xml",
+        "source": "com.example.drawingapp-main-73:/layout/fragment_drawing.xml"
     },
     {
-        "merged": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-mergeDebugResources-40:/layout/fragment_click.xml",
-        "source": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-main-43:/layout/fragment_click.xml"
+        "merged": "com.example.drawingapp-mergeDebugResources-70:/layout/fragment_landing.xml",
+        "source": "com.example.drawingapp-main-73:/layout/fragment_landing.xml"
     },
     {
-        "merged": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-mergeDebugResources-40:/layout/fragment_lets_draw.xml",
-        "source": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-main-43:/layout/fragment_lets_draw.xml"
+        "merged": "com.example.drawingapp-mergeDebugResources-70:/layout/activity_main.xml",
+        "source": "com.example.drawingapp-main-73:/layout/activity_main.xml"
     },
     {
-        "merged": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-mergeDebugResources-40:/layout/activity_main.xml",
-        "source": "/Users/keegan/.gradle/daemon/8.0/com.example.phase1.app-main-43:/layout/activity_main.xml"
+        "merged": "com.example.drawingapp-mergeDebugResources-70:/layout/activity_splash.xml",
+        "source": "com.example.drawingapp-main-73:/layout/activity_splash.xml"
     }
 ]
