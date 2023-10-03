@@ -42,6 +42,9 @@ android {
 }
 
 dependencies {
+    implementation("androidx.compose.ui:ui:1.0.0")
+    implementation("androidx.compose.material:material:1.0.0")
+    implementation("androidx.compose.ui:ui-tooling-preview-android:1.5.2")
 
     debugImplementation("androidx.fragment:fragment-testing:1.4.1")
     implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
