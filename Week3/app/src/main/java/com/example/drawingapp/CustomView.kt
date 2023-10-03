@@ -54,9 +54,9 @@ class CustomView(context: Context, attrs: AttributeSet,) : View(context, attrs) 
         viewModel?.updateBitmap(bitmap) // ensure that ViewModel is updated with new bitmap
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas?.drawBitmap(bitmap, 0f, 0f, null)
+        canvas.drawBitmap(bitmap, 0f, 0f, null)
     }
 
 
