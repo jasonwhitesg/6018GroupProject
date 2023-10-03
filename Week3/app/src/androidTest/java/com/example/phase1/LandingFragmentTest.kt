@@ -17,7 +17,7 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @MediumTest
-class ClickFragmentTest {
+class LandingFragmentTest {
 
     @Test
     fun testNavigationToLetsDraw() {

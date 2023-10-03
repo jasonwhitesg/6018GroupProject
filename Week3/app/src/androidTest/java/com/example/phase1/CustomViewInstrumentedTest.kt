@@ -2,7 +2,6 @@ package com.example.phase1
 
 import android.graphics.Bitmap
 import android.os.Handler
-import android.os.Looper
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
@@ -27,7 +26,7 @@ class CustomViewInstrumentedTest {
     val instantTaskExecutorRule = InstantTaskExecutorRule()
     @Test
     fun testDrawing() {
-        val scenario: FragmentScenario<LetsDraw> = launchFragmentInContainer()
+        val scenario: FragmentScenario<DrawingFragment> = launchFragmentInContainer()
 
         val idlingResource = ElapsedTimeIdlingResource(3000)
         IdlingRegistry.getInstance().register(idlingResource)
@@ -39,7 +38,7 @@ class CustomViewInstrumentedTest {
 
     @Test
     fun testOnTouchEvent() {
-        val scenario: FragmentScenario<LetsDraw> = launchFragmentInContainer()
+        val scenario: FragmentScenario<DrawingFragment> = launchFragmentInContainer()
 
         scenario.onFragment { fragment ->
             fragment.activity?.runOnUiThread {

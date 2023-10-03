@@ -15,10 +15,9 @@ import com.madrapps.pikolo.listeners.SimpleColorSelectionListener
 import android.graphics.Canvas
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
-import java.io.ByteArrayOutputStream
 
 
-class LetsDraw : Fragment() {
+class DrawingFragment : Fragment() {
 
     private val viewModel: SimpleView by activityViewModels()
     private lateinit var binding: FragmentLetsDrawBinding
