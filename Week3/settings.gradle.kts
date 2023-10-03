@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "phase1"
+rootProject.name = "DrawingApp"
 include(":app")
