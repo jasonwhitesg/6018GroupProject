@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.phase1.LandingFragment">
+    tools:context="com.example.drawingapp.com.example.drawingapp.LandingFragment">
 
     <Button
         android:id="@+id/button"

@@ -1,4 +1,4 @@
-package com.example.phase1
+package com.example.drawingapp
 
 import android.graphics.Bitmap
 import android.os.Handler
@@ -16,7 +16,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.Rule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-
+import com.example.drawingapp.R
 
 
 @RunWith(AndroidJUnit4::class)

@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/ClickFragment"
-        android:name="com.example.phase1.LandingFragment">
+        android:name="com.example.drawingapp.LandingFragment">
         <action
             android:id="@+id/action_to_letsDraw"
             app:destination="@id/LetsDraw" />
@@ -14,7 +14,7 @@
 
     <fragment
         android:id="@+id/LetsDraw"
-        android:name="com.example.phase1.DrawingFragment">
+        android:name="com.example.drawingapp.DrawingFragment">
         <action
             android:id="@+id/action_back_to_clickFragment"
             app:destination="@id/ClickFragment"

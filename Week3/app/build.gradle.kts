@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.phase1"
+    namespace = "com.example.drawingapp"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.example.phase1"
+        applicationId = "com.example.drawingapp"
         minSdk = 33
         targetSdk = 33
         versionCode = 1

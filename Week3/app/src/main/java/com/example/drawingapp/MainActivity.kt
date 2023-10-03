@@ -1,9 +1,10 @@
-package com.example.phase1
+package com.example.drawingapp
 
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
+import com.example.drawingapp.R
 
 
 class MainActivity : AppCompatActivity() {

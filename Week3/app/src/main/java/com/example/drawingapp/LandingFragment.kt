@@ -1,4 +1,4 @@
-package com.example.phase1
+package com.example.drawingapp
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,7 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.example.phase1.databinding.FragmentClickBinding
+import com.example.drawingapp.R
+import com.example.drawingapp.databinding.FragmentLandingBinding
 
 class LandingFragment : Fragment() {
 
@@ -15,7 +16,7 @@ class LandingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val binding = FragmentClickBinding.inflate(inflater, container, false)
+        val binding = FragmentLandingBinding.inflate(inflater, container, false)
         binding.button.setOnClickListener {
             findNavController().navigate(R.id.action_to_letsDraw)
         }

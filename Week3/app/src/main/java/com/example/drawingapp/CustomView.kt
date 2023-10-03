@@ -1,4 +1,4 @@
-package com.example.phase1
+package com.example.drawingapp
 
 import android.content.Context
 import android.graphics.Bitmap

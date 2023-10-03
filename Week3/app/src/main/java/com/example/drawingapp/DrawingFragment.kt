@@ -1,4 +1,4 @@
-package com.example.phase1
+package com.example.drawingapp
 
 import android.graphics.Bitmap
 import android.graphics.PorterDuff
@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.example.phase1.databinding.FragmentLetsDrawBinding
+import com.example.drawingapp.databinding.FragmentDrawingBinding
 import com.madrapps.pikolo.listeners.SimpleColorSelectionListener
 import android.graphics.Canvas
 import androidx.activity.OnBackPressedCallback
@@ -20,7 +20,7 @@ import androidx.navigation.fragment.findNavController
 class DrawingFragment : Fragment() {
 
     private val viewModel: SimpleView by activityViewModels()
-    private lateinit var binding: FragmentLetsDrawBinding
+    private lateinit var binding: FragmentDrawingBinding
     private lateinit var bitmap : Bitmap
 //        get() {
 //           return binding.customView.getCurrentBitmap()
@@ -47,7 +47,7 @@ class DrawingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentLetsDrawBinding.inflate(inflater, container, false)
+        binding = FragmentDrawingBinding.inflate(inflater, container, false)
 
         // Link CustomView with ViewModel
         binding.customView.viewModel = viewModel
