@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/ClickFragment">
+
+    <fragment
+        android:id="@+id/ClickFragment"
+        android:name="com.example.drawingapp.LandingFragment">
+        <action
+            android:id="@+id/action_to_letsDraw"
+            app:destination="@id/LetsDraw" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/LetsDraw"
+        android:name="com.example.drawingapp.DrawingFragment">
+        <action
+            android:id="@+id/action_back_to_clickFragment"
+            app:destination="@id/ClickFragment"
+            app:popUpTo="@id/ClickFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>
