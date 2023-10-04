@@ -56,9 +56,7 @@ class CustomView(context: Context, attrs: AttributeSet,) : View(context, attrs) 
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas?.let {
-            it.drawBitmap(bitmap, 0f, 0f, null)
-        }
+        canvas.drawBitmap(bitmap, 0f, 0f, null)
     }
 
 
