@@ -20,14 +20,14 @@ class Converters {
 }
 
 
-@Entity(tableName="DrawingTable")
+@Entity(tableName = "drawingTable")
 data class DrawingData(
-    var timestamp: Date,
-    var filePath: String
-){
     @PrimaryKey(autoGenerate = true)
-    var id: Int = 0
-}
+    var id: Int = 0,
+    var timestamp: Date,
+    var savedFile: String
+)
+
 
 
 
