@@ -15,6 +15,18 @@ import com.madrapps.pikolo.listeners.SimpleColorSelectionListener
 import android.graphics.Canvas
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
+import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
+import android.content.Context
+import com.example.drawingapp.DrawingDatabase
+import java.io.ByteArrayOutputStream
+import androidx.lifecycle.lifecycleScope
+import android.util.Log
+import android.graphics.BitmapFactory
+
+
+
+
 
 
 class DrawingFragment : Fragment() {
@@ -22,9 +34,7 @@ class DrawingFragment : Fragment() {
     private val viewModel: SimpleView by activityViewModels()
     private lateinit var binding: FragmentDrawingBinding
     private lateinit var bitmap : Bitmap
-//        get() {
-//           return binding.customView.getCurrentBitmap()
-//        }
+    private lateinit var drawingRepository: DrawingRepository
 
     fun combineBitmaps(bitmapOne: Bitmap, bitmapTwo: Bitmap): Bitmap {
         val combinedBitmap = Bitmap.createBitmap(bitmapOne.width, bitmapOne.height, Bitmap.Config.ARGB_8888)
@@ -48,6 +58,7 @@ class DrawingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentDrawingBinding.inflate(inflater, container, false)
+        drawingRepository = DrawingRepository(lifecycleScope, DrawingDatabase.getDatabase(requireContext()).drawingDao())
 
         // Link CustomView with ViewModel
         binding.customView.viewModel = viewModel
@@ -68,6 +79,17 @@ class DrawingFragment : Fragment() {
 
             viewModel.updateBitmap(bitmap)
         }
+
+        val saveDrawingButton = binding.button4
+        saveDrawingButton.setOnClickListener {
+            showDrawingNameDialog()
+        }
+
+        val loadDrawingButton = binding.button6
+        loadDrawingButton.setOnClickListener {
+            showDrawingListDialog()
+        }
+
 
         //On touch center of color picker
         val imageView = binding.imageView
@@ -97,6 +119,8 @@ class DrawingFragment : Fragment() {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
                 // Called when the user stops dragging the thumb
             }
+
+
         })
 
         return binding.root
@@ -124,5 +148,75 @@ class DrawingFragment : Fragment() {
         }
     }
 
+    private fun showDrawingNameDialog() {
+        val editText = EditText(context)
+        val alertDialog = AlertDialog.Builder(requireContext())
+            .setTitle("Name Your Drawing")
+            .setView(editText)
+            .setPositiveButton("Save") { _, _ ->
+                val drawingName = editText.text.toString()
+
+                // Get the current bitmap
+                val currentBitmap = binding.customView.getCurrentBitmap()
+
+                // Save the bitmap to internal storage and get the file path
+                val savedFilePath = saveBitmapToInternalStorage(currentBitmap, "$drawingName.png", requireContext())
+                Log.d("DrawingFragment", "Saved file path: $savedFilePath")
+
+                // Save the file path to the repository
+                drawingRepository.saveDrawing(savedFilePath)
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+
+    fun saveBitmapToInternalStorage(bitmap: Bitmap, filename: String, context: Context): String {
+        val bitmapToPNG = ByteArrayOutputStream()
+
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, bitmapToPNG)
+
+        context.openFileOutput(filename, Context.MODE_PRIVATE).use {
+            it.write(bitmapToPNG.toByteArray())
+        }
+
+        bitmapToPNG.close()
+
+        return context.filesDir.absolutePath + "/" + filename
+    }
+
+    private fun showDrawingListDialog() {
+        // Fetch the list of saved drawings from the database
+        val drawings = drawingRepository.allSavedDrawings.value
+
+        Log.d("DrawingDialog", "Fetched drawings: ${drawings?.size ?: "null"}")
+
+        val drawingNames = drawings?.map { it.savedFile }?.toTypedArray()
+
+        AlertDialog.Builder(requireContext())
+            .setTitle("Load Drawing")
+            .setItems(drawingNames) { _, which ->
+                val selectedDrawing = drawings?.get(which)
+                if (selectedDrawing != null) {
+                    Log.d("DrawingDialog", "Selected drawing: ${selectedDrawing.savedFile}")
+                    loadDrawingIntoCustomView(selectedDrawing.savedFile)
+                } else {
+                    Log.d("DrawingDialog", "No drawing selected!")
+                }
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+
+    private fun loadDrawingIntoCustomView(filePath: String) {
+        val fileInputStream = context?.openFileInput(filePath)
+        val bitmap = BitmapFactory.decodeStream(fileInputStream)
+        binding.customView.setBitmap(bitmap)
+        fileInputStream?.close()
+    }
+
 
 }
+
+

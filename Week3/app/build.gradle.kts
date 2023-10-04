@@ -39,6 +39,7 @@ android {
         dataBinding = true
         viewBinding = true
     }
+
 }
 
 dependencies {
@@ -58,7 +59,6 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation ("androidx.test.espresso:espresso-idling-resource:3.4.0")
-    androidTestImplementation ("androidx.test.espresso:espresso-core:3.4.0")
     androidTestImplementation ("androidx.arch.core:core-testing:2.1.0")
 
     //to get livedata + viewmodel stuff
@@ -71,13 +71,14 @@ dependencies {
     implementation("com.github.antonpopoff:colorwheel:1.1.13")
     implementation("com.github.madrapps:pikolo:2.0.2")
 
-    implementation("androidx.room:room-runtime:2.4.2")
-    kapt("androidx.room:room-compiler:2.4.2")
-
-    implementation("androidx.room:room-ktx:2.4.2")
+    implementation("androidx.room:room-common:2.6.0-beta01")
+    implementation("androidx.room:room-ktx:2.6.0-beta01")
+    kapt("androidx.room:room-compiler:2.6.0-beta01")
 
     testImplementation("androidx.room:room-testing:2.4.2")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
+    annotationProcessor ("androidx.room:room-compiler:2.4.2")
+
 }
