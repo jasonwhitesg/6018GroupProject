@@ -23,8 +23,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.clickable
 import androidx.core.os.bundleOf
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
+
 
 
 
@@ -84,7 +87,7 @@ class SavedDrawingsFragment : Fragment() {
 //                                navController.navigate(action)
                             }
                         ) {
-                            Text(text = drawing.savedFile)
+                            Text(text = drawing.savedFile, style = TextStyle(fontSize = 18.sp))
                         }
                     }
                 }

@@ -31,6 +31,7 @@ class DrawingFragment : Fragment() {
     private lateinit var binding: FragmentDrawingBinding
     private lateinit var bitmap : Bitmap
     private lateinit var drawingRepository: DrawingRepository
+    private var lastSavedFilePath: String? = null
 
     fun combineBitmaps(bitmapOne: Bitmap, bitmapTwo: Bitmap): Bitmap {
         val combinedBitmap = Bitmap.createBitmap(bitmapOne.width, bitmapOne.height, Bitmap.Config.ARGB_8888)
@@ -84,8 +85,13 @@ class DrawingFragment : Fragment() {
 
         val saveDrawingButton = binding.button4
         saveDrawingButton.setOnClickListener {
-            showDrawingNameDialog()
-        }
+            if (lastSavedFilePath == null) {
+                showDrawingNameDialog()
+            } else {
+                val currentBitmap = binding.customView.getCurrentBitmap()
+                saveBitmapToInternalStorage(currentBitmap, lastSavedFilePath!!.substringAfterLast('/'), requireContext())
+                Log.d("DrawingFragment", "Saved file path: $lastSavedFilePath")
+            }        }
 
         val loadDrawingButton = binding.button6
         loadDrawingButton.setOnClickListener {
@@ -175,6 +181,7 @@ class DrawingFragment : Fragment() {
 
                 // Save the bitmap to internal storage and get the file path
                 val savedFilePath = saveBitmapToInternalStorage(currentBitmap, "$drawingName.png", requireContext())
+                lastSavedFilePath = savedFilePath // update file path
                 Log.d("DrawingFragment", "Saved file path: $savedFilePath")
 
                 // Save the file path to the repository
