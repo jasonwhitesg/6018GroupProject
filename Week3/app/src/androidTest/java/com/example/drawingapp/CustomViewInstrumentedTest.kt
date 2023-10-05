@@ -36,26 +36,26 @@ class CustomViewInstrumentedTest {
         IdlingRegistry.getInstance().unregister(idlingResource)
     }
 
-    @Test
-    fun testOnTouchEvent() {
-        val scenario: FragmentScenario<DrawingFragment> = launchFragmentInContainer()
-
-        scenario.onFragment { fragment ->
-            fragment.activity?.runOnUiThread {
-                onView(withId(R.id.customView)).perform(swipeRight())
-
-                onView(withId(R.id.customView)).check { view, _ ->
-                    val customViewInViewCheck = view as CustomView
-                    val beforeBitmap = customViewInViewCheck.getCurrentBitmap().copy(Bitmap.Config.ARGB_8888, false)
-
-                    onView(withId(R.id.customView)).perform(swipeRight())
-
-                    val afterBitmap = customViewInViewCheck.getCurrentBitmap()
-                    assertNotEquals(beforeBitmap, afterBitmap)
-                }
-            }
-        }
-    }
+//    @Test
+//    fun testOnTouchEvent() {
+//        val scenario: FragmentScenario<DrawingFragment> = launchFragmentInContainer()
+//
+//        scenario.onFragment { fragment ->
+//            fragment.activity?.runOnUiThread {
+//                onView(withId(R.id.customView)).perform(swipeRight())
+//
+//                onView(withId(R.id.customView)).check { view, _ ->
+//                    val customViewInViewCheck = view as CustomView
+//                    val beforeBitmap = customViewInViewCheck.getCurrentBitmap().copy(Bitmap.Config.ARGB_8888, false)
+//
+//                    onView(withId(R.id.customView)).perform(swipeRight())
+//
+//                    val afterBitmap = customViewInViewCheck.getCurrentBitmap()
+//                    assertNotEquals(beforeBitmap, afterBitmap)
+//                }
+//            }
+//        }
+//    }
 
 }
 

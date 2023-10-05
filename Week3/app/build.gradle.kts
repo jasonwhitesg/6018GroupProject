@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -47,9 +48,11 @@ android {
 }
 
 dependencies {
-    implementation("androidx.compose.ui:ui:1.0.0")
-    implementation("androidx.compose.material:material:1.0.0")
-    implementation("androidx.compose.ui:ui-tooling-preview-android:1.5.2")
+// Jetpack Compose Dependenciesimplementation 'androidx.compose.ui:ui:1.4.0'
+    implementation ("androidx.compose.material:material:1.4.0")
+    implementation ("androidx.compose.ui:ui-tooling:1.4.0")
+    implementation ("androidx.compose.runtime:runtime-livedata:1.4.0")
+    debugImplementation ("androidx.compose.ui:ui-test-junit4:1.4.0")
 
     debugImplementation("androidx.fragment:fragment-testing:1.4.1")
     implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
@@ -74,6 +77,10 @@ dependencies {
     implementation("com.google.code.gson:gson:2.8.8")
     implementation("com.github.antonpopoff:colorwheel:1.1.13")
     implementation("com.github.madrapps:pikolo:2.0.2")
+
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.5.0")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.5.0")
+
 
     implementation("androidx.room:room-common:2.6.0-beta01")
     implementation("androidx.room:room-ktx:2.6.0-beta01")

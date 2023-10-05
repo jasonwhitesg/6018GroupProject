@@ -5,8 +5,15 @@ plugins {
     id("com.google.devtools.ksp") version "1.9.10-1.0.13" apply false
 }
 
-dependencies {
+buildscript {
+    repositories {
+        google()
+    }
+    dependencies {
+        classpath ("androidx.navigation:navigation-safe-args-gradle-plugin:2.5.0")
+    }
 }
+
 
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)

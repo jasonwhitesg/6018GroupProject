@@ -127,6 +127,15 @@ class DrawingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        super.onViewCreated(view, savedInstanceState)
+
+        val args: DrawingFragmentArgs by navArgs()  // Retrieve arguments
+        val drawingFilePath = args.drawingFilePath
+
+        if (drawingFilePath != null) {
+            loadDrawingIntoCustomView(drawingFilePath)
+        }
+
         // Handle back button press
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
