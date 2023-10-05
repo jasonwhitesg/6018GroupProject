@@ -1,6 +1,7 @@
 package com.example.drawingapp
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +22,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.clickable
+import androidx.core.os.bundleOf
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 
 
@@ -74,8 +77,12 @@ class SavedDrawingsFragment : Fragment() {
                         Box(
                             modifier = Modifier.clickable {
                                 onDrawingClick(drawing.savedFile)
-                                val action = SavedDrawingsFragmentDirections.actionBackToDrawingFragment(drawing.savedFile)
-                                navController.navigate(action)
+//                                val action = SavedDrawingsFragmentDirections.actionBackToDrawingFragment()
+                                val bundle = bundleOf("filePath" to drawing.savedFile)
+                                Log.d(drawing.savedFile, "saved file path")
+                                findNavController().navigate(R.id.action_back_to_drawingFragment, bundle)
+
+//                                navController.navigate(action)
                             }
                         ) {
                             Text(text = drawing.savedFile)

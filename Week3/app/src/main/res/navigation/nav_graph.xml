@@ -35,10 +35,11 @@
         <action
             android:id="@+id/action_back_to_drawingFragment"
             app:destination="@id/drawingFragment">
-            <argument
-                android:name="drawingFilePath"
-                app:argType="string"
-                app:nullable="true" />
+<!--            <argument-->
+<!--                android:id="@+id/drawingFragmentArgs"-->
+<!--                android:name=""-->
+<!--                app:argType="string"-->
+<!--                app:nullable="true" />-->
         </action>
     </fragment>
 </navigation>
