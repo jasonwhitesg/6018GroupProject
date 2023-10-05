@@ -224,7 +224,7 @@ class DrawingFragment : Fragment() {
             .show()
     }
 
-
+//do update bitmap not set bitmap
     private fun loadDrawingIntoCustomView(filePath: String) {
         val bitmap: Bitmap? = BitmapFactory.decodeFile(filePath)
 //        val fileInputStream = context?.openFileInput(filePath)
