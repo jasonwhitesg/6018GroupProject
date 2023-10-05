@@ -64,6 +64,7 @@ class DrawingFragment : Fragment() {
         viewModel.bitmap.observe(viewLifecycleOwner) { bitmap ->
             binding.customView.setBitmap(bitmap)
         }
+
         val colorPickerButton = binding.button3
         bitmap = binding.customView.getCurrentBitmap()
 
@@ -75,6 +76,10 @@ class DrawingFragment : Fragment() {
             binding.colorPickerContainer.visibility = View.VISIBLE
 
             viewModel.updateBitmap(bitmap)
+        }
+        val clearDrawingButton = binding.button7
+        clearDrawingButton.setOnClickListener {
+            binding.customView.clearBitmap()
         }
 
         val saveDrawingButton = binding.button4
@@ -137,13 +142,6 @@ class DrawingFragment : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
 
-//        val args: fragmentArgs by navArgs()  // Retrieve arguments
-//        val drawingFilePath = args.drawingFilePath
-//
-//        if (drawingFilePath != null) {
-//            loadDrawingIntoCustomView(drawingFilePath)
-//        }
-
         // Handle back button press
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -201,40 +199,14 @@ class DrawingFragment : Fragment() {
         return context.filesDir.absolutePath + "/" + filename
     }
 
-    private fun showDrawingListDialog() {
-        // Fetch the list of saved drawings from the database
-        val drawings = drawingRepository.allSavedDrawings.value
-
-        Log.d("DrawingDialog", "Fetched drawings: ${drawings?.size ?: "null"}")
-
-        val drawingNames = drawings?.map { it.savedFile }?.toTypedArray()
-
-        AlertDialog.Builder(requireContext())
-            .setTitle("Load Drawing")
-            .setItems(drawingNames) { _, which ->
-                val selectedDrawing = drawings?.get(which)
-                if (selectedDrawing != null) {
-                    Log.d("DrawingDialog", "Selected drawing: ${selectedDrawing.savedFile}")
-                    loadDrawingIntoCustomView(selectedDrawing.savedFile)
-                } else {
-                    Log.d("DrawingDialog", "No drawing selected!")
-                }
-            }
-            .setNegativeButton("Cancel", null)
-            .show()
-    }
 
 //do update bitmap not set bitmap
     private fun loadDrawingIntoCustomView(filePath: String) {
         val bitmap: Bitmap? = BitmapFactory.decodeFile(filePath)
-//        val fileInputStream = context?.openFileInput(filePath)
-//        val bitmap = BitmapFactory.decodeStream(fileInputStream)
         if (bitmap != null) {
             viewModel.updateBitmap(bitmap)
         }
-//        fileInputStream?.close()
     }
-
 
 }
 

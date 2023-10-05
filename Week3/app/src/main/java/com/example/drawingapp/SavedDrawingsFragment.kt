@@ -61,7 +61,6 @@ class SavedDrawingsFragment : Fragment() {
 
         Scaffold(
             topBar = {
-                // Add a top app bar if needed
             }
         ) { contentPadding ->
             Column(

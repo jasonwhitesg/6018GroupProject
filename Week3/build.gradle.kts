@@ -4,7 +4,7 @@ plugins {
     id("org.jetbrains.kotlin.android") version "1.9.10" apply false
     id("com.google.devtools.ksp") version "1.9.10-1.0.13" apply false
 }
-
+// probalby should get rid of this stuff endeded up going with bindings to send information
 buildscript {
     repositories {
         google()
