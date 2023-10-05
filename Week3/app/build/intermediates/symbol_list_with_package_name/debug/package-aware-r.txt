@@ -3125,9 +3125,7 @@ id ALT
 id BOTTOM_END
 id BOTTOM_START
 id CTRL
-id ClickFragment
 id FUNCTION
-id LetsDraw
 id META
 id NO_DEBUG
 id SHIFT
@@ -3174,7 +3172,6 @@ id accessibility_custom_action_9
 id actionDown
 id actionDownUp
 id actionUp
-id action_back_to_clickFragment
 id action_bar
 id action_bar_activity_content
 id action_bar_container
@@ -3192,7 +3189,8 @@ id action_mode_bar
 id action_mode_bar_stub
 id action_mode_close_button
 id action_text
-id action_to_letsDraw
+id action_to_drawingFragment
+id action_to_savedDrawingFragment
 id actions
 id activity_chooser_view_content
 id add
@@ -3226,7 +3224,11 @@ id bounceBoth
 id bounceEnd
 id bounceStart
 id button
+id button2
 id button3
+id button4
+id button6
+id button7
 id buttonPanel
 id cache_measures
 id callMeasure
@@ -3300,6 +3302,7 @@ id dragLeft
 id dragRight
 id dragStart
 id dragUp
+id drawingFragment
 id dropdown_menu
 id easeIn
 id easeInOut
@@ -3370,6 +3373,7 @@ id item_touch_helper_previous_elevation
 id jumpToEnd
 id jumpToStart
 id labeled
+id landingFragment
 id layout
 id left
 id leftToRight
@@ -3484,6 +3488,7 @@ id peekHeight
 id percent
 id pin
 id pooling_container_listener_holder_tag
+id pop_back_to_landingFragment
 id position
 id postLayout
 id pressed
@@ -3503,6 +3508,7 @@ id rounded
 id row_index_key
 id save_non_transition_alpha
 id save_overlay_view
+id savedDrawingFragment
 id sawtooth
 id scale
 id screen
@@ -3783,6 +3789,7 @@ layout design_text_input_end_icon
 layout design_text_input_start_icon
 layout fragment_drawing
 layout fragment_landing
+layout fragment_saved_drawings
 layout m3_alert_dialog
 layout m3_alert_dialog_actions
 layout m3_alert_dialog_title

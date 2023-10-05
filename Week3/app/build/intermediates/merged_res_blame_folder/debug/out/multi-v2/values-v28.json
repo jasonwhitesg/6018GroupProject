@@ -4,7 +4,7 @@
             "outputFile": "com.example.drawingapp-mergeDebugResources-69:/values-v28/values-v28.xml",
             "map": [
                 {
-                    "source": "/Users/keegan/.gradle/caches/transforms-3/aee2664949e87bf41547ad5e7a01b874/transformed/material-1.9.0/res/values-v28/values-v28.xml",
+                    "source": "/Users/keegan/.gradle/caches/transforms-3/1ce03c9639a8e03a1b44d5e24f4b35c6/transformed/material-1.9.0/res/values-v28/values-v28.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -23,26 +23,7 @@
                     }
                 },
                 {
-                    "source": "/Users/keegan/.gradle/caches/transforms-3/a01aa7c524aba903867d15dd3595657c/transformed/core-1.5.0/res/values-v28/values.xml",
-                    "from": {
-                        "startLines": "4,13",
-                        "startColumns": "0,0",
-                        "startOffsets": "180,659",
-                        "endLines": "12,21",
-                        "endColumns": "8,8",
-                        "endOffsets": "658,1135"
-                    },
-                    "to": {
-                        "startLines": "24,33",
-                        "startColumns": "4,4",
-                        "startOffsets": "1675,2158",
-                        "endLines": "32,41",
-                        "endColumns": "8,8",
-                        "endOffsets": "2153,2634"
-                    }
-                },
-                {
-                    "source": "/Users/keegan/.gradle/caches/transforms-3/0e4db3637ac47adfe42a917d83a20af6/transformed/appcompat-1.6.1/res/values-v28/values-v28.xml",
+                    "source": "/Users/keegan/.gradle/caches/transforms-3/2c70474e6aa8e62c5576d01fe9da77c0/transformed/appcompat-1.6.1/res/values-v28/values-v28.xml",
                     "from": {
                         "startLines": "2,3,4,8",
                         "startColumns": "4,4,4,4",
@@ -58,6 +39,25 @@
                         "endLines": "14,15,19,23",
                         "endColumns": "74,86,12,12",
                         "endOffsets": "1211,1298,1478,1670"
+                    }
+                },
+                {
+                    "source": "/Users/keegan/.gradle/caches/transforms-3/8e5f0817d029448b600ea4c931dd1d2b/transformed/core-1.5.0/res/values-v28/values.xml",
+                    "from": {
+                        "startLines": "4,13",
+                        "startColumns": "0,0",
+                        "startOffsets": "180,659",
+                        "endLines": "12,21",
+                        "endColumns": "8,8",
+                        "endOffsets": "658,1135"
+                    },
+                    "to": {
+                        "startLines": "24,33",
+                        "startColumns": "4,4",
+                        "startOffsets": "1675,2158",
+                        "endLines": "32,41",
+                        "endColumns": "8,8",
+                        "endOffsets": "2153,2634"
                     }
                 }
             ]

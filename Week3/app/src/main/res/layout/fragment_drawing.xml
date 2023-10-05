@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:pikolo="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawingFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    tools:context="com.example.drawingapp.com.example.drawingapp.DrawingFragment">
+    tools:context="com.example.drawingapp.DrawingFragment">
 
     <!-- Left-side vertical Tools Panel -->
 
@@ -124,13 +125,13 @@
         </LinearLayout>
 
         <!-- Bottom horizontal toolbar -->
-<!--        <LinearLayout-->
-<!--            android:id="@+id/bottomToolbar"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="horizontal">-->
+        <!--        <LinearLayout-->
+        <!--            android:id="@+id/bottomToolbar"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:orientation="horizontal">-->
 
-            <!-- Add your bottom toolbar contents here -->
+        <!-- Add your bottom toolbar contents here -->
 
 
     </LinearLayout>

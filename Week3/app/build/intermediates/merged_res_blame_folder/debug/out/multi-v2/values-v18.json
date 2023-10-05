@@ -4,7 +4,7 @@
             "outputFile": "com.example.drawingapp-mergeDebugResources-69:/values-v18/values-v18.xml",
             "map": [
                 {
-                    "source": "/Users/keegan/.gradle/caches/transforms-3/0e4db3637ac47adfe42a917d83a20af6/transformed/appcompat-1.6.1/res/values-v18/values-v18.xml",
+                    "source": "/Users/keegan/.gradle/caches/transforms-3/2c70474e6aa8e62c5576d01fe9da77c0/transformed/appcompat-1.6.1/res/values-v18/values-v18.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "/Users/keegan/.gradle/caches/transforms-3/a01aa7c524aba903867d15dd3595657c/transformed/core-1.5.0/res/values-v18/values.xml",
+                    "source": "/Users/keegan/.gradle/caches/transforms-3/8e5f0817d029448b600ea4c931dd1d2b/transformed/core-1.5.0/res/values-v18/values.xml",
                     "from": {
                         "startLines": "4,12",
                         "startColumns": "0,0",

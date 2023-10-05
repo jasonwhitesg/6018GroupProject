@@ -9,19 +9,19 @@
 9        android:targetSdkVersion="33" />
 10
 11    <uses-permission android:name="android.permission.REORDER_TASKS" />
-11-->[androidx.fragment:fragment-testing-manifest:1.6.1] /Users/keegan/.gradle/caches/transforms-3/ac8a672c25e9cb080c85a8db641e78b5/transformed/fragment-testing-manifest-1.6.1/AndroidManifest.xml:23:5-72
-11-->[androidx.fragment:fragment-testing-manifest:1.6.1] /Users/keegan/.gradle/caches/transforms-3/ac8a672c25e9cb080c85a8db641e78b5/transformed/fragment-testing-manifest-1.6.1/AndroidManifest.xml:23:22-69
+11-->[androidx.fragment:fragment-testing-manifest:1.6.1] /Users/keegan/.gradle/caches/transforms-3/b2b0093990a2268585e7780df3c1bc33/transformed/fragment-testing-manifest-1.6.1/AndroidManifest.xml:23:5-72
+11-->[androidx.fragment:fragment-testing-manifest:1.6.1] /Users/keegan/.gradle/caches/transforms-3/b2b0093990a2268585e7780df3c1bc33/transformed/fragment-testing-manifest-1.6.1/AndroidManifest.xml:23:22-69
 12
 13    <permission
-13-->[androidx.core:core:1.10.1] /Users/keegan/.gradle/caches/transforms-3/6d3c342eb9183f93e0f9a6d7a29ab7a1/transformed/core-1.10.1/AndroidManifest.xml:22:5-24:47
+13-->[androidx.core:core:1.10.1] /Users/keegan/.gradle/caches/transforms-3/d1aa8999a04ba52ff8d87e3de9e86eb2/transformed/core-1.10.1/AndroidManifest.xml:22:5-24:47
 14        android:name="com.example.drawingapp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-14-->[androidx.core:core:1.10.1] /Users/keegan/.gradle/caches/transforms-3/6d3c342eb9183f93e0f9a6d7a29ab7a1/transformed/core-1.10.1/AndroidManifest.xml:23:9-81
+14-->[androidx.core:core:1.10.1] /Users/keegan/.gradle/caches/transforms-3/d1aa8999a04ba52ff8d87e3de9e86eb2/transformed/core-1.10.1/AndroidManifest.xml:23:9-81
 15        android:protectionLevel="signature" />
-15-->[androidx.core:core:1.10.1] /Users/keegan/.gradle/caches/transforms-3/6d3c342eb9183f93e0f9a6d7a29ab7a1/transformed/core-1.10.1/AndroidManifest.xml:24:9-44
+15-->[androidx.core:core:1.10.1] /Users/keegan/.gradle/caches/transforms-3/d1aa8999a04ba52ff8d87e3de9e86eb2/transformed/core-1.10.1/AndroidManifest.xml:24:9-44
 16
 17    <uses-permission android:name="com.example.drawingapp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-17-->[androidx.core:core:1.10.1] /Users/keegan/.gradle/caches/transforms-3/6d3c342eb9183f93e0f9a6d7a29ab7a1/transformed/core-1.10.1/AndroidManifest.xml:26:5-97
-17-->[androidx.core:core:1.10.1] /Users/keegan/.gradle/caches/transforms-3/6d3c342eb9183f93e0f9a6d7a29ab7a1/transformed/core-1.10.1/AndroidManifest.xml:26:22-94
+17-->[androidx.core:core:1.10.1] /Users/keegan/.gradle/caches/transforms-3/d1aa8999a04ba52ff8d87e3de9e86eb2/transformed/core-1.10.1/AndroidManifest.xml:26:5-97
+17-->[androidx.core:core:1.10.1] /Users/keegan/.gradle/caches/transforms-3/d1aa8999a04ba52ff8d87e3de9e86eb2/transformed/core-1.10.1/AndroidManifest.xml:26:22-94
 18
 19    <application
 19-->/Users/keegan/Msd/CS6018/GroupProject/Week3/app/src/main/AndroidManifest.xml:5:5-42:19
@@ -30,7 +30,7 @@
 21        android:allowBackup="true"
 21-->/Users/keegan/Msd/CS6018/GroupProject/Week3/app/src/main/AndroidManifest.xml:7:9-35
 22        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-22-->[androidx.core:core:1.10.1] /Users/keegan/.gradle/caches/transforms-3/6d3c342eb9183f93e0f9a6d7a29ab7a1/transformed/core-1.10.1/AndroidManifest.xml:28:18-86
+22-->[androidx.core:core:1.10.1] /Users/keegan/.gradle/caches/transforms-3/d1aa8999a04ba52ff8d87e3de9e86eb2/transformed/core-1.10.1/AndroidManifest.xml:28:18-86
 23        android:dataExtractionRules="@xml/data_extraction_rules"
 23-->/Users/keegan/Msd/CS6018/GroupProject/Week3/app/src/main/AndroidManifest.xml:8:9-65
 24        android:debuggable="true"
@@ -90,141 +90,142 @@
 55            android:exported="false"
 55-->/Users/keegan/Msd/CS6018/GroupProject/Week3/app/src/main/AndroidManifest.xml:39:13-37
 56            android:multiprocess="true"
-56-->[androidx.fragment:fragment-testing-manifest:1.6.1] /Users/keegan/.gradle/caches/transforms-3/ac8a672c25e9cb080c85a8db641e78b5/transformed/fragment-testing-manifest-1.6.1/AndroidManifest.xml:29:13-40
+56-->[androidx.fragment:fragment-testing-manifest:1.6.1] /Users/keegan/.gradle/caches/transforms-3/b2b0093990a2268585e7780df3c1bc33/transformed/fragment-testing-manifest-1.6.1/AndroidManifest.xml:29:13-40
 57            android:taskAffinity=""
-57-->[androidx.fragment:fragment-testing-manifest:1.6.1] /Users/keegan/.gradle/caches/transforms-3/ac8a672c25e9cb080c85a8db641e78b5/transformed/fragment-testing-manifest-1.6.1/AndroidManifest.xml:30:13-36
+57-->[androidx.fragment:fragment-testing-manifest:1.6.1] /Users/keegan/.gradle/caches/transforms-3/b2b0093990a2268585e7780df3c1bc33/transformed/fragment-testing-manifest-1.6.1/AndroidManifest.xml:30:13-36
 58            android:theme="@android:style/Theme.Material.Light" >
 58-->/Users/keegan/Msd/CS6018/GroupProject/Week3/app/src/main/AndroidManifest.xml:40:13-64
 59            <intent-filter>
-59-->[androidx.fragment:fragment-testing-manifest:1.6.1] /Users/keegan/.gradle/caches/transforms-3/ac8a672c25e9cb080c85a8db641e78b5/transformed/fragment-testing-manifest-1.6.1/AndroidManifest.xml:32:13-34:29
+59-->[androidx.fragment:fragment-testing-manifest:1.6.1] /Users/keegan/.gradle/caches/transforms-3/b2b0093990a2268585e7780df3c1bc33/transformed/fragment-testing-manifest-1.6.1/AndroidManifest.xml:32:13-34:29
 60                <action android:name="android.intent.action.MAIN" />
 60-->/Users/keegan/Msd/CS6018/GroupProject/Week3/app/src/main/AndroidManifest.xml:22:17-69
 60-->/Users/keegan/Msd/CS6018/GroupProject/Week3/app/src/main/AndroidManifest.xml:22:25-66
 61            </intent-filter>
 62        </activity>
-63        <activity
-63-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/a01aa7c524aba903867d15dd3595657c/transformed/core-1.5.0/AndroidManifest.xml:27:9-34:20
-64            android:name="androidx.test.core.app.InstrumentationActivityInvoker$BootstrapActivity"
-64-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/a01aa7c524aba903867d15dd3595657c/transformed/core-1.5.0/AndroidManifest.xml:28:13-99
-65            android:exported="true"
-65-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/a01aa7c524aba903867d15dd3595657c/transformed/core-1.5.0/AndroidManifest.xml:29:13-36
-66            android:theme="@style/WhiteBackgroundTheme" >
-66-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/a01aa7c524aba903867d15dd3595657c/transformed/core-1.5.0/AndroidManifest.xml:30:13-56
-67            <intent-filter android:priority="-100" >
-67-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/a01aa7c524aba903867d15dd3595657c/transformed/core-1.5.0/AndroidManifest.xml:31:13-33:29
-67-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/a01aa7c524aba903867d15dd3595657c/transformed/core-1.5.0/AndroidManifest.xml:31:28-51
-68                <category android:name="android.intent.category.LAUNCHER" />
-68-->/Users/keegan/Msd/CS6018/GroupProject/Week3/app/src/main/AndroidManifest.xml:23:17-77
-68-->/Users/keegan/Msd/CS6018/GroupProject/Week3/app/src/main/AndroidManifest.xml:23:27-74
-69            </intent-filter>
-70        </activity>
-71        <activity
-71-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/a01aa7c524aba903867d15dd3595657c/transformed/core-1.5.0/AndroidManifest.xml:35:9-42:20
-72            android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyActivity"
-72-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/a01aa7c524aba903867d15dd3595657c/transformed/core-1.5.0/AndroidManifest.xml:36:13-95
-73            android:exported="true"
-73-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/a01aa7c524aba903867d15dd3595657c/transformed/core-1.5.0/AndroidManifest.xml:37:13-36
-74            android:theme="@style/WhiteBackgroundTheme" >
-74-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/a01aa7c524aba903867d15dd3595657c/transformed/core-1.5.0/AndroidManifest.xml:38:13-56
-75            <intent-filter android:priority="-100" >
-75-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/a01aa7c524aba903867d15dd3595657c/transformed/core-1.5.0/AndroidManifest.xml:31:13-33:29
-75-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/a01aa7c524aba903867d15dd3595657c/transformed/core-1.5.0/AndroidManifest.xml:31:28-51
-76                <category android:name="android.intent.category.LAUNCHER" />
-76-->/Users/keegan/Msd/CS6018/GroupProject/Week3/app/src/main/AndroidManifest.xml:23:17-77
-76-->/Users/keegan/Msd/CS6018/GroupProject/Week3/app/src/main/AndroidManifest.xml:23:27-74
-77            </intent-filter>
-78        </activity>
-79        <activity
-79-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/a01aa7c524aba903867d15dd3595657c/transformed/core-1.5.0/AndroidManifest.xml:43:9-50:20
-80            android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyFloatingActivity"
-80-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/a01aa7c524aba903867d15dd3595657c/transformed/core-1.5.0/AndroidManifest.xml:44:13-103
-81            android:exported="true"
-81-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/a01aa7c524aba903867d15dd3595657c/transformed/core-1.5.0/AndroidManifest.xml:45:13-36
-82            android:theme="@style/WhiteBackgroundDialogTheme" >
-82-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/a01aa7c524aba903867d15dd3595657c/transformed/core-1.5.0/AndroidManifest.xml:46:13-62
-83            <intent-filter android:priority="-100" >
-83-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/a01aa7c524aba903867d15dd3595657c/transformed/core-1.5.0/AndroidManifest.xml:31:13-33:29
-83-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/a01aa7c524aba903867d15dd3595657c/transformed/core-1.5.0/AndroidManifest.xml:31:28-51
-84                <category android:name="android.intent.category.LAUNCHER" />
-84-->/Users/keegan/Msd/CS6018/GroupProject/Week3/app/src/main/AndroidManifest.xml:23:17-77
-84-->/Users/keegan/Msd/CS6018/GroupProject/Week3/app/src/main/AndroidManifest.xml:23:27-74
-85            </intent-filter>
-86        </activity>
-87
-88        <provider
-88-->[androidx.emoji2:emoji2:1.4.0] /Users/keegan/.gradle/caches/transforms-3/282e4f4f3f75ff1d03dde802723011cc/transformed/emoji2-1.4.0/AndroidManifest.xml:24:9-32:20
-89            android:name="androidx.startup.InitializationProvider"
-89-->[androidx.emoji2:emoji2:1.4.0] /Users/keegan/.gradle/caches/transforms-3/282e4f4f3f75ff1d03dde802723011cc/transformed/emoji2-1.4.0/AndroidManifest.xml:25:13-67
-90            android:authorities="com.example.drawingapp.androidx-startup"
-90-->[androidx.emoji2:emoji2:1.4.0] /Users/keegan/.gradle/caches/transforms-3/282e4f4f3f75ff1d03dde802723011cc/transformed/emoji2-1.4.0/AndroidManifest.xml:26:13-68
-91            android:exported="false" >
-91-->[androidx.emoji2:emoji2:1.4.0] /Users/keegan/.gradle/caches/transforms-3/282e4f4f3f75ff1d03dde802723011cc/transformed/emoji2-1.4.0/AndroidManifest.xml:27:13-37
-92            <meta-data
-92-->[androidx.emoji2:emoji2:1.4.0] /Users/keegan/.gradle/caches/transforms-3/282e4f4f3f75ff1d03dde802723011cc/transformed/emoji2-1.4.0/AndroidManifest.xml:29:13-31:52
-93                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-93-->[androidx.emoji2:emoji2:1.4.0] /Users/keegan/.gradle/caches/transforms-3/282e4f4f3f75ff1d03dde802723011cc/transformed/emoji2-1.4.0/AndroidManifest.xml:30:17-75
-94                android:value="androidx.startup" />
-94-->[androidx.emoji2:emoji2:1.4.0] /Users/keegan/.gradle/caches/transforms-3/282e4f4f3f75ff1d03dde802723011cc/transformed/emoji2-1.4.0/AndroidManifest.xml:31:17-49
-95            <meta-data
-95-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/keegan/.gradle/caches/transforms-3/077df7eebc6868c2219964ee53d8f1f7/transformed/lifecycle-process-2.6.1/AndroidManifest.xml:29:13-31:52
-96                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-96-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/keegan/.gradle/caches/transforms-3/077df7eebc6868c2219964ee53d8f1f7/transformed/lifecycle-process-2.6.1/AndroidManifest.xml:30:17-78
-97                android:value="androidx.startup" />
-97-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/keegan/.gradle/caches/transforms-3/077df7eebc6868c2219964ee53d8f1f7/transformed/lifecycle-process-2.6.1/AndroidManifest.xml:31:17-49
+63
+64        <service
+64-->[androidx.room:room-runtime:2.6.0-beta01] /Users/keegan/.gradle/caches/transforms-3/e92d8f601274efcc62b43ef282735c8c/transformed/room-runtime-2.6.0-beta01/AndroidManifest.xml:24:9-28:63
+65            android:name="androidx.room.MultiInstanceInvalidationService"
+65-->[androidx.room:room-runtime:2.6.0-beta01] /Users/keegan/.gradle/caches/transforms-3/e92d8f601274efcc62b43ef282735c8c/transformed/room-runtime-2.6.0-beta01/AndroidManifest.xml:25:13-74
+66            android:directBootAware="true"
+66-->[androidx.room:room-runtime:2.6.0-beta01] /Users/keegan/.gradle/caches/transforms-3/e92d8f601274efcc62b43ef282735c8c/transformed/room-runtime-2.6.0-beta01/AndroidManifest.xml:26:13-43
+67            android:exported="false" />
+67-->[androidx.room:room-runtime:2.6.0-beta01] /Users/keegan/.gradle/caches/transforms-3/e92d8f601274efcc62b43ef282735c8c/transformed/room-runtime-2.6.0-beta01/AndroidManifest.xml:27:13-37
+68
+69        <activity
+69-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/8e5f0817d029448b600ea4c931dd1d2b/transformed/core-1.5.0/AndroidManifest.xml:27:9-34:20
+70            android:name="androidx.test.core.app.InstrumentationActivityInvoker$BootstrapActivity"
+70-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/8e5f0817d029448b600ea4c931dd1d2b/transformed/core-1.5.0/AndroidManifest.xml:28:13-99
+71            android:exported="true"
+71-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/8e5f0817d029448b600ea4c931dd1d2b/transformed/core-1.5.0/AndroidManifest.xml:29:13-36
+72            android:theme="@style/WhiteBackgroundTheme" >
+72-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/8e5f0817d029448b600ea4c931dd1d2b/transformed/core-1.5.0/AndroidManifest.xml:30:13-56
+73            <intent-filter android:priority="-100" >
+73-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/8e5f0817d029448b600ea4c931dd1d2b/transformed/core-1.5.0/AndroidManifest.xml:31:13-33:29
+73-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/8e5f0817d029448b600ea4c931dd1d2b/transformed/core-1.5.0/AndroidManifest.xml:31:28-51
+74                <category android:name="android.intent.category.LAUNCHER" />
+74-->/Users/keegan/Msd/CS6018/GroupProject/Week3/app/src/main/AndroidManifest.xml:23:17-77
+74-->/Users/keegan/Msd/CS6018/GroupProject/Week3/app/src/main/AndroidManifest.xml:23:27-74
+75            </intent-filter>
+76        </activity>
+77        <activity
+77-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/8e5f0817d029448b600ea4c931dd1d2b/transformed/core-1.5.0/AndroidManifest.xml:35:9-42:20
+78            android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyActivity"
+78-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/8e5f0817d029448b600ea4c931dd1d2b/transformed/core-1.5.0/AndroidManifest.xml:36:13-95
+79            android:exported="true"
+79-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/8e5f0817d029448b600ea4c931dd1d2b/transformed/core-1.5.0/AndroidManifest.xml:37:13-36
+80            android:theme="@style/WhiteBackgroundTheme" >
+80-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/8e5f0817d029448b600ea4c931dd1d2b/transformed/core-1.5.0/AndroidManifest.xml:38:13-56
+81            <intent-filter android:priority="-100" >
+81-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/8e5f0817d029448b600ea4c931dd1d2b/transformed/core-1.5.0/AndroidManifest.xml:31:13-33:29
+81-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/8e5f0817d029448b600ea4c931dd1d2b/transformed/core-1.5.0/AndroidManifest.xml:31:28-51
+82                <category android:name="android.intent.category.LAUNCHER" />
+82-->/Users/keegan/Msd/CS6018/GroupProject/Week3/app/src/main/AndroidManifest.xml:23:17-77
+82-->/Users/keegan/Msd/CS6018/GroupProject/Week3/app/src/main/AndroidManifest.xml:23:27-74
+83            </intent-filter>
+84        </activity>
+85        <activity
+85-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/8e5f0817d029448b600ea4c931dd1d2b/transformed/core-1.5.0/AndroidManifest.xml:43:9-50:20
+86            android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyFloatingActivity"
+86-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/8e5f0817d029448b600ea4c931dd1d2b/transformed/core-1.5.0/AndroidManifest.xml:44:13-103
+87            android:exported="true"
+87-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/8e5f0817d029448b600ea4c931dd1d2b/transformed/core-1.5.0/AndroidManifest.xml:45:13-36
+88            android:theme="@style/WhiteBackgroundDialogTheme" >
+88-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/8e5f0817d029448b600ea4c931dd1d2b/transformed/core-1.5.0/AndroidManifest.xml:46:13-62
+89            <intent-filter android:priority="-100" >
+89-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/8e5f0817d029448b600ea4c931dd1d2b/transformed/core-1.5.0/AndroidManifest.xml:31:13-33:29
+89-->[androidx.test:core:1.5.0] /Users/keegan/.gradle/caches/transforms-3/8e5f0817d029448b600ea4c931dd1d2b/transformed/core-1.5.0/AndroidManifest.xml:31:28-51
+90                <category android:name="android.intent.category.LAUNCHER" />
+90-->/Users/keegan/Msd/CS6018/GroupProject/Week3/app/src/main/AndroidManifest.xml:23:17-77
+90-->/Users/keegan/Msd/CS6018/GroupProject/Week3/app/src/main/AndroidManifest.xml:23:27-74
+91            </intent-filter>
+92        </activity>
+93
+94        <provider
+94-->[androidx.emoji2:emoji2:1.4.0] /Users/keegan/.gradle/caches/transforms-3/674f0789a8b3bf9018908db21ac422b8/transformed/emoji2-1.4.0/AndroidManifest.xml:24:9-32:20
+95            android:name="androidx.startup.InitializationProvider"
+95-->[androidx.emoji2:emoji2:1.4.0] /Users/keegan/.gradle/caches/transforms-3/674f0789a8b3bf9018908db21ac422b8/transformed/emoji2-1.4.0/AndroidManifest.xml:25:13-67
+96            android:authorities="com.example.drawingapp.androidx-startup"
+96-->[androidx.emoji2:emoji2:1.4.0] /Users/keegan/.gradle/caches/transforms-3/674f0789a8b3bf9018908db21ac422b8/transformed/emoji2-1.4.0/AndroidManifest.xml:26:13-68
+97            android:exported="false" >
+97-->[androidx.emoji2:emoji2:1.4.0] /Users/keegan/.gradle/caches/transforms-3/674f0789a8b3bf9018908db21ac422b8/transformed/emoji2-1.4.0/AndroidManifest.xml:27:13-37
 98            <meta-data
-98-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/ba25a564f50c7c760f56f09755729c98/transformed/profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
-99                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-99-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/ba25a564f50c7c760f56f09755729c98/transformed/profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
+98-->[androidx.emoji2:emoji2:1.4.0] /Users/keegan/.gradle/caches/transforms-3/674f0789a8b3bf9018908db21ac422b8/transformed/emoji2-1.4.0/AndroidManifest.xml:29:13-31:52
+99                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+99-->[androidx.emoji2:emoji2:1.4.0] /Users/keegan/.gradle/caches/transforms-3/674f0789a8b3bf9018908db21ac422b8/transformed/emoji2-1.4.0/AndroidManifest.xml:30:17-75
 100                android:value="androidx.startup" />
-100-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/ba25a564f50c7c760f56f09755729c98/transformed/profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
-101        </provider>
-102
-103        <service
-103-->[androidx.room:room-runtime:2.4.2] /Users/keegan/.gradle/caches/transforms-3/79ece3b92af9de7cc4474d8313666bd5/transformed/room-runtime-2.4.2/AndroidManifest.xml:25:9-28:40
-104            android:name="androidx.room.MultiInstanceInvalidationService"
-104-->[androidx.room:room-runtime:2.4.2] /Users/keegan/.gradle/caches/transforms-3/79ece3b92af9de7cc4474d8313666bd5/transformed/room-runtime-2.4.2/AndroidManifest.xml:26:13-74
-105            android:directBootAware="true"
-105-->[androidx.room:room-runtime:2.4.2] /Users/keegan/.gradle/caches/transforms-3/79ece3b92af9de7cc4474d8313666bd5/transformed/room-runtime-2.4.2/AndroidManifest.xml:27:13-43
-106            android:exported="false" />
-106-->[androidx.room:room-runtime:2.4.2] /Users/keegan/.gradle/caches/transforms-3/79ece3b92af9de7cc4474d8313666bd5/transformed/room-runtime-2.4.2/AndroidManifest.xml:28:13-37
-107
-108        <receiver
-108-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/ba25a564f50c7c760f56f09755729c98/transformed/profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
-109            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-109-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/ba25a564f50c7c760f56f09755729c98/transformed/profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
-110            android:directBootAware="false"
-110-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/ba25a564f50c7c760f56f09755729c98/transformed/profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
-111            android:enabled="true"
-111-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/ba25a564f50c7c760f56f09755729c98/transformed/profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
-112            android:exported="true"
-112-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/ba25a564f50c7c760f56f09755729c98/transformed/profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
-113            android:permission="android.permission.DUMP" >
-113-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/ba25a564f50c7c760f56f09755729c98/transformed/profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
-114            <intent-filter>
-114-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/ba25a564f50c7c760f56f09755729c98/transformed/profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
-115                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-115-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/ba25a564f50c7c760f56f09755729c98/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
-115-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/ba25a564f50c7c760f56f09755729c98/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
-116            </intent-filter>
-117            <intent-filter>
-117-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/ba25a564f50c7c760f56f09755729c98/transformed/profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
-118                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-118-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/ba25a564f50c7c760f56f09755729c98/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
-118-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/ba25a564f50c7c760f56f09755729c98/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
-119            </intent-filter>
-120            <intent-filter>
-120-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/ba25a564f50c7c760f56f09755729c98/transformed/profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
-121                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-121-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/ba25a564f50c7c760f56f09755729c98/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
-121-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/ba25a564f50c7c760f56f09755729c98/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
-122            </intent-filter>
-123            <intent-filter>
-123-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/ba25a564f50c7c760f56f09755729c98/transformed/profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
-124                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-124-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/ba25a564f50c7c760f56f09755729c98/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
-124-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/ba25a564f50c7c760f56f09755729c98/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
-125            </intent-filter>
-126        </receiver>
-127    </application>
-128
-129</manifest>
+100-->[androidx.emoji2:emoji2:1.4.0] /Users/keegan/.gradle/caches/transforms-3/674f0789a8b3bf9018908db21ac422b8/transformed/emoji2-1.4.0/AndroidManifest.xml:31:17-49
+101            <meta-data
+101-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/keegan/.gradle/caches/transforms-3/e5bcf9ba774e6ded02553526c633c585/transformed/lifecycle-process-2.6.1/AndroidManifest.xml:29:13-31:52
+102                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+102-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/keegan/.gradle/caches/transforms-3/e5bcf9ba774e6ded02553526c633c585/transformed/lifecycle-process-2.6.1/AndroidManifest.xml:30:17-78
+103                android:value="androidx.startup" />
+103-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/keegan/.gradle/caches/transforms-3/e5bcf9ba774e6ded02553526c633c585/transformed/lifecycle-process-2.6.1/AndroidManifest.xml:31:17-49
+104            <meta-data
+104-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/c0acdacdce3fbb71a7c279207a1a82bf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
+105                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+105-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/c0acdacdce3fbb71a7c279207a1a82bf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
+106                android:value="androidx.startup" />
+106-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/c0acdacdce3fbb71a7c279207a1a82bf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
+107        </provider>
+108
+109        <receiver
+109-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/c0acdacdce3fbb71a7c279207a1a82bf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
+110            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+110-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/c0acdacdce3fbb71a7c279207a1a82bf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
+111            android:directBootAware="false"
+111-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/c0acdacdce3fbb71a7c279207a1a82bf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
+112            android:enabled="true"
+112-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/c0acdacdce3fbb71a7c279207a1a82bf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
+113            android:exported="true"
+113-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/c0acdacdce3fbb71a7c279207a1a82bf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
+114            android:permission="android.permission.DUMP" >
+114-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/c0acdacdce3fbb71a7c279207a1a82bf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
+115            <intent-filter>
+115-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/c0acdacdce3fbb71a7c279207a1a82bf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
+116                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+116-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/c0acdacdce3fbb71a7c279207a1a82bf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
+116-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/c0acdacdce3fbb71a7c279207a1a82bf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
+117            </intent-filter>
+118            <intent-filter>
+118-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/c0acdacdce3fbb71a7c279207a1a82bf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
+119                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+119-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/c0acdacdce3fbb71a7c279207a1a82bf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
+119-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/c0acdacdce3fbb71a7c279207a1a82bf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
+120            </intent-filter>
+121            <intent-filter>
+121-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/c0acdacdce3fbb71a7c279207a1a82bf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
+122                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+122-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/c0acdacdce3fbb71a7c279207a1a82bf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
+122-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/c0acdacdce3fbb71a7c279207a1a82bf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
+123            </intent-filter>
+124            <intent-filter>
+124-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/c0acdacdce3fbb71a7c279207a1a82bf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
+125                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+125-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/c0acdacdce3fbb71a7c279207a1a82bf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
+125-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/keegan/.gradle/caches/transforms-3/c0acdacdce3fbb71a7c279207a1a82bf/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
+126            </intent-filter>
+127        </receiver>
+128    </application>
+129
+130</manifest>

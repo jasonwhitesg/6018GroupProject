@@ -18,7 +18,6 @@ import androidx.navigation.fragment.findNavController
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import android.content.Context
-import com.example.drawingapp.DrawingDatabase
 import java.io.ByteArrayOutputStream
 import androidx.lifecycle.lifecycleScope
 import android.util.Log
@@ -87,7 +86,7 @@ class DrawingFragment : Fragment() {
 
         val loadDrawingButton = binding.button6
         loadDrawingButton.setOnClickListener {
-            showDrawingListDialog()
+            findNavController().navigate(R.id.action_to_savedDrawingFragment)
         }
 
 

@@ -12,6 +12,10 @@
         "source": "com.example.drawingapp-main-73:/layout/activity_main.xml"
     },
     {
+        "merged": "com.example.drawingapp-mergeDebugResources-70:/layout/fragment_saved_drawings.xml",
+        "source": "com.example.drawingapp-main-73:/layout/fragment_saved_drawings.xml"
+    },
+    {
         "merged": "com.example.drawingapp-mergeDebugResources-70:/layout/activity_splash.xml",
         "source": "com.example.drawingapp-main-73:/layout/activity_splash.xml"
     }
