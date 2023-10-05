@@ -4,11 +4,13 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
+import androidx.fragment.app.viewModels
 import com.example.drawingapp.R
 
 
 class MainActivity : AppCompatActivity() {
     private val viewModel: SimpleView by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d("MainActivity", "Before setting the theme.")

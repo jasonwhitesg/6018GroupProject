@@ -21,11 +21,11 @@
             app:popUpTo="@id/landingFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_to_savedDrawingFragment"
-            app:destination="@id/savedDrawingFragment" />
+            android:id="@+id/action_to_savedDrawingsFragment"
+            app:destination="@id/savedDrawingsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/savedDrawingFragment"
-        android:name="com.example.drawingapp.DrawingFragment">
+        android:id="@+id/savedDrawingsFragment"
+        android:name="com.example.drawingapp.SavedDrawingsFragment">
     </fragment>
 </navigation>

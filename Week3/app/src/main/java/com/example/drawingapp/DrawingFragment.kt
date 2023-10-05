@@ -86,7 +86,7 @@ class DrawingFragment : Fragment() {
 
         val loadDrawingButton = binding.button6
         loadDrawingButton.setOnClickListener {
-            findNavController().navigate(R.id.action_to_savedDrawingFragment)
+            findNavController().navigate(R.id.action_to_savedDrawingsFragment)
         }
 
 
