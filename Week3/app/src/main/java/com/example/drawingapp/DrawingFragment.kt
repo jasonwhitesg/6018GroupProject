@@ -209,6 +209,7 @@ class DrawingFragment : Fragment() {
 
 //do update bitmap not set bitmap
     private fun loadDrawingIntoCustomView(filePath: String) {
+    lastSavedFilePath = filePath
         val bitmap: Bitmap? = BitmapFactory.decodeFile(filePath)
         if (bitmap != null) {
             viewModel.updateBitmap(bitmap)
