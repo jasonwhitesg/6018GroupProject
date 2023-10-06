@@ -41,6 +41,11 @@
 <!--                app:argType="string"-->
 <!--                app:nullable="true" />-->
         </action>
+        <action
+            android:id="@+id/pop_back_to_drawingFragment"
+            app:destination="@id/drawingFragment"
+            app:popUpTo="@id/drawingFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
 
