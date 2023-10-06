@@ -8,9 +8,12 @@ plugins {
 buildscript {
     repositories {
         google()
+        jcenter()
     }
     dependencies {
         classpath ("androidx.navigation:navigation-safe-args-gradle-plugin:2.5.0")
+        classpath ("com.android.tools.build:gradle:7.0.+")
+
     }
 }
 

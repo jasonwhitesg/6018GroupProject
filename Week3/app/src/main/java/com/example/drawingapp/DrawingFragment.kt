@@ -22,7 +22,6 @@ import java.io.ByteArrayOutputStream
 import androidx.lifecycle.lifecycleScope
 import android.util.Log
 import android.graphics.BitmapFactory
-import androidx.navigation.fragment.navArgs
 
 
 class DrawingFragment : Fragment() {
@@ -36,9 +35,9 @@ class DrawingFragment : Fragment() {
     fun combineBitmaps(bitmapOne: Bitmap, bitmapTwo: Bitmap): Bitmap {
         val combinedBitmap = Bitmap.createBitmap(bitmapOne.width, bitmapOne.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(combinedBitmap)
-// Draw the first bitmap onto the canvas at (0, 0)
+        // Draw the first bitmap onto the canvas at (0, 0)
         canvas.drawBitmap(bitmapOne, 0f, 0f, null)
-// Draw the second bitmap onto the canvas at the end of the first bitmap
+        // Draw the second bitmap onto the canvas at the end of the first bitmap
         canvas.drawBitmap(bitmapTwo, 0f, 0f, null)
         return combinedBitmap
     }
