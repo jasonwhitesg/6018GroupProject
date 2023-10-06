@@ -20,16 +20,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.6" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="131dp"
-        android:layout_marginBottom="72dp"
-        android:text="LOAD DRAWING"
-        android:textSize="48sp"
-        app:layout_constraintBottom_toTopOf="@id/button"
-        app:layout_constraintEnd_toEndOf="@id/button"
-        app:layout_constraintHorizontal_bias="0.545"
-        app:layout_constraintStart_toStartOf="@id/button" />
+<!--    <Button-->
+<!--        android:id="@+id/button2"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="131dp"-->
+<!--        android:layout_marginBottom="72dp"-->
+<!--        android:text="LOAD DRAWING"-->
+<!--        android:textSize="48sp"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/button"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/button"-->
+<!--        app:layout_constraintHorizontal_bias="0.545"-->
+<!--        app:layout_constraintStart_toStartOf="@id/button" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

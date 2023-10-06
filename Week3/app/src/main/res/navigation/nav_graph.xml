@@ -7,6 +7,7 @@
     <fragment
         android:id="@+id/landingFragment"
         android:name="com.example.drawingapp.LandingFragment">
+        <!-- Action to navigate to DrawingFragment -->
         <action
             android:id="@+id/action_to_drawingFragment"
             app:destination="@id/drawingFragment" />
@@ -15,17 +16,31 @@
     <fragment
         android:id="@+id/drawingFragment"
         android:name="com.example.drawingapp.DrawingFragment">
+        <!-- Action to navigate back to LandingFragment -->
         <action
             android:id="@+id/pop_back_to_landingFragment"
             app:destination="@id/landingFragment"
             app:popUpTo="@id/landingFragment"
             app:popUpToInclusive="true" />
+        <!-- Action to navigate to SavedDrawingsFragment -->
         <action
             android:id="@+id/action_to_savedDrawingsFragment"
             app:destination="@id/savedDrawingsFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/savedDrawingsFragment"
         android:name="com.example.drawingapp.SavedDrawingsFragment">
+        <!-- Action to navigate back to DrawingFragment with a drawing file argument (if needed) -->
+        <action
+            android:id="@+id/action_back_to_drawingFragment"
+            app:destination="@id/drawingFragment">
+<!--            <argument-->
+<!--                android:id="@+id/drawingFragmentArgs"-->
+<!--                android:name=""-->
+<!--                app:argType="string"-->
+<!--                app:nullable="true" />-->
+        </action>
     </fragment>
 </navigation>
+

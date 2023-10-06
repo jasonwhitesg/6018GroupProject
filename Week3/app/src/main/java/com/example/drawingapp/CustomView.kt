@@ -92,4 +92,8 @@ class CustomView(context: Context, attrs: AttributeSet,) : View(context, attrs) 
         return bitmap
     }
 
+    fun clearBitmap() {
+        bitmap.eraseColor(Color.TRANSPARENT)
+        invalidate()
+    }
 }
