@@ -1,5 +1,6 @@
 package com.example.drawingapp
 
+import android.graphics.Bitmap
 import android.view.View
 import android.widget.EditText
 import androidx.test.espresso.Espresso.onView
@@ -25,6 +26,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.hamcrest.Matcher
+import org.junit.Assert
 
 @RunWith(AndroidJUnit4::class)
 @MediumTest
@@ -49,6 +51,10 @@ class DrawingFragmentTest {
         // Perform a click action on the button
         onView(withId(R.id.button)).perform(click())
 
+        // Drawing lines
+        onView(withId(R.id.customView)).perform(swipeDown())
+        onView(withId(R.id.customView)).perform(swipeRight())
+
         // Perform a click action on the "Save Drawing" button
         onView(withId(R.id.button4)).perform(click())
 
@@ -67,6 +73,9 @@ class DrawingFragmentTest {
     fun testButtonClickForSaveDrawing2() {
         // Perform a click action on the button
         onView(withId(R.id.button)).perform(click())
+
+        // Drawing line
+        onView(withId(R.id.customView)).perform(swipeDown())
 
         // Perform a click action on the "Save Drawing" button
         onView(withId(R.id.button4)).perform(click())
@@ -88,6 +97,21 @@ class DrawingFragmentTest {
         // Perform a click action on the button
         onView(withId(R.id.button)).perform(click())
 
+        // Drawing line
+        onView(withId(R.id.customView)).perform(swipeRight())
+
+        // Perform a click action on the "Save Drawing" button
+        onView(withId(R.id.button4)).perform(click())
+
+        // Check if the dialog is displayed
+        onView(withText("Name Your Drawing")).check(matches(isDisplayed()))
+
+        // Type text into the EditText in the dialog
+        onView(isAssignableFrom(EditText::class.java)).perform(typeTextInEditText("DrawingTest1"))
+
+        // Click the "Save" button in the dialog
+        onView(withText("Save")).perform(click())
+
         // Perform a click action on the "Load Drawing" button
         onView(withId(R.id.button6)).perform(click())
 
@@ -98,9 +122,21 @@ class DrawingFragmentTest {
         // Perform a click action on the button
         onView(withId(R.id.button)).perform(click())
 
+        // Drawing lines
+        onView(withId(R.id.customView)).perform(swipeDown())
+        onView(withId(R.id.customView)).perform(swipeRight())
+
         // Perform a click action on the "Clear Drawing" button
         onView(withId(R.id.button7)).perform(click())
 
+        // Check if the drawing canvas is cleared
+        onView(withId(R.id.customView)).check { view, _ ->
+            val customView = view as CustomView
+            val bitmap = customView.getCurrentBitmap()
+
+            // Assert that the bitmap is cleared (empty)
+            Assert.assertTrue(bitmap.sameAs(Bitmap.createBitmap(bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)))
+        }
     }
 
     @Test
@@ -134,6 +170,18 @@ class DrawingFragmentTest {
         // Check if the size slider is enabled
         onView(withId(R.id.sizeSlider)).check(matches(isEnabled()))
     }
+
+    @Test
+    fun testDrawWithPen() {
+        // Perform a click action on the button
+        onView(withId(R.id.button)).perform(click())
+
+        // Drawing lines
+        onView(withId(R.id.customView)).perform(swipeDown())
+        onView(withId(R.id.customView)).perform(swipeRight())
+
+    }
+
 
     private fun typeTextInEditText(text: String): ViewAction {
         return object : ViewAction {

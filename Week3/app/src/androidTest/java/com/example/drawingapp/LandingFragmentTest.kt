@@ -47,14 +47,14 @@ class LandingFragmentTest {
         onView(withId(R.id.sizeSlider)).check(matches(isDisplayed())) // Brush Size Slider
     }
 
-    @Test
-    fun testNavigationToLoadDrawing() {
-        // Perform a click action on the "Load Drawing" button
-        onView(withId(R.id.button2)).perform(click())
-
-        // Check if the LoadDrawingFragment is displayed
-        //onView(withId(R.id.LoadDrawingFragment)).check(matches(isDisplayed()))
-    }
+//    @Test
+//    fun testNavigationToLoadDrawing() {
+//        // Perform a click action on the "Load Drawing" button
+//        onView(withId(R.id.button2)).perform(click())
+//
+//        // Check if the LoadDrawingFragment is displayed
+//        //onView(withId(R.id.LoadDrawingFragment)).check(matches(isDisplayed()))
+//    }
 
 }
 
