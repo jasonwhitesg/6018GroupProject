@@ -77,6 +77,7 @@ class DrawingFragment : Fragment() {
 
             viewModel.updateBitmap(bitmap)
         }
+
         val clearDrawingButton = binding.button7
         clearDrawingButton.setOnClickListener {
             binding.customView.clearBitmap()
@@ -143,8 +144,6 @@ class DrawingFragment : Fragment() {
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
         super.onViewCreated(view, savedInstanceState)
 
         // Handle back button press

@@ -53,6 +53,7 @@ dependencies {
     implementation ("androidx.compose.ui:ui-tooling:1.4.0")
     implementation ("androidx.compose.runtime:runtime-livedata:1.4.0")
     debugImplementation ("androidx.compose.ui:ui-test-junit4:1.4.0")
+    debugImplementation ("androidx.navigation:navigation-testing:2.3.5")
 
     debugImplementation("androidx.fragment:fragment-testing:1.4.1")
     implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
@@ -62,6 +63,7 @@ dependencies {
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     testImplementation("junit:junit:4.13.2")
+    androidTestImplementation ("androidx.navigation:navigation-testing:2.3.5")
 
     // For Testing
     androidTestImplementation ("androidx.test:core:1.4.0")
@@ -93,5 +95,10 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
     annotationProcessor ("androidx.room:room-compiler:2.4.2")
+
+    testImplementation ("io.mockk:mockk:1.13.8")
+    androidTestImplementation ("io.mockk:mockk-android:1.12.0")
+
+
 
 }

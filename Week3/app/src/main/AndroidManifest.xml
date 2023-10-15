@@ -24,14 +24,20 @@
             </intent-filter>
         </activity>
 
+        <meta-data
+            android:name="io.mockk.proxy.android.jvmti.agent.lib"
+            android:value="libmockkjvmtiagent.so" />
+
+        <activity android:name="com.example.drawingapp.TestComposeActivity" />
+
         <activity
             android:name="com.example.drawingapp.MainActivity"
             android:exported="true">
         </activity>
 
         <meta-data
-            android:name="com.google.android.actions"
-            android:resource="@xml/actions" />
+            android:name="io.mockk.proxy.android.jvmti.agent.lib"
+            android:value="libmockkjvmtiagent.so" />
 
         <!-- EmptyFragmentActivity for testing -->
         <activity
