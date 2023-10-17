@@ -3,11 +3,14 @@ package com.example.drawingapp
 import android.graphics.Bitmap
 import android.view.View
 import android.widget.EditText
-import androidx.test.espresso.Espresso.onView
+import androidx.compose.ui.graphics.Color
 import androidx.test.core.app.ActivityScenario
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.pressBack
 import androidx.test.espresso.action.ViewActions.swipeDown
 import androidx.test.espresso.action.ViewActions.swipeLeft
 import androidx.test.espresso.action.ViewActions.swipeRight
@@ -21,12 +24,12 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
+import org.hamcrest.Matcher
 import org.junit.After
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.hamcrest.Matcher
-import org.junit.Assert
 
 @RunWith(AndroidJUnit4::class)
 @MediumTest
@@ -180,6 +183,73 @@ class DrawingFragmentTest {
         onView(withId(R.id.customView)).perform(swipeDown())
         onView(withId(R.id.customView)).perform(swipeRight())
 
+    }
+    @Test
+    fun testBrushSizeStored() {
+        // Perform a click action on the button
+        onView(withId(R.id.button)).perform(click())
+
+        // Drawing lines
+        onView(withId(R.id.customView)).perform(swipeDown())
+
+        // Change the size
+        onView(withId(R.id.sizeSlider)).perform(ViewActions.slowSwipeLeft()) // Change size
+
+        // Simulate the back button press
+        pressBack()
+
+        // Perform a click action on the button
+        onView(withId(R.id.button)).perform(click())
+
+        // Drawing lines
+        onView(withId(R.id.customView)).perform(swipeRight())
+
+        // Check if the color and size are correctly restored
+        onView(withId(R.id.customView)).check { view, _ ->
+            val customView = view as CustomView
+            val size = customView.paint.strokeWidth
+
+            Assert.assertEquals("Size not restored", 97f, size)
+        }
+    }
+
+    @Test
+    fun testBrushColorStored() {
+        // Perform a click action on the button
+        onView(withId(R.id.button)).perform(click())
+
+        // Perform a click action on the "Pick Color" button
+        onView(withId(R.id.button3)).perform(click())
+
+        // Perform a swipe action to select a new color
+        onView(withId(R.id.colorPickerContainer)).perform(swipeUp())
+        onView(withId(R.id.colorPickerContainer)).perform(swipeRight())
+
+        // Perform a click action on the "Pick Color" button
+        onView(withId(R.id.colorPickerContainer)).perform(click())
+
+        // Drawing lines
+        onView(withId(R.id.customView)).perform(swipeDown())
+
+        // Change the size
+        onView(withId(R.id.sizeSlider)).perform(ViewActions.slowSwipeLeft()) // Change size
+
+        // Simulate the back button press
+        pressBack()
+
+        // Perform a click action on the button
+        onView(withId(R.id.button)).perform(click())
+
+        // Drawing lines
+        onView(withId(R.id.customView)).perform(swipeRight())
+
+        // Check if the color and size are correctly restored
+        onView(withId(R.id.customView)).check { view, _ ->
+            val customView = view as CustomView
+            val color = customView.paint.color
+
+            Assert.assertEquals("Color not restored", -4243392, color)
+        }
     }
 
 
