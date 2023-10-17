@@ -9,7 +9,6 @@ import com.example.drawingapp.R
 
 
 class MainActivity : AppCompatActivity() {
-    private val viewModel: SimpleView by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

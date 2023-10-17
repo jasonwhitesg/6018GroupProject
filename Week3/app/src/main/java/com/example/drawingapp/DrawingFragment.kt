@@ -83,6 +83,7 @@ class DrawingFragment : Fragment() {
             binding.customView.clearBitmap()
         }
 
+        //rename buttons in xml!!!
         val saveDrawingButton = binding.button4
         saveDrawingButton.setOnClickListener {
             if (lastSavedFilePath == null) {
