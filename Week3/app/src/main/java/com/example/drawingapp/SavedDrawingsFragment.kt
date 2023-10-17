@@ -27,15 +27,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-
-
-
+import androidx.fragment.app.activityViewModels
 
 
 //some random comment
 class SavedDrawingsFragment : Fragment() {
     // Get the ViewModel using the custom factory
-    private val viewModel: SavedDrawingsViewModel by viewModels {
+
+    //per whitney's suggestion changed to by "activityViewModels" instead of by "viewModels"
+    private val viewModel: SavedDrawingsViewModel by activityViewModels {
         DrawingViewModelFactory((requireActivity().application as DrawingApplication).drawingRepository)
     }
 
@@ -60,8 +60,6 @@ class SavedDrawingsFragment : Fragment() {
     @Composable
     fun SavedDrawingsScreen(viewModel: SavedDrawingsViewModel, onDrawingClick: (String) -> Unit) {
         val allDrawings by viewModel.allSavedDrawings.observeAsState(emptyList())
-        val navController = findNavController()
-
         Scaffold(
             topBar = {
             }
@@ -79,12 +77,9 @@ class SavedDrawingsFragment : Fragment() {
                         Box(
                             modifier = Modifier.clickable {
                                 onDrawingClick(drawing.savedFile)
-//                                val action = SavedDrawingsFragmentDirections.actionBackToDrawingFragment()
                                 val bundle = bundleOf("filePath" to drawing.savedFile)
                                 Log.d(drawing.savedFile, "saved file path")
                                 findNavController().navigate(R.id.action_back_to_drawingFragment, bundle)
-
-//                                navController.navigate(action)
                             }
                         ) {
                             Text(text = drawing.savedFile, style = TextStyle(fontSize = 18.sp))
