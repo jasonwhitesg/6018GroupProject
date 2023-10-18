@@ -61,6 +61,7 @@ class SavedDrawingsFragment : Fragment() {
         }
     }
 
+
     @Composable
     fun SavedDrawingsScreen(
         viewModel: SavedDrawingsViewModel,
@@ -72,7 +73,7 @@ class SavedDrawingsFragment : Fragment() {
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text("Saved Drawings") },
+                title = { Text("Saved Drawings") },
                     navigationIcon = {
                         IconButton(onClick = { navController.popBackStack() }) {
                             Icon(Icons.Filled.ArrowBack, contentDescription = "Navigate Back")
@@ -109,7 +110,4 @@ class SavedDrawingsFragment : Fragment() {
         }
     }
 }
-
-
-
 
