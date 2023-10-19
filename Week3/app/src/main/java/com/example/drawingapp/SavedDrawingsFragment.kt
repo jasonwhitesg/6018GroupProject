@@ -28,15 +28,21 @@ import androidx.navigation.fragment.findNavController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-
-
-
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.navigation.NavController
+import androidx.fragment.app.activityViewModels
 
 
 //some random comment
 class SavedDrawingsFragment : Fragment() {
     // Get the ViewModel using the custom factory
-    private val viewModel: SavedDrawingsViewModel by viewModels {
+
+    //per whitney's suggestion changed to by "activityViewModels" instead of by "viewModels"
+    private val viewModel: SavedDrawingsViewModel by activityViewModels {
         DrawingViewModelFactory((requireActivity().application as DrawingApplication).drawingRepository)
     }
 
@@ -45,8 +51,6 @@ class SavedDrawingsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Handle back button press
-        val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 // Navigate back to ClickFragment
                 findNavController().navigateUp()
@@ -54,24 +58,22 @@ class SavedDrawingsFragment : Fragment() {
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
+        val navController = findNavController() // Fetch NavController
         return ComposeView(requireContext()).apply {
             setContent {
-                SavedDrawingsScreen(viewModel) { selectedDrawing ->
+                SavedDrawingsScreen(viewModel, { selectedDrawing ->
                     // Handle the drawing click here
-                    // For now, we'll just print the selected drawing
                     println("Selected drawing: $selectedDrawing")
-                }
+                }, navController)  // Pass the NavController here
             }
-
         }
+
     }
 
 
     @Composable
     fun SavedDrawingsScreen(viewModel: SavedDrawingsViewModel, onDrawingClick: (String) -> Unit) {
         val allDrawings by viewModel.allSavedDrawings.observeAsState(emptyList())
-        val navController = findNavController()
-
         Scaffold(
             topBar = {
             }
@@ -89,12 +91,12 @@ class SavedDrawingsFragment : Fragment() {
                         Box(
                             modifier = Modifier.clickable {
                                 onDrawingClick(drawing.savedFile)
-//                                val action = SavedDrawingsFragmentDirections.actionBackToDrawingFragment()
                                 val bundle = bundleOf("filePath" to drawing.savedFile)
                                 Log.d(drawing.savedFile, "saved file path")
-                                findNavController().navigate(R.id.action_back_to_drawingFragment, bundle)
-
-//                                navController.navigate(action)
+                                findNavController().navigate(
+                                    R.id.action_back_to_drawingFragment,
+                                    bundle
+                                )
                             }
                         ) {
                             Text(text = drawing.savedFile, style = TextStyle(fontSize = 18.sp))
@@ -104,7 +106,53 @@ class SavedDrawingsFragment : Fragment() {
             }
         }
     }
+
+
+    @Composable
+    fun SavedDrawingsScreen(
+        viewModel: SavedDrawingsViewModel,
+        onDrawingClick: (String) -> Unit,
+        navController: NavController
+    ) {
+        val allDrawings by viewModel.allSavedDrawings.observeAsState(emptyList())
+
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = { Text("Saved Drawings") },
+                    navigationIcon = {
+                        IconButton(onClick = { navController.popBackStack() }) {
+                            Icon(Icons.Filled.ArrowBack, contentDescription = "Navigate Back")
+                        }
+                    }
+                )
+            }
+        ) { contentPadding ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(2.dp)
+                    .padding(contentPadding)
+            ) {
+                LazyColumn {
+                    items(allDrawings) { drawing ->
+                        Box(
+                            modifier = Modifier.clickable {
+                                onDrawingClick(drawing.savedFile)
+                                val bundle = bundleOf("filePath" to drawing.savedFile)
+                                Log.d(drawing.savedFile, "saved file path")
+                                navController.navigate(
+                                    R.id.action_back_to_drawingFragment,
+                                    bundle
+                                )
+                            }
+                        ) {
+                            val fileName = drawing.savedFile.substringAfterLast("/")
+                            Text(text = fileName, style = TextStyle(fontSize = 22.sp))
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
-
-
-

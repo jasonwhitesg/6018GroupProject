@@ -26,18 +26,11 @@ class CustomView(context: Context, attrs: AttributeSet,) : View(context, attrs) 
     private val idleRunnable = Runnable {
         // Code to run when view is idle
     }
-    init {
-        paint.color = Color.BLACK
-        paint.style = Paint.Style.FILL_AND_STROKE
-        paint.strokeWidth = 10f
-    }
-
 
     init {
         paint.color = Color.BLACK
         paint.style = Paint.Style.FILL_AND_STROKE
         paint.strokeWidth = 10f
-
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {

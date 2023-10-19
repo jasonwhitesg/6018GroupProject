@@ -77,11 +77,13 @@ class DrawingFragment : Fragment() {
 
             viewModel.updateBitmap(bitmap)
         }
+
         val clearDrawingButton = binding.button7
         clearDrawingButton.setOnClickListener {
             binding.customView.clearBitmap()
         }
 
+        //rename buttons in xml!!!
         val saveDrawingButton = binding.button4
         saveDrawingButton.setOnClickListener {
             if (lastSavedFilePath == null) {
@@ -105,19 +107,35 @@ class DrawingFragment : Fragment() {
         }
         val colorPicker = binding.colorPicker
         val customView = binding.customView
+
         colorPicker.setColorSelectionListener(object : SimpleColorSelectionListener() {
             override fun onColorSelected(color: Int) {
                 customView.paint.color = color
-                // Do whatever you want with the color
+                viewModel.updateSelectedColor(color) // Update the selected color in ViewModel
                 imageView.background.colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN)
             }
         })
+
+//        colorPicker.setColorSelectionListener(object : SimpleColorSelectionListener() {
+//            override fun onColorSelected(color: Int) {
+//                customView.paint.color = color
+//                // Do whatever you want with the color
+//                imageView.background.colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN)
+//            }
+//        })
+
         val sizeSlider = binding.sizeSlider
+
         sizeSlider.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                // Handle progress change here
                 customView.paint.strokeWidth = progress.toFloat()
+                viewModel.updateSelectedSliderValue(progress) // Update the selected slider value in ViewModel
             }
+//        sizeSlider.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+//            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+//                // Handle progress change here
+//                customView.paint.strokeWidth = progress.toFloat()
+//            }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
                 // Called when the user starts dragging the thumb
@@ -129,6 +147,7 @@ class DrawingFragment : Fragment() {
 
 
         })
+
 // Check if arguments were provided when the fragment was navigated to
         val arguments = arguments
         if (arguments != null) {
@@ -140,22 +159,28 @@ class DrawingFragment : Fragment() {
                 loadDrawingIntoCustomView(bundleValue)
             }
         }
+
+        // Call the function to restore color and slider values
+        restoreColorAndSliderValues()
+
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        super.onViewCreated(view, savedInstanceState)
-
         // Handle back button press
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
+                // Call the function to restore color and slider values
+                restoreColorAndSliderValues()
+
                 // Navigate back to ClickFragment
                 findNavController().navigateUp()
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         if(binding.colorPickerContainer.visibility == View.VISIBLE){
@@ -215,6 +240,15 @@ class DrawingFragment : Fragment() {
         }
     }
 
+    private fun restoreColorAndSliderValues() {
+        // Retrieve the selected color and slider value from the ViewModel
+        val selectedColor = viewModel.getSelectedColor()
+        val selectedSliderValue = viewModel.getSelectedSliderValue()
+
+        // Update the color and slider value
+        binding.customView.paint.color = selectedColor
+        binding.sizeSlider.progress = selectedSliderValue
+    }
 }
 
 
