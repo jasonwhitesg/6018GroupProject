@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Scaffold
@@ -51,13 +50,6 @@ class SavedDrawingsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-            override fun handleOnBackPressed() {
-                // Navigate back to ClickFragment
-                findNavController().navigateUp()
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
-
         val navController = findNavController() // Fetch NavController
         return ComposeView(requireContext()).apply {
             setContent {
