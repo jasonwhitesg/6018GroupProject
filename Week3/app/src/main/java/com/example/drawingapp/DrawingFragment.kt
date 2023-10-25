@@ -22,6 +22,10 @@ import java.io.ByteArrayOutputStream
 import androidx.lifecycle.lifecycleScope
 import android.util.Log
 import android.graphics.BitmapFactory
+import android.hardware.Sensor
+import android.hardware.SensorManager
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class DrawingFragment : Fragment() {
@@ -31,6 +35,55 @@ class DrawingFragment : Fragment() {
     private lateinit var bitmap : Bitmap
     private lateinit var drawingRepository: DrawingRepository
     private var lastSavedFilePath: String? = null
+
+    private lateinit var sensorManager: SensorManager
+    private var gravitySensor: Sensor? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sensorManager = requireActivity().getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        gravitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val (x, y) = viewModel.getBallPosition()
+        Log.d("Fragment", "onResume - Retrieved ball position from ViewModel: x = $x, y = $y")
+
+        if (x != null && y != null) {
+            binding.customView.setBallPosition(x, y)
+            Log.d("Fragment", "onResume - Ball position set on CustomView: x = $x, y = $y")
+        } else {
+            Log.d("Fragment", "onResume - Ball position is null in ViewModel")
+        }
+
+        gravitySensor?.let {
+            val isRegistered = sensorManager?.registerListener(binding.customView, it, SensorManager.SENSOR_DELAY_GAME)
+            if (isRegistered == true) {
+                Log.d("Fragment", "onResume - Sensor listener registered successfully")
+            } else {
+                Log.d("Fragment", "onResume - Failed to register sensor listener")
+            }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        sensorManager?.unregisterListener(binding.customView)
+
+        val (x, y) = viewModel.getBallPosition()
+        Log.d("Fragment", "onPause - Retrieved ball position from CustomView: x = $x, y = $y")
+
+        if (x != null && y != null) {
+            binding.customView.setBallPosition(x,y)
+            viewModel.updateBallPosition(x,y)
+//c            Log.d("Fragment", "onPause - Updated ball position in ViewModel: x = $x, y = $y")
+        } else {
+            Log.d("Fragment", "onPause - Ball position is null in CustomView")
+        }
+    }
+
 
     fun combineBitmaps(bitmapOne: Bitmap, bitmapTwo: Bitmap): Bitmap {
         val combinedBitmap = Bitmap.createBitmap(bitmapOne.width, bitmapOne.height, Bitmap.Config.ARGB_8888)
@@ -91,7 +144,7 @@ class DrawingFragment : Fragment() {
             } else {
                 val currentBitmap = binding.customView.getCurrentBitmap()
                 saveBitmapToInternalStorage(currentBitmap, lastSavedFilePath!!.substringAfterLast('/'), requireContext())
-                Log.d("DrawingFragment", "Saved file path: $lastSavedFilePath")
+//                Log.d("DrawingFragment", "Saved file path: $lastSavedFilePath")
             }        }
 
         val loadDrawingButton = binding.button6
@@ -113,29 +166,20 @@ class DrawingFragment : Fragment() {
                 customView.paint.color = color
                 viewModel.updateSelectedColor(color) // Update the selected color in ViewModel
                 imageView.background.colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN)
+                viewModel.updateBallColor(color) // Update the ball color in ViewModel
             }
         })
-
-//        colorPicker.setColorSelectionListener(object : SimpleColorSelectionListener() {
-//            override fun onColorSelected(color: Int) {
-//                customView.paint.color = color
-//                // Do whatever you want with the color
-//                imageView.background.colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN)
-//            }
-//        })
 
         val sizeSlider = binding.sizeSlider
 
         sizeSlider.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                val newSize = progress.toFloat() // Convert the progress to float
+                customView.setBallSize(newSize)
+                viewModel.updateBallSize(newSize) // Update Ball SIze
                 customView.paint.strokeWidth = progress.toFloat()
                 viewModel.updateSelectedSliderValue(progress) // Update the selected slider value in ViewModel
             }
-//        sizeSlider.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-//            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-//                // Handle progress change here
-//                customView.paint.strokeWidth = progress.toFloat()
-//            }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
                 // Called when the user starts dragging the thumb
@@ -179,10 +223,51 @@ class DrawingFragment : Fragment() {
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
+        // Observe changes in ball size
+        viewModel.ballSize.observe(viewLifecycleOwner) { size ->
+            binding.customView.setBallSize(size)
+        }
+
+        // Observe changes in ball color
+        viewModel.ballColor.observe(viewLifecycleOwner) { color ->
+            binding.customView.setBallColor(color)
+        }
+
+        viewModel.ballX.observe(viewLifecycleOwner) { x ->
+            if (x != null) {
+                val y = viewModel.ballY.value ?: return@observe
+                Log.d("BallPosition", "X: $x, Y: $y")  // Log the X and Y positions
+                binding.customView.setBallPosition(x, y)
+            }
+        }
+
+        viewModel.ballY.observe(viewLifecycleOwner) { y ->
+            if (y != null) {
+                val x = viewModel.ballX.value ?: return@observe
+                Log.d("BallPosition", "X: $x, Y: $y")  // Log the X and Y positions
+                binding.customView.setBallPosition(x, y)
+            }
+        }
+
+        // Restore ball state
+        restoreBallColorAndSize()
+        restoreBallPosition()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+
+
+        val (x, y) = viewModel.getBallPosition()
+
+        Log.d("Fragment", "onDestroyView - Current ball position: x = $x, y = $y")
+
+        if (x != null && y != null) {
+            viewModel.updateBallPosition(x, y)
+            Log.d("Fragment", "onDestroyView - Ball position updated in ViewModel: x = $x, y = $y")
+        }
+
         if(binding.colorPickerContainer.visibility == View.VISIBLE){
             closeColorPicker()
         }
@@ -249,6 +334,36 @@ class DrawingFragment : Fragment() {
         binding.customView.paint.color = selectedColor
         binding.sizeSlider.progress = selectedSliderValue
     }
+
+    private fun restoreBallColorAndSize() {
+        val ballColor = viewModel.getBallColor()
+        val ballSize = viewModel.getBallSize().toFloat()
+        binding.customView.setBallColor(ballColor)
+        binding.customView.setBallSize(ballSize)
+    }
+
+    private fun restoreBallPosition() {
+        // Log entry point of the function
+        Log.d("DrawingApp", "restoreBallPosition - Entering function")
+
+        // Retrieve ball position from the ViewModel
+        val (x, y) = viewModel.getBallPosition()
+        Log.d("DrawingApp", "restoreBallPosition - Retrieved ball position: x = $x, y = $y")
+
+        // Check if the ball position is not null and set it on the custom view
+        if (x != null && y != null) {
+            Log.d("DrawingApp", "restoreBallPosition - Ball position is valid, setting on custom view")
+            binding.customView.setBallPosition(x, y)
+            Log.d("DrawingApp", "restoreBallPosition - Ball position set successfully: x = $x, y = $y")
+        } else {
+            // Log a message if the ball position is null
+            Log.d("DrawingApp", "restoreBallPosition - Ball position is null, not setting on custom view")
+        }
+
+        // Log exit point of the function
+        Log.d("DrawingApp", "restoreBallPosition - Exiting function")
+    }
+
 }
 
 

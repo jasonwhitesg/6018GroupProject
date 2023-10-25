@@ -6,9 +6,8 @@ import android.graphics.Color
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import kotlin.random.Random
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import android.util.Log
+
 
 class SimpleView : ViewModel() {
     private val _bitmap = MutableLiveData<Bitmap>()
@@ -17,6 +16,49 @@ class SimpleView : ViewModel() {
     // Add fields to store color and slider value
     private var selectedColor: Int = Color.BLACK
     private var selectedSliderValue: Int = 10
+
+    private val _ballSize = MutableLiveData<Float>(20f)
+    val ballSize: LiveData<Float> = _ballSize
+
+    private val _ballColor = MutableLiveData<Int>(Color.BLACK)
+    val ballColor: LiveData<Int> = _ballColor
+
+    private val _ballX = MutableLiveData<Float>(400f)
+    val ballX: LiveData<Float> get() = _ballX
+
+    private val _ballY = MutableLiveData<Float>(400f)
+    val ballY: LiveData<Float> get() = _ballY
+
+
+    fun updateBallPosition(x: Float, y: Float) {
+        _ballX.value = x
+        _ballY.value = y
+//        Log.d("ViewModel", "Ball position updated: x = $x, y = $y")
+    }
+
+    fun getBallPosition(): Pair<Float?, Float?> {
+        val x = _ballX.value
+        val y = _ballY.value
+        Log.d("ViewModel", "Getting ball position: x = $x, y = $y")
+        return Pair(x, y)
+    }
+
+
+    fun updateBallSize(size: Float) {
+        _ballSize.value = size
+    }
+
+    fun updateBallColor(color: Int) {
+        _ballColor.value = color
+    }
+
+    fun getBallColor(): Int {
+        return selectedColor
+    }
+
+    fun getBallSize(): Int {
+        return selectedSliderValue
+    }
 
     // Functions to get the stored values
     fun getSelectedColor(): Int {
