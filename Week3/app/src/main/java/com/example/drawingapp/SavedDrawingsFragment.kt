@@ -59,44 +59,6 @@ class SavedDrawingsFragment : Fragment() {
                 }, navController)  // Pass the NavController here
             }
         }
-
-    }
-
-
-    @Composable
-    fun SavedDrawingsScreen(viewModel: SavedDrawingsViewModel, onDrawingClick: (String) -> Unit) {
-        val allDrawings by viewModel.allSavedDrawings.observeAsState(emptyList())
-        Scaffold(
-            topBar = {
-            }
-        ) { contentPadding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(2.dp)
-                    .padding(contentPadding)
-            ) {
-                Text(text = "Saved Drawings Fragment")
-
-                LazyColumn {
-                    items(allDrawings) { drawing ->
-                        Box(
-                            modifier = Modifier.clickable {
-                                onDrawingClick(drawing.savedFile)
-                                val bundle = bundleOf("filePath" to drawing.savedFile)
-                                Log.d(drawing.savedFile, "saved file path")
-                                findNavController().navigate(
-                                    R.id.action_back_to_drawingFragment,
-                                    bundle
-                                )
-                            }
-                        ) {
-                            Text(text = drawing.savedFile, style = TextStyle(fontSize = 18.sp))
-                        }
-                    }
-                }
-            }
-        }
     }
 
 
@@ -111,7 +73,7 @@ class SavedDrawingsFragment : Fragment() {
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text("Saved Drawings") },
+                title = { Text("Saved Drawings") },
                     navigationIcon = {
                         IconButton(onClick = { navController.popBackStack() }) {
                             Icon(Icons.Filled.ArrowBack, contentDescription = "Navigate Back")
@@ -148,3 +110,4 @@ class SavedDrawingsFragment : Fragment() {
         }
     }
 }
+
