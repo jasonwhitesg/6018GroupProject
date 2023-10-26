@@ -163,10 +163,14 @@ class DrawingFragment : Fragment() {
 
         colorPicker.setColorSelectionListener(object : SimpleColorSelectionListener() {
             override fun onColorSelected(color: Int) {
-                customView.paint.color = color
-                viewModel.updateSelectedColor(color) // Update the selected color in ViewModel
+                if (!binding.toggleButton.isChecked) { // "Ball" mode
+                    binding.customView.setBallColor(color)
+                    viewModel.updateBallColor(color)
+                } else { // "Pen" mode
+                    binding.customView.paint.color = color
+                    viewModel.updateSelectedColor(color) // Update the selected color in ViewModel
+                }
                 imageView.background.colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN)
-                viewModel.updateBallColor(color) // Update the ball color in ViewModel
             }
         })
 
@@ -175,10 +179,15 @@ class DrawingFragment : Fragment() {
         sizeSlider.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 val newSize = progress.toFloat() // Convert the progress to float
-                customView.setBallSize(newSize)
-                viewModel.updateBallSize(newSize) // Update Ball SIze
-                customView.paint.strokeWidth = progress.toFloat()
-                viewModel.updateSelectedSliderValue(progress) // Update the selected slider value in ViewModel
+
+                if(!binding.toggleButton.isChecked){
+                    customView.setBallSize(newSize)
+                    viewModel.updateBallSize(newSize) // Update Ball SIze
+                }
+                else {
+                    customView.paint.strokeWidth = newSize
+                    viewModel.updateSelectedSliderValue(progress) // Update the selected slider value in ViewModel
+                }
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -211,6 +220,13 @@ class DrawingFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val toggleButton = binding.toggleButton
+
+        toggleButton.setOnCheckedChangeListener { _, isChecked ->
+            // Handle the toggle button state change
+            binding.customView.setMode(isChecked)
+        }
 
         // Handle back button press
         val callback = object : OnBackPressedCallback(true) {
