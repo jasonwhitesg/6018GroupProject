@@ -52,6 +52,8 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs), 
         // Code to run when view is idle
     }
 
+    private var isPenMode = true // Initial mode is "Pen"
+
     init {
         paint.color = Color.BLACK
         paint.style = Paint.Style.FILL_AND_STROKE
@@ -85,11 +87,13 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs), 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        // Update paint color and size
-        ballPaint.color = ballColor
+        if (!isPenMode) {
+            // Update paint color and size
+            ballPaint.color = ballColor
 
-        // Draw the ball on the bitmapCanvas
-        bitmapCanvas.drawCircle(ballX, ballY, ballSize, ballPaint)
+            // Draw the ball on the bitmapCanvas
+            bitmapCanvas.drawCircle(ballX, ballY, ballSize, ballPaint)
+        }
 
         // draw the update bitmap
         canvas.drawBitmap(bitmap, 0f, 0f, null)
@@ -101,26 +105,28 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs), 
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
-        if (event?.sensor?.type == Sensor.TYPE_GRAVITY) {
-            // Updating the position of the ball
-            ballX -= event.values[0] * 3
-            ballY += event.values[1] * 3
+        if (!isPenMode) {
+            if (event?.sensor?.type == Sensor.TYPE_GRAVITY) {
+                // Updating the position of the ball
+                ballX -= event.values[0] * 3
+                ballY += event.values[1] * 3
 
-            // Ensure the ball stays within the bounds of the view
-            ballX = max(ballRadius, min(width - ballRadius, ballX))
-            ballY = max(ballRadius, min(height - ballRadius, ballY))
+                // Ensure the ball stays within the bounds of the view
+                ballX = max(ballRadius, min(width - ballRadius, ballX))
+                ballY = max(ballRadius, min(height - ballRadius, ballY))
 
-            Log.d("Sensor", "Sensor values: x = ${event.values[0]}, y = ${event.values[1]}")
-            Log.d("BallPosition", "Ball position: x = $ballX, y = $ballY")
+                Log.d("Sensor", "Sensor values: x = ${event.values[0]}, y = ${event.values[1]}")
+                Log.d("BallPosition", "Ball position: x = $ballX, y = $ballY")
 
-            // Update the ViewModel's ball position
-            viewModel?.updateBallPosition(ballX, ballY)
+                // Update the ViewModel's ball position
+                viewModel?.updateBallPosition(ballX, ballY)
 
-            // Draw the ball at its new position onto the bitmap
-            bitmapCanvas.drawCircle(ballX, ballY, ballRadius, ballPaint)
+                // Draw the ball at its new position onto the bitmap
+                bitmapCanvas.drawCircle(ballX, ballY, ballRadius, ballPaint)
 
-            // Make sure the ball is redrawn
-            invalidate()
+                // Make sure the ball is redrawn
+                invalidate()
+            }
         }
     }
 
@@ -132,23 +138,25 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs), 
         val x = event.x
         val y = event.y
 
-        when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                previousX = x
-                previousY = y
-            }
+        if (isPenMode){
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    previousX = x
+                    previousY = y
+                }
 
-            MotionEvent.ACTION_MOVE -> {
-                bitmapCanvas.drawLine(previousX, previousY, x, y, paint)
-                previousX = x
-                previousY = y
-                invalidate()
-            }
+                MotionEvent.ACTION_MOVE -> {
+                    bitmapCanvas.drawLine(previousX, previousY, x, y, paint)
+                    previousX = x
+                    previousY = y
+                    invalidate()
+                }
 
-            MotionEvent.ACTION_UP -> {
-                // Save the drawing state when the touch event ends
-                viewModel?.updateBitmap(bitmap) // Update ViewModel with the final drawing
-                handler.postDelayed(idleRunnable, 2000) // wait for 2 seconds to consider idle
+                MotionEvent.ACTION_UP -> {
+                    // Save the drawing state when the touch event ends
+                    viewModel?.updateBitmap(bitmap) // Update ViewModel with the final drawing
+                    handler.postDelayed(idleRunnable, 2000) // wait for 2 seconds to consider idle
+                }
             }
         }
         return true
@@ -185,4 +193,11 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs), 
         bitmap.eraseColor(Color.TRANSPARENT)
         invalidate()
     }
+
+    // Update the mode based on the toggle button's state
+    fun setMode(isPenMode: Boolean) {
+        this.isPenMode = isPenMode
+        invalidate() // Redraw the view with the new mode
+    }
+
 }
