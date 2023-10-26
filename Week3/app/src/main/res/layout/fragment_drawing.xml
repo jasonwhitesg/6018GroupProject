@@ -28,33 +28,44 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatingActionButton"
+                android:layout_width="66dp"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:src="@drawable/three_bar_icon" />
+
             <Button
                 android:id="@+id/button4"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="44dp"
                 android:layout_weight="1"
-                android:text="Save Drawing" />
+                android:text="Save" />
 
             <Button
                 android:id="@+id/button6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Load Drawing" />
+                android:text="Load" />
 
             <Button
                 android:id="@+id/button7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Clear Drawing" />
+                android:text="Clear" />
 
             <Button
                 android:id="@+id/button11"
-                android:layout_width="wrap_content"
+                android:layout_width="32dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:icon="@drawable/shareicon" />
+                android:freezesText="false"
+                app:icon="@drawable/shareicon"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconSize="15dp" />
 
         </LinearLayout>
 

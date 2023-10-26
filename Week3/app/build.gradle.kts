@@ -54,7 +54,7 @@ dependencies {
     implementation ("androidx.compose.runtime:runtime-livedata:1.4.0")
     debugImplementation ("androidx.compose.ui:ui-test-junit4:1.4.0")
     debugImplementation ("androidx.navigation:navigation-testing:2.3.5")
-
+    implementation("io.coil-kt:coil-compose:2.4.0")
     debugImplementation("androidx.fragment:fragment-testing:1.4.1")
     implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
     implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
