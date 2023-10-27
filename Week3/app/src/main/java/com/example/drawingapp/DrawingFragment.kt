@@ -108,6 +108,16 @@ class DrawingFragment : Fragment() {
         return context.filesDir.toString() + "/$filename"
     }
 
+    private fun deleteFileFromInternalStorage(filename: String, context: Context): Boolean {
+        val file = File(context.filesDir, filename)
+        return if (file.exists()) {
+            file.delete()
+        } else {
+            Log.e("ERROR", "File not found: $filename")
+            false
+        }
+    }
+
     //do update bitmap not set bitmap
     private fun loadDrawingIntoCustomView(filePath: String) {
         lastSavedFilePath = filePath
@@ -281,36 +291,7 @@ class DrawingFragment : Fragment() {
         loadDrawingButton.setOnClickListener {
             findNavController().navigate(R.id.action_to_savedDrawingsFragment)
         }
-        val shareDrawingButton = binding.button11
-        shareDrawingButton.setOnClickListener {
-//            saveTempFile()
-            viewModel.bitmap.observe(viewLifecycleOwner) {
-//                    val file = lastSavedFilePath?.let { it1 -> File(it1) }
-//                    val uri =
-//                            FileProvider.getUriForFile(
-//                                context,"com.example.drawingapp.fileprovider", file)
-//                    }
-                // Example usage
-                val filePath = lastSavedFilePath!!
-                val fileExists = doesFileExist(filePath)
-                if (fileExists) {
-                    Log.d("FILE EXISTENCE", "FILE EXISTS")
-                } else {
-                    Log.d("FILE EXISTENCE", "FILE DOES NOT EXIST")
-                    // The file doesn't exist
-                    // Handle the situation accordingly
-                }
-                val uri = getFileUri(requireContext(), filePath)
-                val shareIntent = Intent().apply {
-                    action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_STREAM, uri)
 
-                    type = "image/*"
-                }
-                startActivity(Intent.createChooser(shareIntent, null))
-
-            }
-        }
         //On touch center of color picker
         val imageView = binding.imageView
         imageView.setOnClickListener {
@@ -407,6 +388,51 @@ class DrawingFragment : Fragment() {
         // Observe changes in ball size
         viewModel.ballSize.observe(viewLifecycleOwner) { size ->
             binding.customView.setBallSize(size)
+        }
+
+        val shareDrawingButton = binding.button11
+        shareDrawingButton.setOnClickListener {
+            Log.d("DEBUG", "button11 clicked")
+                val filePath = lastSavedFilePath
+                if (filePath != null) {
+                    val fileExists = doesFileExist(filePath)
+                    if (fileExists) {
+                        Log.d("FILE EXISTENCE", "FILE EXISTS")
+                    } else {
+                        Log.d("FILE EXISTENCE", "FILE DOES NOT EXIST")
+                    }
+                    val uri = getFileUri(requireContext(), filePath)
+                    val shareIntent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(Intent.EXTRA_STREAM, uri)
+                        type = "image/*"
+                    }
+                    startActivity(Intent.createChooser(shareIntent, null))
+                } else {
+                    val currentBitmap = binding.customView.getCurrentBitmap()
+
+                    // Save the bitmap to internal storage and get the file path
+                    val drawingName = "tempFIle"
+
+                    val filePath =
+                        saveBitmapToInternalStorage(
+                            currentBitmap,
+                            "$drawingName.png",
+                            requireContext()
+                        )
+
+                    val uri = getFileUri(requireContext(), filePath)
+                    val shareIntent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(Intent.EXTRA_STREAM, uri)
+                        type = "image/*"
+                    }
+                    startActivity(Intent.createChooser(shareIntent, null))
+                    Log.e("ERROR", "lastSavedFilePath is null")
+
+//                    deleteFileFromInternalStorage("$drawingName.png", requireContext())
+                }
+            
         }
 
         // Observe changes in ball color

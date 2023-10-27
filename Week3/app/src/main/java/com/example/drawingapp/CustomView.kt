@@ -15,8 +15,6 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import kotlin.math.min
 import kotlin.math.max
-import android.graphics.RadialGradient
-import android.graphics.Shader
 import android.util.Log
 
 
@@ -135,6 +133,7 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs), 
 
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
+        Log.d("DEBUG", "Custom view touched")
         val x = event.x
         val y = event.y
 

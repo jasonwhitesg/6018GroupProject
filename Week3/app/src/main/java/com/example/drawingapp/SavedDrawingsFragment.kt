@@ -102,7 +102,7 @@ class SavedDrawingsFragment : Fragment() {
             bitmap = imageBitmap,
             contentDescription = null,
             modifier = modifier,
-            contentScale = ContentScale.Crop // You can change the content scale as needed
+            contentScale = ContentScale.Crop
         )
     }
     @Composable
@@ -135,8 +135,6 @@ class SavedDrawingsFragment : Fragment() {
                 Button(
                     onClick = {
                         // Handle button click action here
-                        // For example, you can navigate to another screen
-                        // or perform some other action.
                     },
                     shape = RoundedCornerShape(16.dp), // Specify the corner radius
                     modifier = Modifier
