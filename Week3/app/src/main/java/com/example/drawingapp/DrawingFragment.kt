@@ -291,19 +291,19 @@ class DrawingFragment : Fragment() {
 //                                context,"com.example.drawingapp.fileprovider", file)
 //                    }
                 // Example usage
-                val filePath = lastSavedFilePath!!
-                val fileExists = doesFileExist(filePath)
-                if (fileExists) {
-                    Log.d("FILE EXISTENCE", "FILE EXISTS")
-                } else {
-                    Log.d("FILE EXISTENCE", "FILE DOES NOT EXIST")
-                    // The file doesn't exist
-                    // Handle the situation accordingly
-                }
-                val uri = getFileUri(requireContext(), filePath)
+//                val filePath = lastSavedFilePath!!
+//                val fileExists = doesFileExist(filePath)
+//                if (fileExists) {
+//                    Log.d("FILE EXISTENCE", "FILE EXISTS")
+//                } else {
+//                    Log.d("FILE EXISTENCE", "FILE DOES NOT EXIST")
+//                    // The file doesn't exist
+//                    // Handle the situation accordingly
+//                }
+//                val uri = getFileUri(requireContext(), filePath)
                 val shareIntent = Intent().apply {
                     action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_STREAM, uri)
+                    putExtra(Intent.EXTRA_STREAM, bitmap)
 
                     type = "image/*"
                 }
