@@ -5,12 +5,13 @@ import org.jetbrains.exposed.dao.id.IntIdTable
 
 @Serializable
 data class Drawing(
-    val id: Int,
+    val id: Int = -1,
     val filePath: String,
     val userUid: String,
     val userName: String,
-    val timestamp: Long
+    val timestamp: Long = -1
 )
+
 
 object DrawingsTable : IntIdTable() {
     val filePath = varchar("file_path", 255).check { it neq "" }

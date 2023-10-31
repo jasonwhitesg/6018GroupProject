@@ -76,7 +76,7 @@ class ShareDrawings {
                 it[DrawingsTable.timestamp] = timestamp
             }
         }.value
-        return Drawing(filePath, userUid, userName, timestamp)
+        return Drawing(id, filePath, userUid, userName, timestamp)
     }
 
     fun deleteDrawing(id: Int): Boolean {

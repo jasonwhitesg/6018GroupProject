@@ -53,11 +53,6 @@ class LandingFragment : Fragment() {
             createUser(email, password, statusTextView)
         }
 
-        navigateButton.setOnClickListener {
-            Log.d(TAG, "Navigate button clicked")
-            findNavController().navigate(R.id.action_to_drawingFragment)
-        }
-
         return view
     }
 
@@ -67,6 +62,7 @@ class LandingFragment : Fragment() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.d(TAG, "Login successful")
+                    Log.d(TAG, "User's UID: ${auth.currentUser?.uid}")
                     statusTextView.text = "Login successful"
                     findNavController().navigate(R.id.action_to_drawingFragment)
                 } else {
@@ -82,6 +78,7 @@ class LandingFragment : Fragment() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.d(TAG, "User creation successful")
+                    Log.d(TAG, "User's UID: ${auth.currentUser?.uid}")
                     statusTextView.text = "User creation successful"
                     findNavController().navigate(R.id.action_to_drawingFragment)
                 } else {
