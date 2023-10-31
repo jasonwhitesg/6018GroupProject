@@ -27,6 +27,8 @@ import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.net.Uri
 import androidx.core.content.FileProvider
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.File
@@ -183,10 +185,16 @@ class DrawingFragment : Fragment() {
         val file = File(filePath)
         return FileProvider.getUriForFile(context, "com.example.drawingapp.fileprovider", file)
     }
+
+    private lateinit var auth: FirebaseAuth
+    private var currentUser: FirebaseUser? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sensorManager = requireActivity().getSystemService(Context.SENSOR_SERVICE) as SensorManager
         gravitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY)
+
+        auth = FirebaseAuth.getInstance()
+        currentUser = auth.currentUser
     }
 
     override fun onResume() {
@@ -365,6 +373,17 @@ class DrawingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val userName = currentUser?.displayName ?: "User"
+        val alertDialog = AlertDialog.Builder(requireContext())
+            .setTitle("Welcome")
+            .setMessage("Hello, $userName!")
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+
+        alertDialog.show()
 
         val toggleButton = binding.toggleButton
 
