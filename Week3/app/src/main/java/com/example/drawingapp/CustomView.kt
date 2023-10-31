@@ -15,8 +15,6 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import kotlin.math.min
 import kotlin.math.max
-import android.graphics.RadialGradient
-import android.graphics.Shader
 import android.util.Log
 
 
@@ -115,8 +113,8 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs), 
                 ballX = max(ballRadius, min(width - ballRadius, ballX))
                 ballY = max(ballRadius, min(height - ballRadius, ballY))
 
-                Log.d("Sensor", "Sensor values: x = ${event.values[0]}, y = ${event.values[1]}")
-                Log.d("BallPosition", "Ball position: x = $ballX, y = $ballY")
+//                Log.d("Sensor", "Sensor values: x = ${event.values[0]}, y = ${event.values[1]}")
+//                Log.d("BallPosition", "Ball position: x = $ballX, y = $ballY")
 
                 // Update the ViewModel's ball position
                 viewModel?.updateBallPosition(ballX, ballY)
@@ -135,6 +133,7 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs), 
 
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
+//        Log.d("DEBUG", "Custom view touched")
         val x = event.x
         val y = event.y
 

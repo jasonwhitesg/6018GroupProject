@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -52,6 +53,7 @@ dependencies {
     implementation ("androidx.compose.material:material:1.4.0")
     implementation ("androidx.compose.ui:ui-tooling:1.4.0")
     implementation ("androidx.compose.runtime:runtime-livedata:1.4.0")
+    implementation("com.google.firebase:firebase-auth-ktx:22.2.0")
     debugImplementation ("androidx.compose.ui:ui-test-junit4:1.4.0")
     debugImplementation ("androidx.navigation:navigation-testing:2.3.5")
     implementation("io.coil-kt:coil-compose:2.4.0")
@@ -99,6 +101,15 @@ dependencies {
     testImplementation ("io.mockk:mockk:1.13.8")
     androidTestImplementation ("io.mockk:mockk-android:1.12.0")
 
+    implementation(platform("com.google.firebase:firebase-bom:32.4.1"))
+    implementation("com.google.firebase:firebase-analytics-ktx")
+
+    //Ktor stuff
+    implementation ("io.ktor:ktor-client-android:2.2.3")
+    implementation ("io.ktor:ktor-client-core:2.2.3")
+    implementation ("io.ktor:ktor-client-json:2.2.3")
+    implementation ("io.ktor:ktor-client-serialization:2.2.3")
+    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
 
 
 }

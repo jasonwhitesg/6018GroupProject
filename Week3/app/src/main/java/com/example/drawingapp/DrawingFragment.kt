@@ -27,6 +27,8 @@ import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.net.Uri
 import androidx.core.content.FileProvider
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.File
@@ -108,6 +110,16 @@ class DrawingFragment : Fragment() {
         return context.filesDir.toString() + "/$filename"
     }
 
+    private fun deleteFileFromInternalStorage(filename: String, context: Context): Boolean {
+        val file = File(context.filesDir, filename)
+        return if (file.exists()) {
+            file.delete()
+        } else {
+            Log.e("ERROR", "File not found: $filename")
+            false
+        }
+    }
+
     //do update bitmap not set bitmap
     private fun loadDrawingIntoCustomView(filePath: String) {
         lastSavedFilePath = filePath
@@ -173,10 +185,16 @@ class DrawingFragment : Fragment() {
         val file = File(filePath)
         return FileProvider.getUriForFile(context, "com.example.drawingapp.fileprovider", file)
     }
+
+    private lateinit var auth: FirebaseAuth
+    private var currentUser: FirebaseUser? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sensorManager = requireActivity().getSystemService(Context.SENSOR_SERVICE) as SensorManager
         gravitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY)
+
+        auth = FirebaseAuth.getInstance()
+        currentUser = auth.currentUser
     }
 
     override fun onResume() {
@@ -281,8 +299,8 @@ class DrawingFragment : Fragment() {
         loadDrawingButton.setOnClickListener {
             findNavController().navigate(R.id.action_to_savedDrawingsFragment)
         }
-        val shareDrawingButton = binding.button11
-        shareDrawingButton.setOnClickListener {
+//        val shareDrawingButton = binding.button11
+//        shareDrawingButton.setOnClickListener {
 //            saveTempFile()
             viewModel.bitmap.observe(viewLifecycleOwner) {
 //                    val file = lastSavedFilePath?.let { it1 -> File(it1) }
@@ -301,16 +319,10 @@ class DrawingFragment : Fragment() {
 //                    // Handle the situation accordingly
 //                }
 //                val uri = getFileUri(requireContext(), filePath)
-                val shareIntent = Intent().apply {
-                    action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_STREAM, bitmap)
+//                val shareIntent = Intent().apply {
+//                    action = Intent.ACTION_SEND
+//                   putExtra(Intent.EXTRA_STREAM, bitmap)
 
-                    type = "image/*"
-                }
-                startActivity(Intent.createChooser(shareIntent, null))
-
-            }
-        }
         //On touch center of color picker
         val imageView = binding.imageView
         imageView.setOnClickListener {
@@ -385,6 +397,17 @@ class DrawingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: "Unknown"
+        val alertDialog = AlertDialog.Builder(requireContext())
+            .setTitle("Welcome")
+            .setMessage("Hello, your UID is $uid!")
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+
+        alertDialog.show()
+
         val toggleButton = binding.toggleButton
 
         toggleButton.setOnCheckedChangeListener { _, isChecked ->
@@ -407,6 +430,51 @@ class DrawingFragment : Fragment() {
         // Observe changes in ball size
         viewModel.ballSize.observe(viewLifecycleOwner) { size ->
             binding.customView.setBallSize(size)
+        }
+
+        val shareDrawingButton = binding.button11
+        shareDrawingButton.setOnClickListener {
+            Log.d("DEBUG", "button11 clicked")
+                val filePath = lastSavedFilePath
+                if (filePath != null) {
+                    val fileExists = doesFileExist(filePath)
+                    if (fileExists) {
+                        Log.d("FILE EXISTENCE", "FILE EXISTS")
+                    } else {
+                        Log.d("FILE EXISTENCE", "FILE DOES NOT EXIST")
+                    }
+                    val uri = getFileUri(requireContext(), filePath)
+                    val shareIntent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(Intent.EXTRA_STREAM, uri)
+                        type = "image/*"
+                    }
+                    startActivity(Intent.createChooser(shareIntent, null))
+                } else {
+                    val currentBitmap = binding.customView.getCurrentBitmap()
+
+                    // Save the bitmap to internal storage and get the file path
+                    val drawingName = "tempFIle"
+
+                    val filePath =
+                        saveBitmapToInternalStorage(
+                            currentBitmap,
+                            "$drawingName.png",
+                            requireContext()
+                        )
+
+                    val uri = getFileUri(requireContext(), filePath)
+                    val shareIntent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(Intent.EXTRA_STREAM, uri)
+                        type = "image/*"
+                    }
+                    startActivity(Intent.createChooser(shareIntent, null))
+                    Log.e("ERROR", "lastSavedFilePath is null")
+
+//                    deleteFileFromInternalStorage("$drawingName.png", requireContext())
+                }
+            
         }
 
         // Observe changes in ball color
