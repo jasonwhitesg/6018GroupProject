@@ -10,6 +10,8 @@ import io.ktor.server.resources.Resources
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.decodeFromString
 
 fun Application.configureRouting() {
     install(Resources)
@@ -28,10 +30,11 @@ fun Application.configureRouting() {
 
             post {
                 application.log.info("Received a POST request to /drawings")
-                val drawingRequest = call.receive<DrawingRequest>()
-                application.log.info("Received drawingRequest: $drawingRequest")
+//                val drawingRequest = call.receive<DrawingRequest>()
+//                application.log.info("Received drawingRequest: $drawingRequest")
                 try {
-                    val drawingRequest = call.receive<DrawingRequest>()
+                    val post = call.receive<String>()
+                    val drawingRequest = Json.decodeFromString<DrawingRequest>(post)
                     application.log.info("Received drawingRequest: $drawingRequest")
                     val drawing = shareDrawings.createDrawing(
                         filePath = drawingRequest.filePath,
