@@ -28,6 +28,8 @@ fun Application.configureRouting() {
 
             post {
                 application.log.info("Received a POST request to /drawings")
+                val drawingRequest = call.receive<DrawingRequest>()
+                application.log.info("Received drawingRequest: $drawingRequest")
                 try {
                     val drawingRequest = call.receive<DrawingRequest>()
                     application.log.info("Received drawingRequest: $drawingRequest")
