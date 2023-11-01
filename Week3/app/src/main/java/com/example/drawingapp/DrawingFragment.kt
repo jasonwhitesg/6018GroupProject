@@ -374,16 +374,21 @@ class DrawingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: "Unknown"
-        val alertDialog = AlertDialog.Builder(requireContext())
-            .setTitle("Welcome")
-            .setMessage("Hello, your UID is $uid!")
-            .setPositiveButton("OK") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .create()
+        val fromLandingFragment = arguments?.getBoolean("fromLandingFragment", false) ?: false
+        val userName = arguments?.getString("userName")
 
-        alertDialog.show()
+        if (fromLandingFragment && userName != null) {
+//            val uid = FirebaseAuth.getInstance().currentUser?.uid ?: "Unknown"
+            val alertDialog = AlertDialog.Builder(requireContext())
+                .setTitle("Welcome $userName")
+                .setMessage("Let's Draw Something!")
+                .setPositiveButton("OK") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .create()
+
+            alertDialog.show()
+        }
 
         val toggleButton = binding.toggleButton
 
