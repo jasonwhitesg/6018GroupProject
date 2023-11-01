@@ -19,3 +19,11 @@ data class Drawing(
     val userName: String,
     val timestamp: Long
 )
+
+@Serializable
+data class DrawingRequest(
+    val filePath: String,
+    val userUid: String,
+    val userName: String
+)
+
