@@ -247,6 +247,7 @@ class DrawingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+
         binding = FragmentDrawingBinding.inflate(inflater, container, false)
         drawingRepository = DrawingRepository(
             lifecycleScope,

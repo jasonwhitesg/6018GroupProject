@@ -48,18 +48,43 @@ import androidx.compose.ui.unit.sp
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import io.ktor.client.request.get
+import io.ktor.client.request.request
+import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.bodyAsText
+import io.ktor.client.statement.readText
+import io.ktor.http.isSuccess
+import kotlinx.coroutines.launch
 import java.io.File
 
 
 //some random comment
 class SavedDrawingsFragment : Fragment() {
     // Get the ViewModel using the custom factory
-
     //per whitney's suggestion changed to by "activityViewModels" instead of by "viewModels"
     private val viewModel: SavedDrawingsViewModel by activityViewModels {
         DrawingViewModelFactory((requireActivity().application as DrawingApplication).drawingRepository)
+    }
+    private val client = (requireActivity().application as DrawingApplication).client
+
+    private suspend fun getDrawings() {
+        try {
+            val response: HttpResponse = client.get("http://0.0.0.0:8080")
+            if (response.status.isSuccess()) {
+                // Handle the successful response here
+                val responseBody = response.bodyAsText()
+                Log.d("RESPONSE RECEIVED", responseBody)
+            } else {
+                // Handle HTTP error response
+                Log.e("HTTP Error", "HTTP status code: ${response.status}")
+            }
+        } catch (e: Exception) {
+            // Handle network request exceptions
+            Log.e("Network Error", "Error during network request: ${e.message}")
+        }
     }
 
     override fun onCreateView(
@@ -67,6 +92,7 @@ class SavedDrawingsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+//        lifecycleScope.launch { getDrawings() }
         val navController = findNavController() // Fetch NavController
         return ComposeView(requireContext()).apply {
             setContent {
