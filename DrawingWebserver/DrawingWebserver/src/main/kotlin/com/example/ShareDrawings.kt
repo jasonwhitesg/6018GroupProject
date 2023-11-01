@@ -9,9 +9,10 @@ import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import java.io.File
+import java.io.IOException
 
 class ShareDrawings {
-
     fun getAllDrawings(): List<Drawing> {
         return transaction {
             DrawingsTable.selectAll().map {
@@ -87,5 +88,19 @@ class ShareDrawings {
             DrawingsTable.deleteWhere { DrawingsTable.id eq id } > 0
         }
     }
+
+    /**
+     * Saves a drawing file to the specified path.
+     *
+     * @param filePath the path where the file should be saved.
+     * @param fileBytes the byte array representing the file content.
+     * @throws IOException if an I/O error occurs.
+     */
+    @Throws(IOException::class)
+    fun saveDrawing(filePath: String, fileBytes: ByteArray) {
+        val file = File(filePath)
+        file.writeBytes(fileBytes)
+    }
 }
+
 

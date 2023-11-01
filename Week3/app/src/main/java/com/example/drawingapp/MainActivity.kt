@@ -15,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
 
 class MainActivity : AppCompatActivity() {
 
@@ -90,4 +91,3 @@ class MainActivity : AppCompatActivity() {
         client.close()
     }
 }
-

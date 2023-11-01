@@ -10,6 +10,13 @@ import io.ktor.server.resources.Resources
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.serialization.Serializable
+import java.io.File
+import io.ktor.http.content.*
+import io.ktor.http.*
+import io.ktor.server.request.*
+import io.ktor.server.response.*
+import java.util.*
+
 
 fun Application.configureRouting() {
     install(Resources)
@@ -28,9 +35,9 @@ fun Application.configureRouting() {
 
             post {
                 application.log.info("Received a POST request to /drawings")
+                val drawingRequest = call.receive<DrawingRequest>()
+                application.log.info("Received drawingRequest: $drawingRequest")
                 try {
-                    val drawingRequest = call.receive<DrawingRequest>()
-                    application.log.info("Received drawingRequest: $drawingRequest")
                     val drawing = shareDrawings.createDrawing(
                         filePath = drawingRequest.filePath,
                         userUid = drawingRequest.userUid,
@@ -44,7 +51,6 @@ fun Application.configureRouting() {
                     call.respond(HttpStatusCode.BadRequest, "Invalid request body")
                 }
             }
-
             get("/{id}") {
                 val id = call.parameters["id"]?.toIntOrNull()
                 if (id != null) {
@@ -86,6 +92,68 @@ fun Application.configureRouting() {
                     call.respond(drawings)
                 } else {
                     call.respond(HttpStatusCode.BadRequest, "Invalid time format")
+                }
+            }
+
+
+            post("/upload") {
+                // Initialize the multipart data reception
+                val multipart = call.receiveMultipart()
+
+                // Initialize a variable to hold the file bytes
+                var fileBytes: ByteArray? = null
+
+                // Iterate through each part of the multipart data This method is used by KTOR often
+                multipart.forEachPart { part ->
+                    when (part) {
+                        // If the part is a FileItem (i.e., file upload), read its bytes
+                        is PartData.FileItem -> {
+                            try {
+                                fileBytes = part.streamProvider().readBytes()
+                                application.log.info("File successfully read into bytes")
+                            } catch (e: Exception) {
+                                application.log.error("Error reading file bytes", e)
+                            }
+                        }
+                        else -> {
+                            // Received an unsupported type of the multipart
+                            application.log.info("Received an unsupported part type in multipart data: ${part::class}")
+                        }
+                    }
+                    // Dispose of the part to free up resources
+                    part.dispose()
+                }
+
+                // Check if the file bytes were successfully read
+                val nonNullFileBytes = fileBytes
+                if (nonNullFileBytes != null) {
+                    // The folder path
+                    val folderPath = "/Users/jasonwhite/Desktop/6018GroupProject/DrawingWebserver/DrawingWebserver/savedPNG"
+
+                    // Check if folder exists or create it if it doesn't
+                    val folder = File(folderPath)
+                    if (!folder.exists() && !folder.mkdirs()) {
+                        application.log.error("Failed to create directory: $folderPath")
+                        call.respond(HttpStatusCode.InternalServerError, mapOf("error" to "Server error: Could not create directory for file upload"))
+                        return@post
+                    }
+
+                    // Generate a unique file name and define the file path help with overwriting
+                    val fileName = UUID.randomUUID().toString()
+                    val filePath = "$folderPath/$fileName.png"
+
+                    // Saving the Drawing
+                    try {
+                        shareDrawings.saveDrawing(filePath, nonNullFileBytes)
+                        application.log.info("File uploaded and saved successfully at $filePath")
+                        call.respond(HttpStatusCode.OK, mapOf("message" to "File uploaded successfully"))
+                    } catch (e: Exception) {
+                        application.log.error("Error saving drawing at $filePath", e)
+                        call.respond(HttpStatusCode.InternalServerError, mapOf("error" to "Error saving drawing"))
+                    }
+                } else {
+                    application.log.warn("Invalid file data received in upload request")
+                    call.respond(HttpStatusCode.BadRequest, mapOf("error" to "Invalid file data"))
                 }
             }
         }
