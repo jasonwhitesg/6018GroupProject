@@ -105,11 +105,14 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics-ktx")
 
     //Ktor stuff
-    implementation ("io.ktor:ktor-client-android:2.2.3")
-    implementation ("io.ktor:ktor-client-core:2.2.3")
-    implementation ("io.ktor:ktor-client-json:2.2.3")
-    implementation ("io.ktor:ktor-client-serialization:2.2.3")
-    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
+    implementation ("io.ktor:ktor-client-android:1.5.0")
+    implementation ("io.ktor:ktor-client-core:1.5.0")
+    implementation ("io.ktor:ktor-client-json:1.5.0")
+    implementation ("io.ktor:ktor-client-serialization:1.5.0")
+    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
 
+    implementation ("io.ktor:ktor-client-logging-jvm:1.5.0")
+
+    implementation ("io.ktor:ktor-client-logging:1.5.0")
 
 }
