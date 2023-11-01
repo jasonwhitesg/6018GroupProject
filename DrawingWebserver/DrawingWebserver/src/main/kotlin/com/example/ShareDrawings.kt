@@ -16,9 +16,10 @@ class ShareDrawings {
         return transaction {
             DrawingsTable.selectAll().map {
                 Drawing(
+                    id = it[DrawingsTable.id].value,
                     filePath = it[DrawingsTable.filePath],
                     userUid = it[DrawingsTable.userUid],
-                    userName = it[DrawingsTable.userName] ?: "", // Setting up to hand Null Users
+                    userName = it[DrawingsTable.userName] ?: "",
                     timestamp = it[DrawingsTable.timestamp]
                 )
             }
@@ -45,9 +46,10 @@ class ShareDrawings {
             DrawingsTable.select { DrawingsTable.timestamp greaterEq time }
                 .map {
                     Drawing(
+                        id = it[DrawingsTable.id].value,
                         filePath = it[DrawingsTable.filePath],
                         userUid = it[DrawingsTable.userUid],
-                        userName = it[DrawingsTable.userName] ?: "", // or handle null userName differently
+                        userName = it[DrawingsTable.userName] ?: "",
                         timestamp = it[DrawingsTable.timestamp]
                     )
                 }
@@ -58,9 +60,10 @@ class ShareDrawings {
         return transaction {
             DrawingsTable.select { DrawingsTable.id eq id }.singleOrNull()?.let {
                 Drawing(
+                    id = it[DrawingsTable.id].value,
                     filePath = it[DrawingsTable.filePath],
                     userUid = it[DrawingsTable.userUid],
-                    userName = it[DrawingsTable.userName] ?: "", // or handle null userName differently
+                    userName = it[DrawingsTable.userName] ?: "",
                     timestamp = it[DrawingsTable.timestamp]
                 )
             }

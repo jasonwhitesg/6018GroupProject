@@ -4,22 +4,26 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import io.ktor.client.HttpClient
+import io.ktor.client.engine.android.Android
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
+import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
-    private val client = HttpClient {
+    private val client = HttpClient(Android) {
         install(JsonFeature) {
             serializer = KotlinxSerializer()
         }
     }
+    private val coroutineScope = MainScope()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d("MainActivity", "Before setting the theme.")
@@ -28,15 +32,41 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        GlobalScope.launch(Dispatchers.Main) {
+        coroutineScope.launch(Dispatchers.Main) {
             val serverUrl = "http://10.0.2.2:8080"
-            val drawingRequest = DrawingRequest(
-                filePath = "path/to/file",
-                userUid = "userUid",
-                userName = "userName"
-            )
-            val response = sendDrawingRequestToServer(serverUrl, drawingRequest)
-            Log.d("ServerResponse", response)
+
+            // Perform multiple POST requests
+            val drawingRequest1 = DrawingRequest("path/to/file1", "userUid1", "userName1")
+            sendDrawingRequestToServer(serverUrl, drawingRequest1)
+
+            val drawingRequest2 = DrawingRequest("path/to/file2", "userUid2", "userName2")
+            sendDrawingRequestToServer(serverUrl, drawingRequest2)
+
+            // Fetch and log all drawings
+            val allDrawings = fetchAllDrawings(serverUrl)
+            Log.d("ServerResponse", "All Drawings: $allDrawings")
+
+            // Fetch and log drawing by ID (assuming ID is 1 for example)
+            val drawingById = fetchDrawingById(serverUrl, 1)
+            Log.d("ServerResponse", "Drawing by ID: $drawingById")
+        }
+    }
+
+    private suspend fun fetchAllDrawings(serverUrl: String): List<Drawing>? {
+        return try {
+            client.get("$serverUrl/drawings")
+        } catch (e: Exception) {
+            Log.e("ServerResponse", "Error fetching all drawings: ${e.message}")
+            null
+        }
+    }
+
+    private suspend fun fetchDrawingById(serverUrl: String, id: Int): Drawing? {
+        return try {
+            client.get("$serverUrl/drawings/$id")
+        } catch (e: Exception) {
+            Log.e("ServerResponse", "Error fetching drawing by ID: ${e.message}")
+            null
         }
     }
 
@@ -56,6 +86,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        coroutineScope.cancel()
         client.close()
     }
 }
