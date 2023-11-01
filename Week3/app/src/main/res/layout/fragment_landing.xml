@@ -9,31 +9,31 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="194dp"
-        android:layout_height="51dp"
+        android:layout_width="192dp"
+        android:layout_height="53dp"
         android:layout_gravity="center"
         android:text="LETS DRAW LOGIN"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.935"
+        app:layout_constraintHorizontal_bias="0.995"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.223" />
+        app:layout_constraintVertical_bias="0.218" />
 
     <Button
         android:id="@+id/button5"
-        android:layout_width="187dp"
-        android:layout_height="52dp"
+        android:layout_width="151dp"
+        android:layout_height="51dp"
         android:layout_gravity="center"
         android:text="SIGN UP"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.071"
+        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.222" />
+        app:layout_constraintVertical_bias="0.218" />
 
     <EditText
         android:id="@+id/emailEditText"
