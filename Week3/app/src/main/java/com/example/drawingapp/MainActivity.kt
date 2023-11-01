@@ -17,5 +17,6 @@ class MainActivity : AppCompatActivity() {
         Log.d("MainActivity", "After setting the theme.")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
     }
 }
