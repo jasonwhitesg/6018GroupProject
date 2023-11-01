@@ -302,7 +302,7 @@ class DrawingFragment : Fragment() {
 //        val shareDrawingButton = binding.button11
 //        shareDrawingButton.setOnClickListener {
 //            saveTempFile()
-            viewModel.bitmap.observe(viewLifecycleOwner) {
+//            viewModel.bitmap.observe(viewLifecycleOwner) {
 //                    val file = lastSavedFilePath?.let { it1 -> File(it1) }
 //                    val uri =
 //                            FileProvider.getUriForFile(
