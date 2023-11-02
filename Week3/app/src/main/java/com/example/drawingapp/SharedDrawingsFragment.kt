@@ -39,6 +39,8 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -48,11 +50,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.navigation.NavController
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
-
+import androidx.compose.foundation.lazy.items
 
 //some random comment
 class SharedDrawingsFragment : Fragment() {
@@ -62,19 +65,19 @@ class SharedDrawingsFragment : Fragment() {
     private val viewModel: SharedDrawingsViewModel by activityViewModels {
         DrawingViewModelFactory((requireActivity().application as DrawingApplication).drawingRepository)
     }
-
+    private fun getSharedDrawings(): LiveData<List<Drawing>> {
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+            viewModel.updateSharedDrawingsList()
+        }
+        return viewModel.getDrawingsLiveData()
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val navController = findNavController() // Fetch NavController
-        var allDrawings: List<Drawing>? = null
-        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-            // Call your suspend function here
-            allDrawings = viewModel.getAllDrawings("http://10.0.2.2:8080")
-            // Update UI or perform other actions with the result
-        }
+
         return ComposeView(requireContext()).apply {
             setContent {
                 SharedDrawingsScreen(viewModel, { selectedDrawing ->
@@ -112,7 +115,8 @@ class SharedDrawingsFragment : Fragment() {
         navController: NavController
     ) {
 
-//        val allDrawings by viewModel.allSavedDrawings?.observeAsState(emptyList())
+        val allDrawings: List<Drawing> by viewModel.getDrawingsLiveData().observeAsState(emptyList())
+
 
         Scaffold(
             topBar = {
@@ -153,11 +157,16 @@ class SharedDrawingsFragment : Fragment() {
                                 .background(
                                     color = Color.White,
                                     shape = RoundedCornerShape(16.dp) // Specify the corner radius
-                                ).border(width = 3.dp,color = Color.Black,shape = RoundedCornerShape(16.dp))
+                                )
+                                .border(
+                                    width = 3.dp,
+                                    color = Color.Black,
+                                    shape = RoundedCornerShape(16.dp)
+                                )
                                 .clickable {
-                                    onDrawingClick(drawing.savedFile)
-                                    val bundle = bundleOf("filePath" to drawing.savedFile)
-                                    Log.d(drawing.savedFile, "saved file path")
+                                    onDrawingClick(drawing.filePath)
+                                    val bundle = bundleOf("filePath" to drawing.filePath)
+                                    Log.d(drawing.filePath, "saved file path")
                                     navController.navigate(
                                         R.id.action_back_to_drawingFragment,
                                         bundle
@@ -171,8 +180,8 @@ class SharedDrawingsFragment : Fragment() {
                                 verticalArrangement = Arrangement.Center,
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
-                                val fileName = drawing.savedFile.substringAfterLast("/")
-                                val imageBitmap = loadBitmapFromFile(drawing.savedFile)
+                                val fileName = drawing
+                                val imageBitmap = loadBitmapFromFile(drawing.filePath)
                                 if (imageBitmap != null) {
                                     Column(
                                         modifier = Modifier
