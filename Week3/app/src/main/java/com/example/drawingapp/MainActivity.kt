@@ -1,8 +1,10 @@
 package com.example.drawingapp
 
+import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
+import androidx.core.content.ContentProviderCompat.requireContext
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
 import io.ktor.client.features.json.JsonFeature
@@ -59,6 +61,9 @@ class MainActivity : AppCompatActivity() {
             // Send the file to the server
             val response = sendFileToServer(serverUrl, file)
             Log.d("ServerResponse", "Response: $response")
+
+            // Received file from Server
+            val downloadedFile = receiveFileFromServer(serverUrl, "fromServer.png")
         }
     }
 
@@ -115,6 +120,19 @@ class MainActivity : AppCompatActivity() {
             }
         } catch (e: Exception) {
             "Error: ${e.message}"
+        }
+    }
+
+    private suspend fun receiveFileFromServer(serverUrl: String, fileName: String): ByteArray? {
+        return try {
+            val downloadUrl = "$serverUrl/drawings/download/$fileName"
+            val responseBytes = client.get<ByteArray>(downloadUrl)
+
+            return responseBytes
+
+        } catch (e: Exception) {
+            Log.e("ServerFile", "Error receiving file from server: ${e.message}")
+            null // Return null on failure
         }
     }
 

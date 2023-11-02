@@ -152,7 +152,7 @@ fun Application.configureRouting() {
 
                     // Generate a unique file name and define the file path help with overwriting
 //                    val fileName = UUID.randomUUID().toString() //actual name of the file
-                    val filePath = "$folderPath/$fileName.png"
+                    val filePath = "$folderPath/$fileName"
 
                     // Saving the Drawing
                     try {
