@@ -15,7 +15,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
-import kotlinx.serialization.Serializable
+import io.ktor.client.request.forms.*
+import io.ktor.http.*
+import java.io.File
+import io.ktor.client.statement.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,9 +31,6 @@ class MainActivity : AppCompatActivity() {
     private val coroutineScope = MainScope()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("MainActivity", "Before setting the theme.")
-        setTheme(R.style.Theme_Phase1)
-        Log.d("MainActivity", "After setting the theme.")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -50,6 +51,36 @@ class MainActivity : AppCompatActivity() {
             // Fetch and log drawing by ID (assuming ID is 1 for example)
             val drawingById = fetchDrawingById(serverUrl, 1)
             Log.d("ServerResponse", "Drawing by ID: $drawingById")
+            val root = applicationContext.filesDir.path
+            val filePath = "$root/jason.png"
+            // Assume you have a File instance
+            val file = File(filePath)
+
+            // Send the file to the server
+            val response = sendFileToServer(serverUrl, file)
+            Log.d("ServerResponse", "Response: $response")
+        }
+    }
+
+    private suspend fun sendFileToServer(serverUrl: String, file: File): String {
+        return try {
+            val response: HttpResponse = client.post("$serverUrl/drawings/upload") {
+                body = MultiPartFormDataContent(
+                    formData {
+                        append("file", file.readBytes(), Headers.build {
+                            append(HttpHeaders.ContentDisposition, "filename=${file.name}")
+                        })
+                    }
+                )
+            }
+
+            if (response.status == HttpStatusCode.OK) {
+                response.readText()
+            } else {
+                "Failed to upload file: ${response.status}"
+            }
+        } catch (e: Exception) {
+            "Error: ${e.message}"
         }
     }
 

@@ -95,8 +95,10 @@ fun Application.configureRouting() {
                 }
             }
 
+            application.log.info("About to UPLOAD")
 
             post("/upload") {
+                application.log.info("Received a request to /drawings/upload")
                 // Initialize the multipart data reception
                 val multipart = call.receiveMultipart()
 
