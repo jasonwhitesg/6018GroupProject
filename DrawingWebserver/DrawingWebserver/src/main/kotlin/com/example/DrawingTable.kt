@@ -7,14 +7,16 @@ import org.jetbrains.exposed.dao.id.IntIdTable
 data class Drawing(
     val id: Int = -1,
     val filePath: String,
+    val fileName: String,
     val userUid: String,
-    val userName: String,
+    val userName: String?,
     val timestamp: Long = -1,
 )
 
 
 object DrawingsTable : IntIdTable() {
     val filePath = varchar("file_path", 255).check { it neq "" }
+    val fileName = varchar("file_nqme", 255).check { it neq "" }
     val userUid = varchar("user_uid", 28).check { it neq "" }
     val userName = varchar("user_name", 255).nullable()
     val timestamp = long("timestamp")

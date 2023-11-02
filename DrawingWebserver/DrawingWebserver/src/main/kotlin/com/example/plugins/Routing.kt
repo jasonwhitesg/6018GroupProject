@@ -1,5 +1,6 @@
 package com.example.plugins
 
+import com.example.DrawingsTable
 import com.example.ShareDrawings
 import io.ktor.http.*
 import io.ktor.resources.*
@@ -40,6 +41,7 @@ fun Application.configureRouting() {
                 try {
                     val drawing = shareDrawings.createDrawing(
                         filePath = drawingRequest.filePath,
+                        fileName = drawingRequest.fileName,
                         userUid = drawingRequest.userUid,
                         userName = drawingRequest.userName,
                         timestamp = System.currentTimeMillis()
@@ -105,8 +107,10 @@ fun Application.configureRouting() {
                 // Initialize a variable to hold the file bytes
                 var fileBytes: ByteArray? = null
                 var fileName: String? = null
-                var user: String? = null
-                // Iterate through each part of the multipart data This method is used by KTOR often
+                var userUid: String? = null
+                var userName: String? = null
+
+                // Iterate through each part of the multipart data
                 multipart.forEachPart { part ->
                     when (part) {
                         // If the part is a FileItem (i.e., file upload), read its bytes
@@ -122,8 +126,11 @@ fun Application.configureRouting() {
                         is PartData.FormItem -> {
                             // Handle form fields
                             when (part.name) {
-                                "user" -> {
-                                    user = part.value
+                                "userUid" -> {
+                                    userUid = part.value
+                                }
+                                "userName" -> {
+                                    userName = part.value
                                 }
                             }
                         }
@@ -136,31 +143,46 @@ fun Application.configureRouting() {
                     part.dispose()
                 }
 
-                // Check if the file bytes were successfully read
-                val nonNullFileBytes = fileBytes
-                if (nonNullFileBytes != null) {
+                // Check if the file bytes were successfully read and required information is available
+                if (fileBytes != null && fileName != null && userUid != null) {
                     // The folder path
-                    val folderPath = "/Users/ricardo2830/CS6018_Group/6018GroupProject/DrawingWebserver/DrawingWebserver/savedPNG"
+//<<<<<<< HEAD
+//                    val folderPath = "/Users/ricardo2830/CS6018_Group/6018GroupProject/DrawingWebserver/DrawingWebserver/savedPNG"
+//
+//                    // Check if folder exists or create it if it doesn't
+//                    val folder = File(folderPath)
+//                    if (!folder.exists() && !folder.mkdirs()) {
+//                        application.log.error("Failed to create directory: $folderPath")
+//                        call.respond(HttpStatusCode.InternalServerError, mapOf("error" to "Server error: Could not create directory for file upload"))
+//                        return@post
+//                    }
+//
+//                    // Generate a unique file name and define the file path help with overwriting
+////                    val fileName = UUID.randomUUID().toString() //actual name of the file
+//                    val filePath = "$folderPath/$fileName"
+//=======
+                    val folderPath = "/path/to/your/folder"
 
-                    // Check if folder exists or create it if it doesn't
-                    val folder = File(folderPath)
-                    if (!folder.exists() && !folder.mkdirs()) {
-                        application.log.error("Failed to create directory: $folderPath")
-                        call.respond(HttpStatusCode.InternalServerError, mapOf("error" to "Server error: Could not create directory for file upload"))
-                        return@post
-                    }
+                    // Generating a unique file name and defining the file path
+                    val filePath = "$folderPath/$fileName.png"
+//>>>>>>> jason
 
-                    // Generate a unique file name and define the file path help with overwriting
-//                    val fileName = UUID.randomUUID().toString() //actual name of the file
-                    val filePath = "$folderPath/$fileName"
-
-                    // Saving the Drawing
                     try {
-                        shareDrawings.saveDrawing(filePath, nonNullFileBytes)
-                        application.log.info("File uploaded and saved successfully at $filePath")
-                        call.respond(HttpStatusCode.OK, mapOf("message" to "File uploaded successfully"))
+                        // Saving the Drawing to Disk
+                        shareDrawings.saveDrawing(filePath, fileBytes!!)
+
+                        // Saving the Drawing Information to Database
+                        val drawing = shareDrawings.createDrawing(
+                            filePath = filePath,
+                            fileName = fileName!!,
+                            userUid = userUid!!,
+                            userName = userName ?: "Unknown", // Provide a default value or handle null case as needed
+                            timestamp = System.currentTimeMillis()
+                        )
+                        application.log.info("Drawing information saved to database with ID: ${drawing.id}")
+                        call.respond(HttpStatusCode.OK, mapOf("message" to "File uploaded successfully", "drawingId" to drawing.id))
                     } catch (e: Exception) {
-                        application.log.error("Error saving drawing at $filePath", e)
+                        application.log.error("Error saving drawing", e)
                         call.respond(HttpStatusCode.InternalServerError, mapOf("error" to "Error saving drawing"))
                     }
                 } else {
@@ -169,25 +191,43 @@ fun Application.configureRouting() {
                 }
             }
 
-            // Sending File to the Android App
-            get("/download/{fileName}") {
-                val fileName = call.parameters["fileName"]
-                if (fileName != null) {
-                    val folderPath = "/Users/ricardo2830/CS6018_Group/6018GroupProject/DrawingWebserver/DrawingWebserver/savedPNG"
-                    val filePath = "$folderPath/$fileName"
+//<<<<<<< HEAD
+//            // Sending File to the Android App
+//            get("/download/{fileName}") {
+//                val fileName = call.parameters["fileName"]
+//                if (fileName != null) {
+//                    val folderPath = "/Users/ricardo2830/CS6018_Group/6018GroupProject/DrawingWebserver/DrawingWebserver/savedPNG"
+//                    val filePath = "$folderPath/$fileName"
+//
+//                    val file = File(filePath)
+//
+//                    if (file.exists()) {
+//                        call.respondFile(file)
+//                    } else {
+//                        call.respond(HttpStatusCode.NotFound, "File not found")
+//                    }
+//                } else {
+//                    call.respond(HttpStatusCode.BadRequest, "Invalid file name")
+//                }
+//            }
+//
+//=======
+            get("/drawing") {
+                val userUid = call.request.queryParameters["userUid"]
+                val fileName = call.request.queryParameters["fileName"]
 
-                    val file = File(filePath)
-
-                    if (file.exists()) {
-                        call.respondFile(file)
+                if (userUid != null && fileName != null) {
+                    val drawing = shareDrawings.getDrawingByUidAndFileName(userUid, fileName)
+                    if (drawing != null) {
+                        call.respond(drawing)
                     } else {
-                        call.respond(HttpStatusCode.NotFound, "File not found")
+                        call.respond(HttpStatusCode.NotFound, "Drawing not found")
                     }
                 } else {
-                    call.respond(HttpStatusCode.BadRequest, "Invalid file name")
+                    call.respond(HttpStatusCode.BadRequest, "Missing or invalid parameters")
                 }
             }
-
+//>>>>>>> jason
         }
     }
 }
@@ -195,6 +235,7 @@ fun Application.configureRouting() {
 @Serializable
 data class DrawingRequest(
     val filePath: String,
+    val fileName: String,
     val userUid: String,
     val userName: String
 )
