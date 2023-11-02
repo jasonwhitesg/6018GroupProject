@@ -15,16 +15,18 @@ val client = HttpClient {
 
 @Serializable
 data class DrawingRequest(
-    val filePath: String,
+    val fileName: String,
     val userUid: String,
-    val userName: String
+    val userName: String,
+    val imageBase64: String
 )
 
 @Serializable
 data class Drawing(
     val id: Int,
-    val filePath: String,
+    val fileName: String,
     val userUid: String,
     val userName: String,
-    val timestamp: Long
+    val timestamp: Long,
+    val imageBase64: String
 )

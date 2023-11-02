@@ -13,16 +13,18 @@ import java.io.File
 import java.io.IOException
 
 class ShareDrawings {
+
     fun getAllDrawings(): List<Drawing> {
         return transaction {
             DrawingsTable.selectAll().map {
                 Drawing(
                     id = it[DrawingsTable.id].value,
-                    filePath = it[DrawingsTable.filePath],
+//                    filePath = it[DrawingsTable.filePath],
                     fileName = it[DrawingsTable.fileName],
                     userUid = it[DrawingsTable.userUid],
                     userName = it[DrawingsTable.userName] ?: "",
-                    timestamp = it[DrawingsTable.timestamp]
+                    timestamp = it[DrawingsTable.timestamp],
+                    imageBase64 = it[DrawingsTable.imageBase64]
                 )
             }
         }
@@ -34,27 +36,33 @@ class ShareDrawings {
                 .orderBy(DrawingsTable.timestamp, if (descending) SortOrder.DESC else SortOrder.ASC)
                 .map {
                     Drawing(
-                        filePath = it[DrawingsTable.filePath],
-                        fileName = it[DrawingsTable.filePath],
+                        id = it[DrawingsTable.id].value,
+//                        filePath = it[DrawingsTable.filePath],
+                        fileName = it[DrawingsTable.fileName],
                         userUid = it[DrawingsTable.userUid],
-                        userName = it[DrawingsTable.userName] ?: "", // or handle null userName differently
+                        userName = it[DrawingsTable.userName] ?: "",
+                        imageBase64 = it[DrawingsTable.imageBase64],
                         timestamp = it[DrawingsTable.timestamp]
                     )
                 }
         }
     }
 
-    fun getDrawingsSince(time: Long): List<Drawing> {
+
+    fun getDrawingsByUserUidSince(userUid: String, time: Long): List<Drawing> {
         return transaction {
-            DrawingsTable.select { DrawingsTable.timestamp greaterEq time }
-                .map {
+            DrawingsTable.select {
+                (DrawingsTable.timestamp greaterEq time) and (DrawingsTable.userUid eq userUid)
+            }
+                .map { row ->
                     Drawing(
-                        id = it[DrawingsTable.id].value,
-                        filePath = it[DrawingsTable.filePath],
-                        fileName = it[DrawingsTable.filePath],
-                        userUid = it[DrawingsTable.userUid],
-                        userName = it[DrawingsTable.userName] ?: "",
-                        timestamp = it[DrawingsTable.timestamp]
+                        id = row[DrawingsTable.id].value,
+//                        filePath = row[DrawingsTable.filePath],
+                        fileName = row[DrawingsTable.fileName],
+                        userUid = row[DrawingsTable.userUid],
+                        userName = row[DrawingsTable.userName] ?: "",
+                        imageBase64 = row[DrawingsTable.imageBase64], // Assuming you have this field for image bytes
+                        timestamp = row[DrawingsTable.timestamp]
                     )
                 }
         }
@@ -62,37 +70,40 @@ class ShareDrawings {
 
     fun getDrawingById(id: Int): Drawing? {
         return transaction {
-            DrawingsTable.select { DrawingsTable.id eq id }.singleOrNull()?.let {
+            DrawingsTable.select { DrawingsTable.id eq id }.singleOrNull()?.let { row ->
                 Drawing(
-                    id = it[DrawingsTable.id].value,
-                    filePath = it[DrawingsTable.filePath],
-                    fileName = it[DrawingsTable.filePath],
-                    userUid = it[DrawingsTable.userUid],
-                    userName = it[DrawingsTable.userName] ?: "",
-                    timestamp = it[DrawingsTable.timestamp]
+                    id = row[DrawingsTable.id].value,
+//                    filePath = row[DrawingsTable.filePath],
+                    fileName = row[DrawingsTable.fileName],
+                    userUid = row[DrawingsTable.userUid],
+                    userName = row[DrawingsTable.userName] ?: "",
+                    imageBase64 = row[DrawingsTable.imageBase64], // Assuming imageData is a ByteArray column
+                    timestamp = row[DrawingsTable.timestamp]
                 )
             }
         }
     }
 
-    fun createDrawing(filePath: String, fileName: String, userUid: String, userName: String, timestamp: Long): Drawing {
+    fun createDrawing(fileName: String, userUid: String, userName: String?, timestamp: Long, imageBase64: String): Drawing {
         val id = transaction {
-            DrawingsTable.insertAndGetId {
-                it[DrawingsTable.filePath] = filePath
-                it[DrawingsTable.fileName] = fileName
-                it[DrawingsTable.userUid] = userUid
-                it[DrawingsTable.userName] = userName
-                it[DrawingsTable.timestamp] = timestamp
+            DrawingsTable.insertAndGetId { statement ->
+                statement[DrawingsTable.fileName] = fileName
+                statement[DrawingsTable.userUid] = userUid
+                statement[DrawingsTable.userName] = userName
+                statement[DrawingsTable.timestamp] = timestamp
+                statement[DrawingsTable.imageBase64] = imageBase64
             }
         }.value
-        return Drawing(id, filePath, fileName, userUid, userName, timestamp)
+        return Drawing(id, fileName, userUid, userName.orEmpty(), timestamp, imageBase64)
     }
 
-    fun deleteDrawing(id: Int): Boolean {
+
+    fun deleteDrawingsByUserUid(userUid: String): Int {
         return transaction {
-            DrawingsTable.deleteWhere { DrawingsTable.id eq id } > 0
+            DrawingsTable.deleteWhere { DrawingsTable.userUid eq userUid }
         }
     }
+
 
     /**
      * Saves a drawing file to the specified path.
@@ -107,26 +118,25 @@ class ShareDrawings {
         file.writeBytes(fileBytes)
     }
 
-    fun getDrawingByUidAndFileName(userUid: String, fileName: String): Drawing? {
+    fun getDrawingsByUserUid(userUid: String): List<Drawing> {
         return transaction {
             DrawingsTable
-                .select { (DrawingsTable.userUid eq userUid) and (DrawingsTable.fileName eq fileName) }
-                .mapNotNull { rowToDrawing(it) }
-                .singleOrNull()
+                .select { DrawingsTable.userUid eq userUid }
+                .map { rowToDrawing(it) }
         }
     }
 
     private fun rowToDrawing(row: ResultRow): Drawing {
         return Drawing(
             id = row[DrawingsTable.id].value,
-            filePath = row[DrawingsTable.filePath],
+//            filePath = row[DrawingsTable.filePath],
             fileName = row[DrawingsTable.fileName],
             userUid = row[DrawingsTable.userUid],
             userName = row[DrawingsTable.userName],
-            timestamp = row[DrawingsTable.timestamp]
+            timestamp = row[DrawingsTable.timestamp],
+            imageBase64 = row[DrawingsTable.imageBase64] // Make sure you have this column defined properly in your table
         )
     }
-
 }
 
 

@@ -40,10 +40,11 @@ fun Application.configureRouting() {
                 application.log.info("Received drawingRequest: $drawingRequest")
                 try {
                     val drawing = shareDrawings.createDrawing(
-                        filePath = drawingRequest.filePath,
+//                        filePath = drawingRequest.filePath,
                         fileName = drawingRequest.fileName,
                         userUid = drawingRequest.userUid,
                         userName = drawingRequest.userName,
+                        imageBase64 = drawingRequest.imageBase64,
                         timestamp = System.currentTimeMillis()
                     )
                     application.log.info("Drawing created: $drawing")
@@ -67,19 +68,22 @@ fun Application.configureRouting() {
                 }
             }
 
-            delete("/{id}") {
-                application.log.info("Handling DELETE request for drawing")
-                val id = call.parameters["id"]?.toIntOrNull()
-                if (id != null) {
-                    if (shareDrawings.deleteDrawing(id)) {
-                        call.respond(HttpStatusCode.OK, "Drawing deleted successfully")
+            delete("/{userUid}") {
+                application.log.info("Handling DELETE request for drawings by userUid")
+                val userUid = call.parameters["userUid"]
+                if (!userUid.isNullOrBlank()) { // Check that it's not null or blank
+                    val deletedCount = shareDrawings.deleteDrawingsByUserUid(userUid)
+                    if (deletedCount > 0) { // Check if any rows were deleted
+                        call.respond(HttpStatusCode.OK, "Drawings deleted successfully for userUid: $userUid")
                     } else {
-                        call.respond(HttpStatusCode.NotFound, "Drawing not found")
+                        call.respond(HttpStatusCode.NotFound, "No drawings found for the specified userUid")
                     }
                 } else {
-                    call.respond(HttpStatusCode.BadRequest, "Invalid ID format")
+                    call.respond(HttpStatusCode.BadRequest, "Invalid userUid format or missing userUid")
                 }
             }
+
+
 
             get("/ordered") {
                 val order = call.request.queryParameters["order"] ?: "desc"
@@ -87,107 +91,58 @@ fun Application.configureRouting() {
                 call.respond(drawings)
             }
 
-            get("/since/{time}") {
-                val time = call.parameters["time"]?.toLongOrNull()
-                if (time != null) {
-                    val drawings = shareDrawings.getDrawingsSince(time)
-                    call.respond(drawings)
-                } else {
-                    call.respond(HttpStatusCode.BadRequest, "Invalid time format")
-                }
-            }
-
             application.log.info("About to UPLOAD")
 
             post("/upload") {
                 application.log.info("Received a request to /drawings/upload")
-                // Initialize the multipart data reception
-                val multipart = call.receiveMultipart()
 
-                // Initialize a variable to hold the file bytes
-                var fileBytes: ByteArray? = null
-                var fileName: String? = null
-                var userUid: String? = null
-                var userName: String? = null
+                try {
 
-                // Iterate through each part of the multipart data
-                multipart.forEachPart { part ->
-                    when (part) {
-                        // If the part is a FileItem (i.e., file upload), read its bytes
-                        is PartData.FileItem -> {
-                            try {
-                                fileBytes = part.streamProvider().readBytes()
-                                application.log.info("File successfully read into bytes")
-                                fileName = part.originalFileName
-                            } catch (e: Exception) {
-                                application.log.error("Error reading file bytes", e)
-                            }
-                        }
-                        is PartData.FormItem -> {
-                            // Handle form fields
-                            when (part.name) {
-                                "userUid" -> {
-                                    userUid = part.value
-                                }
-                                "userName" -> {
-                                    userName = part.value
-                                }
-                            }
-                        }
-                        else -> {
-                            // Received an unsupported type of the multipart
-                            application.log.info("Received an unsupported part type in multipart data: ${part::class}")
-                        }
-                    }
-                    // Dispose of the part to free up resources
-                    part.dispose()
-                }
+//                    // Read the raw request body text
+//                    application.log.info("BEFORE TEXT")
+//                    val requestBodyText = call.receiveText()
+//                    application.log.info("After TEXT")
+//
+//                    // Log the raw request body text
+//                    application.log.info("Raw request body: $requestBodyText")
+//                    // Receive the JSON payload into an object of DrawingRequest
+                    application.log.info("BEFORE TEXT")
+                    val drawingRequest = call.receive<DrawingRequest>()
+                    application.log.info("After TEXT")
 
-                // Check if the file bytes were successfully read and required information is available
-                if (fileBytes != null && fileName != null && userUid != null) {
-                    // The folder path
-                    val folderPath = "/path/to/your/folder"
+                    // Generating a unique file name could be a good practice to prevent overwriting
+                    val timestamp = System.currentTimeMillis()
 
-                    // Generating a unique file name and defining the file path
-                    val filePath = "$folderPath/$fileName.png"
+                    // Saving the Drawing to Disk (implement the saveDrawing method as needed)
+                    // Create the Drawing record in the database
+                    val drawing = shareDrawings.createDrawing(
+                        fileName = drawingRequest.fileName,
+                        userUid = drawingRequest.userUid,
+                        userName = drawingRequest.userName,
+                        timestamp = timestamp,
+                        imageBase64 = drawingRequest.imageBase64 // Passing the base64 string directly
+                    )
 
-                    try {
-                        // Saving the Drawing to Disk
-                        shareDrawings.saveDrawing(filePath, fileBytes!!)
-
-                        // Saving the Drawing Information to Database
-                        val drawing = shareDrawings.createDrawing(
-                            filePath = filePath,
-                            fileName = fileName!!,
-                            userUid = userUid!!,
-                            userName = userName ?: "Unknown", // Provide a default value or handle null case as needed
-                            timestamp = System.currentTimeMillis()
-                        )
-                        application.log.info("Drawing information saved to database with ID: ${drawing.id}")
-                        call.respond(HttpStatusCode.OK, mapOf("message" to "File uploaded successfully", "drawingId" to drawing.id))
-                    } catch (e: Exception) {
-                        application.log.error("Error saving drawing", e)
-                        call.respond(HttpStatusCode.InternalServerError, mapOf("error" to "Error saving drawing"))
-                    }
-                } else {
-                    application.log.warn("Invalid file data received in upload request")
-                    call.respond(HttpStatusCode.BadRequest, mapOf("error" to "Invalid file data"))
+                    application.log.info("Drawing information saved to database with ID: ${drawing.id}")
+                    call.respond(HttpStatusCode.OK, mapOf("message" to "File uploaded successfully", "drawingId" to drawing.id))
+                } catch (e: Exception) {
+                    application.log.error("Error processing upload", e)
+                    call.respond(HttpStatusCode.InternalServerError, mapOf("error" to "Error processing upload"))
                 }
             }
 
-            get("/drawing") {
-                val userUid = call.request.queryParameters["userUid"]
-                val fileName = call.request.queryParameters["fileName"]
+            get("/drawing/{userUid}") {
+                val userUid = call.parameters["userUid"]
 
-                if (userUid != null && fileName != null) {
-                    val drawing = shareDrawings.getDrawingByUidAndFileName(userUid, fileName)
-                    if (drawing != null) {
-                        call.respond(drawing)
+                if (userUid != null) {
+                    val drawings = shareDrawings.getDrawingsByUserUid(userUid)
+                    if (drawings.isNotEmpty()) {
+                        call.respond(drawings)
                     } else {
-                        call.respond(HttpStatusCode.NotFound, "Drawing not found")
+                        call.respond(HttpStatusCode.NotFound, "No drawings found for userUid: $userUid")
                     }
                 } else {
-                    call.respond(HttpStatusCode.BadRequest, "Missing or invalid parameters")
+                    call.respond(HttpStatusCode.BadRequest, "Missing userUid parameter")
                 }
             }
         }
@@ -196,8 +151,9 @@ fun Application.configureRouting() {
 
 @Serializable
 data class DrawingRequest(
-    val filePath: String,
     val fileName: String,
     val userUid: String,
-    val userName: String
+    val userName: String,
+    val imageBase64: String
 )
+
