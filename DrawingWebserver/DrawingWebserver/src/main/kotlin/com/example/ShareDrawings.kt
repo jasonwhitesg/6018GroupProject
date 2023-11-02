@@ -19,6 +19,7 @@ class ShareDrawings {
                 Drawing(
                     id = it[DrawingsTable.id].value,
                     filePath = it[DrawingsTable.filePath],
+                    fileName = it[DrawingsTable.fileName],
                     userUid = it[DrawingsTable.userUid],
                     userName = it[DrawingsTable.userName] ?: "",
                     timestamp = it[DrawingsTable.timestamp]
@@ -34,6 +35,7 @@ class ShareDrawings {
                 .map {
                     Drawing(
                         filePath = it[DrawingsTable.filePath],
+                        fileName = it[DrawingsTable.filePath],
                         userUid = it[DrawingsTable.userUid],
                         userName = it[DrawingsTable.userName] ?: "", // or handle null userName differently
                         timestamp = it[DrawingsTable.timestamp]
@@ -49,6 +51,7 @@ class ShareDrawings {
                     Drawing(
                         id = it[DrawingsTable.id].value,
                         filePath = it[DrawingsTable.filePath],
+                        fileName = it[DrawingsTable.filePath],
                         userUid = it[DrawingsTable.userUid],
                         userName = it[DrawingsTable.userName] ?: "",
                         timestamp = it[DrawingsTable.timestamp]
@@ -63,6 +66,7 @@ class ShareDrawings {
                 Drawing(
                     id = it[DrawingsTable.id].value,
                     filePath = it[DrawingsTable.filePath],
+                    fileName = it[DrawingsTable.filePath],
                     userUid = it[DrawingsTable.userUid],
                     userName = it[DrawingsTable.userName] ?: "",
                     timestamp = it[DrawingsTable.timestamp]
@@ -71,16 +75,17 @@ class ShareDrawings {
         }
     }
 
-    fun createDrawing(filePath: String, userUid: String, userName: String, timestamp: Long): Drawing {
+    fun createDrawing(filePath: String, fileName: String, userUid: String, userName: String, timestamp: Long): Drawing {
         val id = transaction {
             DrawingsTable.insertAndGetId {
                 it[DrawingsTable.filePath] = filePath
+                it[DrawingsTable.fileName] = fileName
                 it[DrawingsTable.userUid] = userUid
                 it[DrawingsTable.userName] = userName
                 it[DrawingsTable.timestamp] = timestamp
             }
         }.value
-        return Drawing(id, filePath, userUid, userName, timestamp)
+        return Drawing(id, filePath, fileName, userUid, userName, timestamp)
     }
 
     fun deleteDrawing(id: Int): Boolean {
@@ -101,6 +106,27 @@ class ShareDrawings {
         val file = File(filePath)
         file.writeBytes(fileBytes)
     }
+
+    fun getDrawingByUidAndFileName(userUid: String, fileName: String): Drawing? {
+        return transaction {
+            DrawingsTable
+                .select { (DrawingsTable.userUid eq userUid) and (DrawingsTable.fileName eq fileName) }
+                .mapNotNull { rowToDrawing(it) }
+                .singleOrNull()
+        }
+    }
+
+    private fun rowToDrawing(row: ResultRow): Drawing {
+        return Drawing(
+            id = row[DrawingsTable.id].value,
+            filePath = row[DrawingsTable.filePath],
+            fileName = row[DrawingsTable.fileName],
+            userUid = row[DrawingsTable.userUid],
+            userName = row[DrawingsTable.userName],
+            timestamp = row[DrawingsTable.timestamp]
+        )
+    }
+
 }
 
 

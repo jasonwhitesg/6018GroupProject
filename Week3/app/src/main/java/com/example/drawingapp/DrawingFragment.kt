@@ -110,16 +110,6 @@ class DrawingFragment : Fragment() {
         return context.filesDir.toString() + "/$filename"
     }
 
-    private fun deleteFileFromInternalStorage(filename: String, context: Context): Boolean {
-        val file = File(context.filesDir, filename)
-        return if (file.exists()) {
-            file.delete()
-        } else {
-            Log.e("ERROR", "File not found: $filename")
-            false
-        }
-    }
-
     //do update bitmap not set bitmap
     private fun loadDrawingIntoCustomView(filePath: String) {
         lastSavedFilePath = filePath
