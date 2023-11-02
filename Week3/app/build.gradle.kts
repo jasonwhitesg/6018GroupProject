@@ -55,6 +55,7 @@ dependencies {
     implementation ("androidx.compose.ui:ui-tooling:1.4.0")
     implementation ("androidx.compose.runtime:runtime-livedata:1.4.0")
     implementation("com.google.firebase:firebase-auth-ktx:22.2.0")
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
     debugImplementation ("androidx.compose.ui:ui-test-junit4:1.4.0")
     debugImplementation ("androidx.navigation:navigation-testing:2.3.5")
     implementation("io.coil-kt:coil-compose:2.4.0")

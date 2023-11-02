@@ -10,7 +10,7 @@ data class Drawing(
     val fileName: String,
     val userUid: String,
     val userName: String?,
-    val timestamp: Long = -1,
+    val timestamp: Long = -1
 )
 
 

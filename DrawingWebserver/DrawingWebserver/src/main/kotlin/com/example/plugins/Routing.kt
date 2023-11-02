@@ -177,7 +177,7 @@ fun Application.configureRouting() {
                             fileName = fileName!!,
                             userUid = userUid!!,
                             userName = userName ?: "Unknown", // Provide a default value or handle null case as needed
-                            timestamp = System.currentTimeMillis()
+                            timestamp = System.currentTimeMillis(),
                         )
                         application.log.info("Drawing information saved to database with ID: ${drawing.id}")
                         call.respond(HttpStatusCode.OK, mapOf("message" to "File uploaded successfully", "drawingId" to drawing.id))
@@ -192,25 +192,25 @@ fun Application.configureRouting() {
             }
 
 //<<<<<<< HEAD
-//            // Sending File to the Android App
-//            get("/download/{fileName}") {
-//                val fileName = call.parameters["fileName"]
-//                if (fileName != null) {
-//                    val folderPath = "/Users/ricardo2830/CS6018_Group/6018GroupProject/DrawingWebserver/DrawingWebserver/savedPNG"
-//                    val filePath = "$folderPath/$fileName"
-//
-//                    val file = File(filePath)
-//
-//                    if (file.exists()) {
-//                        call.respondFile(file)
-//                    } else {
-//                        call.respond(HttpStatusCode.NotFound, "File not found")
-//                    }
-//                } else {
-//                    call.respond(HttpStatusCode.BadRequest, "Invalid file name")
-//                }
-//            }
-//
+            // Sending File to the Android App
+            get("/download/{fileName}") {
+                val fileName = call.parameters["fileName"]
+                if (fileName != null) {
+                    val folderPath = "/Users/ricardo2830/CS6018_Group/6018GroupProject/DrawingWebserver/DrawingWebserver/savedPNG"
+                    val filePath = "$folderPath/$fileName"
+
+                    val file = File(filePath)
+
+                    if (file.exists()) {
+                        call.respondFile(file)
+                    } else {
+                        call.respond(HttpStatusCode.NotFound, "File not found")
+                    }
+                } else {
+                    call.respond(HttpStatusCode.BadRequest, "Invalid file name")
+                }
+            }
+
 //=======
             get("/drawing") {
                 val userUid = call.request.queryParameters["userUid"]

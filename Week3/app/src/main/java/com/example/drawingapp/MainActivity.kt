@@ -135,6 +135,18 @@ class MainActivity : AppCompatActivity() {
             null // Return null on failure
         }
     }
+    private suspend fun requestDrawing(serverUrl: String, fileName: String): ByteArray? {
+        return try {
+            val downloadUrl = "$serverUrl/drawings/download/$fileName"
+            val responseBytes = client.get<ByteArray>(downloadUrl)
+
+            return responseBytes
+
+        } catch (e: Exception) {
+            Log.e("ServerFile", "Error receiving file from server: ${e.message}")
+            null // Return null on failure
+        }
+    }
 
     override fun onDestroy() {
         super.onDestroy()
