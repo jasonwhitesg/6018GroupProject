@@ -104,7 +104,8 @@ fun Application.configureRouting() {
 
                 // Initialize a variable to hold the file bytes
                 var fileBytes: ByteArray? = null
-
+                var fileName: String? = null
+                var user: String? = null
                 // Iterate through each part of the multipart data This method is used by KTOR often
                 multipart.forEachPart { part ->
                     when (part) {
@@ -113,8 +114,17 @@ fun Application.configureRouting() {
                             try {
                                 fileBytes = part.streamProvider().readBytes()
                                 application.log.info("File successfully read into bytes")
+                                fileName = part.originalFileName
                             } catch (e: Exception) {
                                 application.log.error("Error reading file bytes", e)
+                            }
+                        }
+                        is PartData.FormItem -> {
+                            // Handle form fields
+                            when (part.name) {
+                                "user" -> {
+                                    user = part.value
+                                }
                             }
                         }
                         else -> {
@@ -141,7 +151,7 @@ fun Application.configureRouting() {
                     }
 
                     // Generate a unique file name and define the file path help with overwriting
-                    val fileName = UUID.randomUUID().toString() //actual name of the file 
+//                    val fileName = UUID.randomUUID().toString() //actual name of the file
                     val filePath = "$folderPath/$fileName.png"
 
                     // Saving the Drawing

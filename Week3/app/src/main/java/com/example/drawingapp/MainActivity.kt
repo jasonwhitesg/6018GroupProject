@@ -71,6 +71,7 @@ class MainActivity : AppCompatActivity() {
                             append(HttpHeaders.ContentDisposition, "filename=${file.name}")
                         })
                         append("name","flower.png")
+                        append("user", "keegan")
                     }
                 )
             }
