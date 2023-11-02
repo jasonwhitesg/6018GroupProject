@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
             val drawingById = fetchDrawingById(serverUrl, 1)
             Log.d("ServerResponse", "Drawing by ID: $drawingById")
             val root = applicationContext.filesDir.path
-            val filePath = "$root/jason.png"
+            val filePath = "$root/flower.png"
             // Assume you have a File instance
             val file = File(filePath)
 
@@ -70,6 +70,7 @@ class MainActivity : AppCompatActivity() {
                         append("file", file.readBytes(), Headers.build {
                             append(HttpHeaders.ContentDisposition, "filename=${file.name}")
                         })
+                        append("name","flower.png")
                     }
                 )
             }

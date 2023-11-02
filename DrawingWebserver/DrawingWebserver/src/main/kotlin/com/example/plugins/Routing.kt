@@ -130,7 +130,7 @@ fun Application.configureRouting() {
                 val nonNullFileBytes = fileBytes
                 if (nonNullFileBytes != null) {
                     // The folder path
-                    val folderPath = "/Users/jasonwhite/Desktop/6018GroupProject/DrawingWebserver/DrawingWebserver/savedPNG"
+                    val folderPath = "/Users/keegan/Msd/CS6018/GroupProject/DrawingWebserver/DrawingWebserver/savedPNG"
 
                     // Check if folder exists or create it if it doesn't
                     val folder = File(folderPath)
@@ -141,7 +141,7 @@ fun Application.configureRouting() {
                     }
 
                     // Generate a unique file name and define the file path help with overwriting
-                    val fileName = UUID.randomUUID().toString()
+                    val fileName = UUID.randomUUID().toString() //actual name of the file 
                     val filePath = "$folderPath/$fileName.png"
 
                     // Saving the Drawing
