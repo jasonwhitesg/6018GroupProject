@@ -4,6 +4,7 @@ plugins {
     id("kotlin-kapt")
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.gms.google-services")
+    id ("kotlinx-serialization")
 }
 
 android {
@@ -109,7 +110,10 @@ dependencies {
     implementation ("io.ktor:ktor-client-core:1.5.0")
     implementation ("io.ktor:ktor-client-json:1.5.0")
     implementation ("io.ktor:ktor-client-serialization:1.5.0")
-    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
+    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
+
     implementation ("io.ktor:ktor-client-logging-jvm:1.5.0")
+
     implementation ("io.ktor:ktor-client-logging:1.5.0")
+
 }

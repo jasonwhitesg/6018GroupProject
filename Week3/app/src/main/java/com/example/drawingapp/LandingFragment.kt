@@ -58,6 +58,23 @@ class LandingFragment : Fragment() {
     }
 
     private fun loginUser(email: String, password: String, statusTextView: TextView) {
+
+        if (email.isBlank() || password.isBlank()) {
+            if (email.isBlank()) {
+                statusTextView.text = "Please enter a valid email"
+            }
+            if (password.isBlank()) {
+                val existingText = statusTextView.text.toString()
+                val newText = if (existingText.isNotEmpty()) {
+                    "$existingText\nPlease enter a valid password"
+                } else {
+                    "Please enter a valid password"
+                }
+                statusTextView.text = newText
+            }
+            return
+        }
+
         Log.d(TAG, "Attempting to log in user with email: $email")
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
@@ -77,6 +94,23 @@ class LandingFragment : Fragment() {
     }
 
     private fun createUser(email: String, password: String, statusTextView: TextView) {
+
+        if (email.isBlank() || password.isBlank()) {
+            if (email.isBlank()) {
+                statusTextView.text = "Please enter a valid email"
+            }
+            if (password.isBlank()) {
+                val existingText = statusTextView.text.toString()
+                val newText = if (existingText.isNotEmpty()) {
+                    "$existingText\nPlease enter a valid password"
+                } else {
+                    "Please enter a valid password"
+                }
+                statusTextView.text = newText
+            }
+            return
+        }
+
         Log.d(TAG, "Attempting to create user with email: $email")
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->

@@ -10,8 +10,12 @@ import io.ktor.server.resources.Resources
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.decodeFromString
+import java.io.File
+import io.ktor.http.content.*
+import io.ktor.http.*
+import io.ktor.server.request.*
+import io.ktor.server.response.*
+import java.util.*
 
 fun Application.configureRouting() {
     install(Resources)
@@ -33,9 +37,6 @@ fun Application.configureRouting() {
 //                val drawingRequest = call.receive<DrawingRequest>()
 //                application.log.info("Received drawingRequest: $drawingRequest")
                 try {
-                    val post = call.receive<String>()
-                    val drawingRequest = Json.decodeFromString<DrawingRequest>(post)
-                    application.log.info("Received drawingRequest: $drawingRequest")
                     val drawing = shareDrawings.createDrawing(
                         filePath = drawingRequest.filePath,
                         userUid = drawingRequest.userUid,
@@ -49,7 +50,6 @@ fun Application.configureRouting() {
                     call.respond(HttpStatusCode.BadRequest, "Invalid request body")
                 }
             }
-
             get("/{id}") {
                 val id = call.parameters["id"]?.toIntOrNull()
                 if (id != null) {
@@ -91,6 +91,80 @@ fun Application.configureRouting() {
                     call.respond(drawings)
                 } else {
                     call.respond(HttpStatusCode.BadRequest, "Invalid time format")
+                }
+            }
+
+            application.log.info("About to UPLOAD")
+
+            post("/upload") {
+                application.log.info("Received a request to /drawings/upload")
+                // Initialize the multipart data reception
+                val multipart = call.receiveMultipart()
+
+                // Initialize a variable to hold the file bytes
+                var fileBytes: ByteArray? = null
+                var fileName: String? = null
+                var user: String? = null
+                // Iterate through each part of the multipart data This method is used by KTOR often
+                multipart.forEachPart { part ->
+                    when (part) {
+                        // If the part is a FileItem (i.e., file upload), read its bytes
+                        is PartData.FileItem -> {
+                            try {
+                                fileBytes = part.streamProvider().readBytes()
+                                application.log.info("File successfully read into bytes")
+                                fileName = part.originalFileName
+                            } catch (e: Exception) {
+                                application.log.error("Error reading file bytes", e)
+                            }
+                        }
+                        is PartData.FormItem -> {
+                            // Handle form fields
+                            when (part.name) {
+                                "user" -> {
+                                    user = part.value
+                                }
+                            }
+                        }
+                        else -> {
+                            // Received an unsupported type of the multipart
+                            application.log.info("Received an unsupported part type in multipart data: ${part::class}")
+                        }
+                    }
+                    // Dispose of the part to free up resources
+                    part.dispose()
+                }
+
+                // Check if the file bytes were successfully read
+                val nonNullFileBytes = fileBytes
+                if (nonNullFileBytes != null) {
+                    // The folder path
+                    val folderPath = "/Users/keegan/Msd/CS6018/GroupProject/DrawingWebserver/DrawingWebserver/savedPNG"
+
+                    // Check if folder exists or create it if it doesn't
+                    val folder = File(folderPath)
+                    if (!folder.exists() && !folder.mkdirs()) {
+                        application.log.error("Failed to create directory: $folderPath")
+                        call.respond(HttpStatusCode.InternalServerError, mapOf("error" to "Server error: Could not create directory for file upload"))
+                        return@post
+                    }
+
+                    // Generate a unique file name and define the file path help with overwriting
+//                    val fileName = UUID.randomUUID().toString() //actual name of the file
+                    val filePath = "$folderPath/$fileName.png"
+
+                    // Saving the Drawing
+                    try {
+                        shareDrawings.saveDrawing(filePath, nonNullFileBytes)
+                        application.log.info("File uploaded and saved successfully at $filePath")
+                        call.respond(HttpStatusCode.OK, mapOf("message" to "File uploaded successfully"))
+                    } catch (e: Exception) {
+                        application.log.error("Error saving drawing at $filePath", e)
+                        call.respond(HttpStatusCode.InternalServerError, mapOf("error" to "Error saving drawing"))
+                    }
+                } else {
+                    application.log.warn("Invalid file data received in upload request")
+                    call.respond(HttpStatusCode.BadRequest, mapOf("error" to "Invalid file data"))
                 }
             }
         }

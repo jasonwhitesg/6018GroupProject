@@ -1,63 +1,126 @@
 package com.example.drawingapp
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
-import androidx.fragment.app.viewModels
-import com.example.drawingapp.R
-import com.google.gson.Gson
 import io.ktor.client.HttpClient
+import io.ktor.client.engine.android.Android
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
+import io.ktor.client.request.get
 import io.ktor.client.request.post
-import io.ktor.client.utils.EmptyContent.contentType
-import io.ktor.http.HttpHeaders.ContentType
+import io.ktor.http.ContentType
+import io.ktor.http.contentType
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import io.ktor.client.request.forms.*
+import io.ktor.http.*
+import java.io.File
+import io.ktor.client.statement.*
 
 
 class MainActivity : AppCompatActivity() {
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("MainActivity", "Before setting the theme.")
-        setTheme(R.style.Theme_Phase1)
-        Log.d("MainActivity", "After setting the theme.")
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        GlobalScope.launch(Dispatchers.Main) {
-            val serverUrl = "http://10.0.2.2:8080" // Replace with your server's address and port
-            val testData = DrawingRequest("image.png", "1234", "Ricardo")
-
-            val response = sendStringToServer(serverUrl, testData)
-            Log.d("ServerResponse", response)
-        }
-    }
-
-
-    private val client = HttpClient {
+    private val client = HttpClient(Android) {
         install(JsonFeature) {
             serializer = KotlinxSerializer()
         }
     }
+    private val coroutineScope = MainScope()
 
-    private suspend fun sendStringToServer(serverUrl: String, data: DrawingRequest): String {
-        val json = Gson().toJson(data)
-        Log.d("Sending JSON", json)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        coroutineScope.launch(Dispatchers.Main) {
+            val serverUrl = "http://10.0.2.2:8080"
+
+            // Perform multiple POST requests
+            val drawingRequest1 = DrawingRequest("path/to/file1", "userUid1", "userName1")
+            sendDrawingRequestToServer(serverUrl, drawingRequest1)
+
+            val drawingRequest2 = DrawingRequest("path/to/file2", "userUid2", "userName2")
+            sendDrawingRequestToServer(serverUrl, drawingRequest2)
+
+            // Fetch and log all drawings
+            val allDrawings = fetchAllDrawings(serverUrl)
+            Log.d("ServerResponse", "All Drawings: $allDrawings")
+
+            // Fetch and log drawing by ID (assuming ID is 1 for example)
+            val drawingById = fetchDrawingById(serverUrl, 1)
+            Log.d("ServerResponse", "Drawing by ID: $drawingById")
+            val root = applicationContext.filesDir.path
+            val filePath = "$root/flower.png"
+            // Assume you have a File instance
+            val file = File(filePath)
+
+            // Send the file to the server
+            val response = sendFileToServer(serverUrl, file)
+            Log.d("ServerResponse", "Response: $response")
+        }
+    }
+
+    private suspend fun sendFileToServer(serverUrl: String, file: File): String {
         return try {
-            client.post<String>("$serverUrl/drawings") {
-                body = json
+            val response: HttpResponse = client.post("$serverUrl/drawings/upload") {
+                body = MultiPartFormDataContent(
+                    formData {
+                        append("file", file.readBytes(), Headers.build {
+                            append(HttpHeaders.ContentDisposition, "filename=${file.name}")
+                        })
+                        append("name","flower.png")
+                        append("user", "keegan")
+                    }
+                )
+            }
+
+            if (response.status == HttpStatusCode.OK) {
+                response.readText()
+            } else {
+                "Failed to upload file: ${response.status}"
             }
         } catch (e: Exception) {
             "Error: ${e.message}"
         }
     }
-    override fun onDestroy() {
-        super.onDestroy()
-        client.close()
+
+    private suspend fun fetchAllDrawings(serverUrl: String): List<Drawing>? {
+        return try {
+            client.get("$serverUrl/drawings")
+        } catch (e: Exception) {
+            Log.e("ServerResponse", "Error fetching all drawings: ${e.message}")
+            null
+        }
     }
 
+    private suspend fun fetchDrawingById(serverUrl: String, id: Int): Drawing? {
+        return try {
+            client.get("$serverUrl/drawings/$id")
+        } catch (e: Exception) {
+            Log.e("ServerResponse", "Error fetching drawing by ID: ${e.message}")
+            null
+        }
+    }
+
+    private suspend fun sendDrawingRequestToServer(
+        serverUrl: String,
+        drawingRequest: DrawingRequest
+    ): String {
+        return try {
+            client.post<String>("$serverUrl/drawings") {
+                contentType(ContentType.Application.Json)
+                body = drawingRequest
+            }
+        } catch (e: Exception) {
+            "Error: ${e.message}"
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        coroutineScope.cancel()
+        client.close()
+    }
 }

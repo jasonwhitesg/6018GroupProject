@@ -9,16 +9,18 @@ import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import java.io.File
+import java.io.IOException
 
 class ShareDrawings {
-
     fun getAllDrawings(): List<Drawing> {
         return transaction {
             DrawingsTable.selectAll().map {
                 Drawing(
+                    id = it[DrawingsTable.id].value,
                     filePath = it[DrawingsTable.filePath],
                     userUid = it[DrawingsTable.userUid],
-                    userName = it[DrawingsTable.userName] ?: "", // Setting up to hand Null Users
+                    userName = it[DrawingsTable.userName] ?: "",
                     timestamp = it[DrawingsTable.timestamp]
                 )
             }
@@ -45,9 +47,10 @@ class ShareDrawings {
             DrawingsTable.select { DrawingsTable.timestamp greaterEq time }
                 .map {
                     Drawing(
+                        id = it[DrawingsTable.id].value,
                         filePath = it[DrawingsTable.filePath],
                         userUid = it[DrawingsTable.userUid],
-                        userName = it[DrawingsTable.userName] ?: "", // or handle null userName differently
+                        userName = it[DrawingsTable.userName] ?: "",
                         timestamp = it[DrawingsTable.timestamp]
                     )
                 }
@@ -58,9 +61,10 @@ class ShareDrawings {
         return transaction {
             DrawingsTable.select { DrawingsTable.id eq id }.singleOrNull()?.let {
                 Drawing(
+                    id = it[DrawingsTable.id].value,
                     filePath = it[DrawingsTable.filePath],
                     userUid = it[DrawingsTable.userUid],
-                    userName = it[DrawingsTable.userName] ?: "", // or handle null userName differently
+                    userName = it[DrawingsTable.userName] ?: "",
                     timestamp = it[DrawingsTable.timestamp]
                 )
             }
@@ -84,5 +88,19 @@ class ShareDrawings {
             DrawingsTable.deleteWhere { DrawingsTable.id eq id } > 0
         }
     }
+
+    /**
+     * Saves a drawing file to the specified path.
+     *
+     * @param filePath the path where the file should be saved.
+     * @param fileBytes the byte array representing the file content.
+     * @throws IOException if an I/O error occurs.
+     */
+    @Throws(IOException::class)
+    fun saveDrawing(filePath: String, fileBytes: ByteArray) {
+        val file = File(filePath)
+        file.writeBytes(fileBytes)
+    }
 }
+
 
