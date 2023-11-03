@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
             Log.d("ServerResponse", "Response: $response")
 
             // Received file from Server
-            val downloadedFile = receiveFileFromServer(serverUrl, "fromServer.png")
+//            val downloadedFile = receiveFileFromServer(serverUrl, "fromServer.png")
         }
     }
 
@@ -74,22 +74,26 @@ class MainActivity : AppCompatActivity() {
                     formData {
                         append("file", file.readBytes(), Headers.build {
                             append(HttpHeaders.ContentDisposition, "filename=${file.name}")
+                            append(HttpHeaders.ContentType, "application/octet-stream") // or the correct content type
                         })
-                        append("name","flower.png")
-                        append("user", "keegan")
+                        // append other fields if needed
                     }
                 )
             }
 
-            if (response.status == HttpStatusCode.OK) {
+            val status = response.status
+            Log.d("FileUpload", "Response status: $status")
+            if (status == HttpStatusCode.OK) {
                 response.readText()
             } else {
-                "Failed to upload file: ${response.status}"
+                "Failed to upload file: $status"
             }
         } catch (e: Exception) {
-            "Error: ${e.message}"
+            Log.e("FileUpload", "Exception during file upload", e)
+            "Error: ${e.localizedMessage}"
         }
     }
+
 
     private suspend fun fetchAllDrawings(serverUrl: String): List<Drawing>? {
         return try {

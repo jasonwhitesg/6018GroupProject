@@ -135,6 +135,7 @@ fun Application.configureRouting() {
                             when (part.name) {
                                 "userUid" -> {
                                     userUid = part.value
+                                    application.log.info("Received userUid: $userUid")
                                 }
 //                                "userName" -> {
 //                                    userName = part.value

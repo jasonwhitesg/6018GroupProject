@@ -72,13 +72,30 @@ class SharedDrawingsFragment : Fragment() {
     }
 
     private fun shareDrawing() {
-        val fileName = "/flower.png"
+        val fileName = "/jason.png"
         val root = context?.filesDir?.absolutePath
         val file = File(root + fileName)
-        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-            Log.d("FileUploadResponse", viewModel.sendFileToServer(file, "keegan"))
+
+        // Check if the file exists and log the result
+        if (file.exists()) {
+            Log.d("FileCheck", "The file $fileName exists.")
+        } else {
+            Log.d("FileCheck", "The file $fileName does not exist.")
+        }
+
+        // If the file exists, proceed to upload
+        if (file.exists()) {
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+                try {
+                    val response = viewModel.sendFileToServer(file, "keegan")
+                    Log.d("FileUploadResponse", response)
+                } catch (e: Exception) {
+                    Log.e("FileUploadError", "Error sending file to server", e)
+                }
+            }
         }
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
