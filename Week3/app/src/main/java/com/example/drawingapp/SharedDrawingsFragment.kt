@@ -14,6 +14,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -58,24 +59,33 @@ import java.io.File
 
 //some random comment
 class SharedDrawingsFragment : Fragment() {
-    // Get the ViewModel using the custom factory
-
-    //per whitney's suggestion changed to by "activityViewModels" instead of by "viewModels"
     private val viewModel: SharedDrawingsViewModel by activityViewModels {
-        DrawingViewModelFactory((requireActivity().application as DrawingApplication).drawingRepository)
+        SharedDrawingViewModelFactory()
     }
+
     private fun getSharedDrawings(): LiveData<List<Drawing>> {
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
             viewModel.updateSharedDrawingsList()
         }
         return viewModel.getDrawingsLiveData()
     }
+
+    private fun shareDrawing() {
+        val fileName = "/flower.png"
+        val root = context?.filesDir?.absolutePath
+        val file = File(root + fileName)
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+            Log.d("FileUploadResponse", viewModel.sendFileToServer(file, "keegan"))
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val navController = findNavController() // Fetch NavController
+        val navController = findNavController()
+        // Fetch NavController
 
         return ComposeView(requireContext()).apply {
             setContent {
@@ -88,13 +98,14 @@ class SharedDrawingsFragment : Fragment() {
     }
 
 
-    private fun loadBitmapFromFile(filePath: String): Bitmap? {
-        val file = File(filePath)
-        if (file.exists()) {
-            return BitmapFactory.decodeFile(file.absolutePath)
+    private fun loadBitmapFromServer(fileName: String): Bitmap? {
+        var imageByteArray: ByteArray? = null
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+            imageByteArray = viewModel.requestDrawing(fileName)
         }
-        return null
+        return imageByteArray?.let { BitmapFactory.decodeByteArray(it, 0, it.size) }
     }
+
     @Composable
     fun ImageBitmapComposable(
         imageBitmap: ImageBitmap,
@@ -107,6 +118,7 @@ class SharedDrawingsFragment : Fragment() {
             contentScale = ContentScale.Crop
         )
     }
+
     @Composable
     fun SharedDrawingsScreen(
         viewModel: SharedDrawingsViewModel,
@@ -114,13 +126,14 @@ class SharedDrawingsFragment : Fragment() {
         navController: NavController
     ) {
 
-        val allDrawings: List<Drawing> by viewModel.getDrawingsLiveData().observeAsState(emptyList())
+        val allDrawings: List<Drawing> by viewModel.getDrawingsLiveData()
+            .observeAsState(emptyList())
 
 
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text("Saved Drawings") },
+                    title = { Text("Shared Drawings") },
                     navigationIcon = {
                         IconButton(onClick = { navController.popBackStack() }) {
                             Icon(Icons.Filled.ArrowBack, contentDescription = "Navigate Back")
@@ -135,20 +148,38 @@ class SharedDrawingsFragment : Fragment() {
                     .padding(2.dp)
                     .padding(contentPadding)
             ) {
-                // Add a button at the top of the screen
-                Button(
-                    onClick = {
-                        // Handle button click action here
-                    },
-                    shape = RoundedCornerShape(16.dp), // Specify the corner radius
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
+//                 Add a button at the top of the screen
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(text = "Import")
+                    Button(
+                        onClick = {
+                                  shareDrawing()
+                        },
+                        shape = RoundedCornerShape(16.dp), // Specify the corner radius
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(16.dp)
+                    ) {
+                        Text(text = "Upload")
+                    }
+                    Button(
+                        onClick = {
+                                  getSharedDrawings()
+                        },
+                        shape = RoundedCornerShape(16.dp), // Specify the corner radius
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(16.dp)
+                    ) {
+                        Text(text = "Refresh")
+                    }
                 }
                 LazyColumn {
                     items(allDrawings) { drawing ->
+                        val fileName = drawing.filePath
+                        val imageBitmap = loadBitmapFromServer(fileName)
                         Box(
                             modifier = Modifier
                                 .padding(8.dp)
@@ -163,9 +194,9 @@ class SharedDrawingsFragment : Fragment() {
                                     shape = RoundedCornerShape(16.dp)
                                 )
                                 .clickable {
-                                    onDrawingClick(drawing.filePath)
-                                    val bundle = bundleOf("filePath" to drawing.filePath)
-                                    Log.d(drawing.filePath, "saved file path")
+                                    onDrawingClick(fileName)
+                                    val bundle = bundleOf("filePath" to fileName)
+                                    Log.d(fileName, "saved file path")
                                     navController.navigate(
                                         R.id.action_back_to_drawingFragment,
                                         bundle
@@ -179,8 +210,7 @@ class SharedDrawingsFragment : Fragment() {
                                 verticalArrangement = Arrangement.Center,
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
-                                val fileName = drawing
-                                val imageBitmap = loadBitmapFromFile(drawing.filePath)
+
                                 if (imageBitmap != null) {
                                     Column(
                                         modifier = Modifier
