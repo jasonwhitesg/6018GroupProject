@@ -64,6 +64,7 @@ class SharedDrawingsViewModel : ViewModel() {
         return drawingsList
     }
 
+
     // Update the LiveData with a new List<Drawing>
     fun setDrawings(drawings: List<Drawing>) {
         drawingsList.value = drawings
@@ -85,6 +86,9 @@ class SharedDrawingsViewModel : ViewModel() {
             null
         }
     }
+
+
+
 
 }
 class SharedDrawingViewModelFactory() : ViewModelProvider.Factory {
