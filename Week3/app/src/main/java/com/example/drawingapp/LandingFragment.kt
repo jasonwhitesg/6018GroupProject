@@ -54,8 +54,7 @@ class LandingFragment : Fragment() {
             createUser(email, password, statusTextView)
         }
 
-        findNavController().navigate(R.id.action_to_drawingFragment)
-
+//        findNavController().navigate(R.id.action_to_drawingFragment)
 
         return view
     }

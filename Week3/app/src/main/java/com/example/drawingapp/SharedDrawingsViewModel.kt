@@ -41,7 +41,7 @@ class SharedDrawingsViewModel : ViewModel() {
                             append(HttpHeaders.ContentDisposition, "filename=${file.name}")
                         })
 //                        append("name", fileName)
-                        append("userUid", userUid)
+                        append("userUid", userUid,)
                     }
                 )
             }

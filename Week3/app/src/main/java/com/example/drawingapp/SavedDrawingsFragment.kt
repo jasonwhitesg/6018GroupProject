@@ -67,6 +67,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.android.Android
+import io.ktor.client.features.json.JsonFeature
+import io.ktor.client.features.json.serializer.KotlinxSerializer
+import io.ktor.client.request.delete
+import io.ktor.client.request.parameter
+import io.ktor.client.request.url
+import io.ktor.client.statement.HttpResponse
+import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -94,9 +103,13 @@ class SavedDrawingsFragment : Fragment() {
         } else if (uid == null) {
             Log.e("FileUploadError", "User ID is null, user might not be logged in.")
 
-
         }
+    }
 
+    private val client = HttpClient(Android) {
+        install(JsonFeature) {
+            serializer = KotlinxSerializer()
+        }
     }
 
     //per whitney's suggestion changed to by "activityViewModels" instead of by "viewModels"
@@ -104,7 +117,11 @@ class SavedDrawingsFragment : Fragment() {
         DrawingViewModelFactory((requireActivity().application as DrawingApplication).drawingRepository)
     }
 
-
+    suspend fun deleteDrawingByUserUid(userUid: String): HttpResponse {
+        return client.delete {
+            url("http://10.0.2.2:8080/drawings/delete/$userUid")
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -253,17 +270,34 @@ class SavedDrawingsFragment : Fragment() {
 
                                         IconButton(
                                             onClick = {
-                                                // If the shareIconState is true, call shareDrawing.
                                                 if (shareIconState.value) {
+                                                    // Handle the sharing action
                                                     shareDrawing(drawing.savedFile)
-                                                    // Optional: Toggle the icon state if you want to change the icon after sharing
-                                                    shareIconState.value = !shareIconState.value
                                                 } else {
-                                                    // Handle delete action
-                                                    shareIconState.value = !shareIconState.value
+                                                    // If we are not in share state, it means delete icon is visible
+                                                    // Trigger the delete action
+                                                    val uid = FirebaseAuth.getInstance().currentUser?.uid
+                                                    uid?.let {
+                                                        // Start a coroutine to call the delete function
+                                                        viewLifecycleOwner.lifecycleScope.launch {
+                                                            try {
+                                                                val response = deleteDrawingByUserUid(uid) // pass the user's UID
+                                                                if (response.status == HttpStatusCode.OK) {
+                                                                    Log.d("DeleteSuccess", "Drawing deleted successfully.")
+                                                                    // Optionally, update the UI or list of drawings here if needed
+                                                                } else {
+                                                                    Log.e("DeleteFailed", "Failed to delete drawing: ${response.status}")
+                                                                }
+
+                                                            } catch (e: Exception) {
+                                                                Log.e("DeleteError", "Error deleting drawing", e)
+                                                            }
+                                                        }
+                                                    }
                                                 }
+                                                shareIconState.value = !shareIconState.value
                                             },
-                                            modifier = Modifier.size(48.dp)
+                                       modifier = Modifier.size(48.dp)
                                         ) {
                                             Icon(
                                                 painter = painterResource(id = if (shareIconState.value) R.drawable.ic_share_icon_shared_drawing else R.drawable.ic_trash_icon_shared_drawing),
