@@ -287,19 +287,21 @@ class SavedDrawingsFragment : Fragment() {
                                             modifier = Modifier.weight(1f) // Takes up the remaining space
                                         )
 
-                                        val shareIconState = observe { mutableStateOf(isShared) }
+                                        val shareIconState = remember { mutableStateOf(isShared) }
 
                                         IconButton(
                                             onClick = {
                                                 // If the shareIconState is true, call shareDrawing.
+
                                                 if (shareIconState.value) {
+                                                    // Handle delete action
+                                                    shareIconState.value = !shareIconState.value
+                                                } else {
                                                     shareDrawing(drawing.savedFile)
                                                     // Optional: Toggle the icon state if you want to change the icon after sharing
                                                     shareIconState.value = !shareIconState.value
-                                                } else {
-                                                    // Handle delete action
-                                                    shareIconState.value = !shareIconState.value
                                                 }
+                                                Log.d("IconStateChange", "Value = ${shareIconState.value}")
                                                 serverFileNames = getCurrentFilenamesFromServer()
                                             },
                                             modifier = Modifier.size(48.dp)
