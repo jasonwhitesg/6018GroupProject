@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
             val drawingById = fetchDrawingById(serverUrl, 1)
             Log.d("ServerResponse", "Drawing by ID: $drawingById")
             val root = applicationContext.filesDir.path
-            val filePath = "$root/flower.png"
+            val filePath = "$root/jason.png"
             // Assume you have a File instance
             val file = File(filePath)
 

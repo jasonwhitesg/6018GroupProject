@@ -199,11 +199,11 @@ class SharedDrawingsFragment : Fragment() {
                                         )
                                         Spacer(modifier = Modifier.height(8.dp))
                                         // Centered text
-                                        Text(
-                                            text = fileName,
-                                            style = TextStyle(fontSize = 22.sp),
-                                            modifier = Modifier.fillMaxWidth()
-                                        )
+//                                        Text(
+//                                            text = fileName,
+//                                            style = TextStyle(fontSize = 22.sp),
+//                                            modifier = Modifier.fillMaxWidth()
+//                                        )
 //                            val fileName = drawing.savedFile.substringAfterLast("/")
 //                            Text(text = fileName, style = TextStyle(fontSize = 22.sp))
 
