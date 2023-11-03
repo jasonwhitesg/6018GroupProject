@@ -28,6 +28,17 @@ class ShareDrawings {
         }
     }
 
+    fun deleteDrawingByUserUid(userUid: String): Boolean {
+        return transaction {
+            // Delete the record(s) where the userUid matches the provided userUid
+            val deletedCount = DrawingsTable.deleteWhere { DrawingsTable.userUid eq userUid }
+
+            // Return true if at least one record was deleted, false otherwise
+            deletedCount > 0
+        }
+    }
+
+
     fun getAllDrawingsOrderedByTimestamp(descending: Boolean = true): List<Drawing> {
         return transaction {
             DrawingsTable.selectAll()

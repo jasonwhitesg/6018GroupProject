@@ -65,16 +65,46 @@ import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.lifecycle.lifecycleScope
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 //some random comment
 class SavedDrawingsFragment : Fragment() {
     // Get the ViewModel using the custom factory
+    private val sharedDrawingsViewModel: SharedDrawingsViewModel by viewModels { SharedDrawingViewModelFactory() }
+    private fun shareDrawing(filePath: String) {
+//        val fileName = "/jason.png"
+//        val root = context?.filesDir?.absolutePath
+        val file = File(filePath)
+
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+
+        if (file.exists() && uid != null) { // Check that the file exists and uid is not null
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+                try {
+                    val response = sharedDrawingsViewModel.sendFileToServer(file, uid) // uid is now known to be non-null
+                    Log.d("FileUploadResponse", response)
+                } catch (e: Exception) {
+                    Log.e("FileUploadError", "Error sending file to server", e)
+                }
+            }
+        } else if (uid == null) {
+            Log.e("FileUploadError", "User ID is null, user might not be logged in.")
+
+
+        }
+
+    }
 
     //per whitney's suggestion changed to by "activityViewModels" instead of by "viewModels"
     private val viewModel: SavedDrawingsViewModel by activityViewModels {
         DrawingViewModelFactory((requireActivity().application as DrawingApplication).drawingRepository)
     }
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -84,14 +114,21 @@ class SavedDrawingsFragment : Fragment() {
         val navController = findNavController() // Fetch NavController
         return ComposeView(requireContext()).apply {
             setContent {
-                SavedDrawingsScreen(viewModel, { selectedDrawing ->
-                    // Handle the drawing click here
-                    println("Selected drawing: $selectedDrawing")
-                }, navController)  // Pass the NavController here
+                SavedDrawingsScreen(
+                    viewModel = viewModel,
+                    onDrawingClick = { selectedDrawing ->
+                        // Handle the drawing click here
+                        println("Selected drawing: $selectedDrawing")
+                    },
+                    navController = navController,
+                    shareDrawing = { filePath ->
+                        // Implement the sharing functionality here
+                        shareDrawing(filePath)
+                    }
+                )
             }
         }
     }
-
 
     private fun loadBitmapFromFile(filePath: String): Bitmap? {
         val file = File(filePath)
@@ -118,7 +155,8 @@ class SavedDrawingsFragment : Fragment() {
     fun SavedDrawingsScreen(
         viewModel: SavedDrawingsViewModel,
         onDrawingClick: (String) -> Unit,
-        navController: NavController
+        navController: NavController,
+        shareDrawing: (String) -> Unit
     ) {
         val allDrawings by viewModel.allSavedDrawings.observeAsState(emptyList())
 
@@ -215,9 +253,15 @@ class SavedDrawingsFragment : Fragment() {
 
                                         IconButton(
                                             onClick = {
-                                                // Toggle the state
-                                                shareIconState.value = !shareIconState.value
-                                                // Implement the actions
+                                                // If the shareIconState is true, call shareDrawing.
+                                                if (shareIconState.value) {
+                                                    shareDrawing(drawing.savedFile)
+                                                    // Optional: Toggle the icon state if you want to change the icon after sharing
+                                                    shareIconState.value = !shareIconState.value
+                                                } else {
+                                                    // Handle delete action
+                                                    shareIconState.value = !shareIconState.value
+                                                }
                                             },
                                             modifier = Modifier.size(48.dp)
                                         ) {
