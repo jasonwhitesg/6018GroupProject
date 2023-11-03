@@ -1,6 +1,5 @@
 package com.example.plugins
 
-import com.example.DrawingsTable
 import com.example.ShareDrawings
 import io.ktor.http.*
 import io.ktor.resources.*
@@ -13,9 +12,6 @@ import io.ktor.server.routing.*
 import kotlinx.serialization.Serializable
 import java.io.File
 import io.ktor.http.content.*
-import io.ktor.http.*
-import io.ktor.server.request.*
-import io.ktor.server.response.*
 import java.util.*
 
 import java.nio.file.Paths
@@ -73,11 +69,12 @@ fun Application.configureRouting() {
                 }
             }
 
-            delete("/{id}") {
+            delete("/{userUid}/{fileName}") {
                 application.log.info("Handling DELETE request for drawing")
-                val id = call.parameters["id"]?.toIntOrNull()
-                if (id != null) {
-                    if (shareDrawings.deleteDrawing(id)) {
+                val userUid = call.parameters["userUid"]?.toString()
+                val fileName = call.parameters["fileName"]?.toString()
+                if (userUid != null && fileName != null) {
+                    if (shareDrawings.deleteDrawing(userUid,fileName)) {
                         call.respond(HttpStatusCode.OK, "Drawing deleted successfully")
                     } else {
                         call.respond(HttpStatusCode.NotFound, "Drawing not found")
@@ -86,6 +83,21 @@ fun Application.configureRouting() {
                     call.respond(HttpStatusCode.BadRequest, "Invalid ID format")
                 }
             }
+//            delete("/delete/{userUid}") {
+//                val userUid = call.parameters["userUid"] ?: return@delete call.respond(HttpStatusCode.BadRequest, "Missing userUid")
+//
+//                try {
+//                    val success = shareDrawings.deleteDrawingByUserUid(userUid)
+//                    if (success) {
+//                        call.respond(HttpStatusCode.OK, "Drawing(s) deleted successfully for userUid: $userUid")
+//                    } else {
+//                        call.respond(HttpStatusCode.NotFound, "No drawing(s) found for the given userUid")
+//                    }
+//                } catch (e: Exception) {
+//                    application.log.error("Error deleting drawing by userUid", e)
+//                    call.respond(HttpStatusCode.InternalServerError, "Error deleting drawing")
+//                }
+//            }
 
             get("/ordered") {
                 val order = call.request.queryParameters["order"] ?: "desc"
@@ -154,8 +166,7 @@ fun Application.configureRouting() {
 
                 // Check if the file bytes were successfully read and required information is available
                 if (fileBytes != null && fileName != null && userUid != null) {
-                    val projectPath = getProjectPath()
-                    val folderPath = "$projectPath/savedPNG"
+                    val folderPath = getProjectPath() + "/savedPNG"
                     application.log.info("PATH=$folderPath")
 
                     // Generating a unique file name and defining the file path
