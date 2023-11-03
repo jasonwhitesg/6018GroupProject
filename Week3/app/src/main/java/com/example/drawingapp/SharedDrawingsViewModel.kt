@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
+import io.ktor.client.features.get
 import io.ktor.client.request.forms.MultiPartFormDataContent
 import io.ktor.client.request.forms.formData
 import io.ktor.client.request.get
@@ -57,7 +58,9 @@ class SharedDrawingsViewModel : ViewModel() {
 
     suspend fun requestDrawing(fileName: String): ByteArray? {
         return try {
-            client.get<ByteArray>("$url/drawings/download/$fileName")
+            val imageFile = client.get<ByteArray>("$url/drawings/download/$fileName")
+            Log.d("SUCCESS","RECEIVED IMAGE BYTE ARRAY")
+            return imageFile
         } catch (e: Exception) {
             Log.e("ServerFile", "Error receiving file from server: ${e.message}")
             null // Return null on failure
@@ -79,6 +82,10 @@ class SharedDrawingsViewModel : ViewModel() {
     suspend fun updateSharedDrawingsList() {
         try {
             val downloadUrl = "$url/drawings"
+            val drawingsList: List<Drawing> = client.get(downloadUrl)
+            for(drawing:Drawing in drawingsList){
+                Log.d("DRAWING",drawing.toString())
+            }
             setDrawings(client.get(downloadUrl))
         } catch (e: Exception) {
             // Handle the error and return null on failure

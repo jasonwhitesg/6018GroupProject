@@ -24,6 +24,7 @@ data class DrawingRequest(
 data class Drawing(
     val id: Int,
     val filePath: String,
+    val fileName: String,
     val userUid: String,
     val userName: String,
     val timestamp: Long
