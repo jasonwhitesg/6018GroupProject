@@ -175,7 +175,7 @@ fun Application.configureRouting() {
                         application.log.info("Drawing information saved to database with ID: ${drawing.id}")
                         call.respond(
                             HttpStatusCode.OK,
-                            mapOf("message" to "File uploaded successfully", "drawingId" to drawing.id)
+                            mapOf("message" to "File uploaded successfully")
                         )
                     } catch (e: Exception) {
                         application.log.error("Error saving drawing", e)
@@ -192,8 +192,7 @@ fun Application.configureRouting() {
             get("/download/{fileName}") {
                 val fileName = call.parameters["fileName"]
                 if (fileName != null) {
-                    val folderPath =
-                        "/Users/ricardo2830/CS6018_Group/6018GroupProject/DrawingWebserver/DrawingWebserver/savedPNG"
+                    val folderPath = getProjectPath() + "/savedPNG"
                     val filePath = "$folderPath/$fileName"
 
                     val file = File(filePath)

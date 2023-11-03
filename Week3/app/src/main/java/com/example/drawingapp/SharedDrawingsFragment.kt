@@ -50,11 +50,13 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.io.File
 
 //some random comment
@@ -98,12 +100,31 @@ class SharedDrawingsFragment : Fragment() {
     }
 
 
-    private fun loadBitmapFromServer(fileName: String): Bitmap? {
+    private fun loadBitmapFromServer(liveData: MutableLiveData<Bitmap?>, fileName: String) {
         var imageByteArray: ByteArray? = null
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-            imageByteArray = viewModel.requestDrawing(fileName)
+            try {
+                imageByteArray = viewModel.requestDrawing(fileName)
+                val bitmap = imageByteArray?.let {
+                    BitmapFactory.decodeByteArray(
+                        imageByteArray,
+                        0,
+                        it.size
+                    )
+                }
+
+                if (imageByteArray != null) {
+                    Log.d("Bitmap Load", "Received image data for $fileName")
+                    liveData.postValue(bitmap)
+                } else {
+                    Log.e("Bitmap Load", "Image data is null for $fileName")
+                    liveData.postValue(null)
+                }
+            } catch (e: Exception) {
+                Log.e("Bitmap Load", "Error loading image data for $fileName: ${e.message}")
+                liveData.postValue(null)
+            }
         }
-        return imageByteArray?.let { BitmapFactory.decodeByteArray(it, 0, it.size) }
     }
 
     @Composable
@@ -155,7 +176,7 @@ class SharedDrawingsFragment : Fragment() {
                 ) {
                     Button(
                         onClick = {
-                                  shareDrawing()
+                            shareDrawing()
                         },
                         shape = RoundedCornerShape(16.dp), // Specify the corner radius
                         modifier = Modifier
@@ -166,7 +187,7 @@ class SharedDrawingsFragment : Fragment() {
                     }
                     Button(
                         onClick = {
-                                  getSharedDrawings()
+                            getSharedDrawings()
                         },
                         shape = RoundedCornerShape(16.dp), // Specify the corner radius
                         modifier = Modifier
@@ -178,8 +199,15 @@ class SharedDrawingsFragment : Fragment() {
                 }
                 LazyColumn {
                     items(allDrawings) { drawing ->
-                        val fileName = drawing.filePath
-                        val imageBitmap = loadBitmapFromServer(fileName)
+                        val fileName = drawing.fileName
+                        val imageLiveData = MutableLiveData<Bitmap?>()
+                        loadBitmapFromServer(imageLiveData, fileName)
+                        val bitmap by imageLiveData.observeAsState(initial = null)
+                        if (imageLiveData != null) {
+                            Log.d("SUCCESS", "ImageByteArray decoded to bitmap")
+                        } else {
+                            Log.d("FAILURE", "ImageByteArray not decoded to bitmap")
+                        }
                         Box(
                             modifier = Modifier
                                 .padding(8.dp)
@@ -211,7 +239,7 @@ class SharedDrawingsFragment : Fragment() {
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
 
-                                if (imageBitmap != null) {
+                                if (imageLiveData != null) {
                                     Column(
                                         modifier = Modifier
                                             .fillMaxSize()
@@ -220,12 +248,14 @@ class SharedDrawingsFragment : Fragment() {
                                         horizontalAlignment = Alignment.CenterHorizontally
                                     ) {
                                         // Display the loaded image as a thumbnail
-                                        ImageBitmapComposable(
-                                            imageBitmap = imageBitmap.asImageBitmap(),
-                                            modifier = Modifier
-                                                .size(80.dp)
-                                                .clip(RoundedCornerShape(8.dp))
-                                        )
+                                        bitmap?.let {
+                                            ImageBitmapComposable(
+                                                imageBitmap = it.asImageBitmap(),
+                                                modifier = Modifier
+                                                    .size(80.dp)
+                                                    .clip(RoundedCornerShape(8.dp))
+                                            )
+                                        }
                                         Spacer(modifier = Modifier.height(8.dp))
                                         // Centered text
                                         Text(
