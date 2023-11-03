@@ -66,7 +66,7 @@ class DrawingFragment : Fragment() {
 
     private fun showDrawingNameDialog() {
         val editText = EditText(context)
-        val alertDialog = AlertDialog.Builder(requireContext())
+        AlertDialog.Builder(requireContext())
             .setTitle("Name Your Drawing")
             .setView(editText)
             .setPositiveButton("Save") { _, _ ->
@@ -166,6 +166,7 @@ class DrawingFragment : Fragment() {
         // Log exit point of the function
         Log.d("DrawingApp", "restoreBallPosition - Exiting function")
     }
+
     private fun doesFileExist(filePath: String): Boolean {
         val file = File(filePath)
         return file.exists()
@@ -231,7 +232,6 @@ class DrawingFragment : Fragment() {
     }
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -250,12 +250,11 @@ class DrawingFragment : Fragment() {
         viewModel.bitmap.observe(viewLifecycleOwner) { bitmap ->
             binding.customView.setBitmap(bitmap)
         }
-
-        val colorPickerButton = binding.button3
+        //GET BITMAP
         bitmap = binding.customView.getCurrentBitmap()
 
-        //on touch color picker button
-        colorPickerButton.setOnClickListener {
+        //COLOR PICKER BUTTON LISTENER
+        binding.colorPickerButton.setOnClickListener {
             bitmap = binding.customView.getCurrentBitmap()
             // Update ViewModel with the final drawing
             binding.bottomMenuContainer.visibility = View.GONE
@@ -264,14 +263,13 @@ class DrawingFragment : Fragment() {
             viewModel.updateBitmap(bitmap)
         }
 
-        val clearDrawingButton = binding.button7
-        clearDrawingButton.setOnClickListener {
+        //CLEAR BUTTON LISTENER
+        binding.clearButton.setOnClickListener {
             binding.customView.clearBitmap()
         }
 
-        //rename buttons in xml!!!
-        val saveDrawingButton = binding.button4
-        saveDrawingButton.setOnClickListener {
+        //SAVE BUTTON LISTENER
+        binding.saveButton.setOnClickListener {
             if (lastSavedFilePath == null) {
                 showDrawingNameDialog()
             } else {
@@ -281,24 +279,21 @@ class DrawingFragment : Fragment() {
                     lastSavedFilePath!!.substringAfterLast('/'),
                     requireContext()
                 )
-//                Log.d("DrawingFragment", "Saved file path: $lastSavedFilePath")
             }
         }
 
-        val loadDrawingButton = binding.button6
-        loadDrawingButton.setOnClickListener {
+        //LOAD BUTTON LISTENER
+        binding.loadButton.setOnClickListener {
             findNavController().navigate(R.id.action_to_savedDrawingsFragment)
         }
 
-        //On touch center of color picker
-        val imageView = binding.imageView
-        imageView.setOnClickListener {
+        //LOAD BUTTON LISTENER
+        binding.imageView.setOnClickListener {
             closeColorPicker()
         }
-        val colorPicker = binding.colorPicker
-        val customView = binding.customView
 
-        colorPicker.setColorSelectionListener(object : SimpleColorSelectionListener() {
+        //COLOR PICKER LISTENER
+        binding.colorPicker.setColorSelectionListener(object : SimpleColorSelectionListener() {
             override fun onColorSelected(color: Int) {
                 if (!binding.toggleButton.isChecked) { // "Ball" mode
                     binding.customView.setBallColor(color)
@@ -307,14 +302,13 @@ class DrawingFragment : Fragment() {
                     binding.customView.paint.color = color
                     viewModel.updateSelectedColor(color) // Update the selected color in ViewModel
                 }
-                imageView.background.colorFilter =
+                binding.imageView.background.colorFilter =
                     PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN)
             }
         })
 
-        val sizeSlider = binding.sizeSlider
-
-        sizeSlider.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        //SIZE SLIDER LISTENER
+        binding.sizeSlider.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(
                 seekBar: SeekBar?,
                 progress: Int,
@@ -323,10 +317,10 @@ class DrawingFragment : Fragment() {
                 val newSize = progress.toFloat() // Convert the progress to float
 
                 if (!binding.toggleButton.isChecked) {
-                    customView.setBallSize(newSize)
+                    binding.customView.setBallSize(newSize)
                     viewModel.updateBallSize(newSize) // Update Ball SIze
                 } else {
-                    customView.paint.strokeWidth = newSize
+                    binding.customView.paint.strokeWidth = newSize
                     viewModel.updateSelectedSliderValue(progress) // Update the selected slider value in ViewModel
                 }
             }
@@ -346,8 +340,7 @@ class DrawingFragment : Fragment() {
         val arguments = arguments
         if (arguments != null) {
             // Arguments were provided, you can access them here
-            val bundleValue =
-                arguments.getString("filePath") // Replace "key" with the actual key you used
+            val bundleValue = arguments.getString("filePath") // Replace "key" with the actual key you used
             // Do something with the bundleValue or other arguments
             Log.d(bundleValue, "<-- should navigate here")
             if (bundleValue != null) {
@@ -380,9 +373,7 @@ class DrawingFragment : Fragment() {
             alertDialog.show()
         }
 
-        val toggleButton = binding.toggleButton
-
-        toggleButton.setOnCheckedChangeListener { _, isChecked ->
+        binding.toggleButton.setOnCheckedChangeListener { _, isChecked ->
             // Handle the toggle button state change
             binding.customView.setMode(isChecked)
         }
@@ -404,49 +395,48 @@ class DrawingFragment : Fragment() {
             binding.customView.setBallSize(size)
         }
 
-        val shareDrawingButton = binding.button11
-        shareDrawingButton.setOnClickListener {
-            Log.d("DEBUG", "button11 clicked")
-                val filePath = lastSavedFilePath
-                if (filePath != null) {
-                    val fileExists = doesFileExist(filePath)
-                    if (fileExists) {
-                        Log.d("FILE EXISTENCE", "FILE EXISTS")
-                    } else {
-                        Log.d("FILE EXISTENCE", "FILE DOES NOT EXIST")
-                    }
-                    val uri = getFileUri(requireContext(), filePath)
-                    val shareIntent = Intent().apply {
-                        action = Intent.ACTION_SEND
-                        putExtra(Intent.EXTRA_STREAM, uri)
-                        type = "image/*"
-                    }
-                    startActivity(Intent.createChooser(shareIntent, null))
+        binding.shareButton.setOnClickListener {
+            Log.d("DEBUG", "shareButton clicked")
+            val filePath = lastSavedFilePath
+            if (filePath != null) {
+                val fileExists = doesFileExist(filePath)
+                if (fileExists) {
+                    Log.d("FILE EXISTENCE", "FILE EXISTS")
                 } else {
-                    val currentBitmap = binding.customView.getCurrentBitmap()
+                    Log.d("FILE EXISTENCE", "FILE DOES NOT EXIST")
+                }
+                val uri = getFileUri(requireContext(), filePath)
+                val shareIntent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_STREAM, uri)
+                    type = "image/*"
+                }
+                startActivity(Intent.createChooser(shareIntent, null))
+            } else {
+                val currentBitmap = binding.customView.getCurrentBitmap()
 
-                    // Save the bitmap to internal storage and get the file path
-                    val drawingName = "tempFIle"
+                // Save the bitmap to internal storage and get the file path
+                val drawingName = "tempFIle"
 
-                    val filePath =
-                        saveBitmapToInternalStorage(
-                            currentBitmap,
-                            "$drawingName.png",
-                            requireContext()
-                        )
+                val filePath =
+                    saveBitmapToInternalStorage(
+                        currentBitmap,
+                        "$drawingName.png",
+                        requireContext()
+                    )
 
-                    val uri = getFileUri(requireContext(), filePath)
-                    val shareIntent = Intent().apply {
-                        action = Intent.ACTION_SEND
-                        putExtra(Intent.EXTRA_STREAM, uri)
-                        type = "image/*"
-                    }
-                    startActivity(Intent.createChooser(shareIntent, null))
-                    Log.e("ERROR", "lastSavedFilePath is null")
+                val uri = getFileUri(requireContext(), filePath)
+                val shareIntent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_STREAM, uri)
+                    type = "image/*"
+                }
+                startActivity(Intent.createChooser(shareIntent, null))
+                Log.e("ERROR", "lastSavedFilePath is null")
 
 //                    deleteFileFromInternalStorage("$drawingName.png", requireContext())
-                }
-            
+            }
+
         }
 
         // Observe changes in ball color

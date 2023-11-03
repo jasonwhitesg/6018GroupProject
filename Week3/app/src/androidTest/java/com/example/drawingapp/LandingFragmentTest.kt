@@ -40,10 +40,10 @@ class LandingFragmentTest {
         onView(withId(R.id.drawingFragment)).check(matches(isDisplayed()))
 
         // Check if specific views or buttons in DrawingFragment are displayed
-        onView(withId(R.id.button3)).check(matches(isDisplayed())) // Color picker button
-        onView(withId(R.id.button4)).check(matches(isDisplayed())) // Save drawing button
-        onView(withId(R.id.button6)).check(matches(isDisplayed())) // Load Drawing button
-        onView(withId(R.id.button7)).check(matches(isDisplayed())) // Clear Drawing button
+        onView(withId(R.id.colorPickerButton)).check(matches(isDisplayed())) // Color picker button
+        onView(withId(R.id.saveButton)).check(matches(isDisplayed())) // Save drawing button
+        onView(withId(R.id.loadButton)).check(matches(isDisplayed())) // Load Drawing button
+        onView(withId(R.id.clearButton)).check(matches(isDisplayed())) // Clear Drawing button
         onView(withId(R.id.sizeSlider)).check(matches(isDisplayed())) // Brush Size Slider
     }
 

@@ -3,7 +3,6 @@ package com.example.drawingapp
 import android.graphics.Bitmap
 import android.view.View
 import android.widget.EditText
-import androidx.compose.ui.graphics.Color
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
@@ -59,7 +58,7 @@ class DrawingFragmentTest {
         onView(withId(R.id.customView)).perform(swipeRight())
 
         // Perform a click action on the "Save Drawing" button
-        onView(withId(R.id.button4)).perform(click())
+        onView(withId(R.id.saveButton)).perform(click())
 
         // Check if the dialog is displayed
         onView(withText("Name Your Drawing")).check(matches(isDisplayed()))
@@ -81,7 +80,7 @@ class DrawingFragmentTest {
         onView(withId(R.id.customView)).perform(swipeDown())
 
         // Perform a click action on the "Save Drawing" button
-        onView(withId(R.id.button4)).perform(click())
+        onView(withId(R.id.saveButton)).perform(click())
 
         // Check if the dialog is displayed
         onView(withText("Name Your Drawing")).check(matches(isDisplayed()))
@@ -104,7 +103,7 @@ class DrawingFragmentTest {
         onView(withId(R.id.customView)).perform(swipeRight())
 
         // Perform a click action on the "Save Drawing" button
-        onView(withId(R.id.button4)).perform(click())
+        onView(withId(R.id.saveButton)).perform(click())
 
         // Check if the dialog is displayed
         onView(withText("Name Your Drawing")).check(matches(isDisplayed()))
@@ -116,7 +115,7 @@ class DrawingFragmentTest {
         onView(withText("Save")).perform(click())
 
         // Perform a click action on the "Load Drawing" button
-        onView(withId(R.id.button6)).perform(click())
+        onView(withId(R.id.loadButton)).perform(click())
 
     }
 
@@ -130,7 +129,7 @@ class DrawingFragmentTest {
         onView(withId(R.id.customView)).perform(swipeRight())
 
         // Perform a click action on the "Clear Drawing" button
-        onView(withId(R.id.button7)).perform(click())
+        onView(withId(R.id.clearButton)).perform(click())
 
         // Check if the drawing canvas is cleared
         onView(withId(R.id.customView)).check { view, _ ->
@@ -148,7 +147,7 @@ class DrawingFragmentTest {
         onView(withId(R.id.button)).perform(click())
 
         // Perform a click action on the "Pick Color" button
-        onView(withId(R.id.button3)).perform(click())
+        onView(withId(R.id.colorPickerButton)).perform(click())
 
         // Check if specific color picker views or elements are displayed
         onView(withId(R.id.colorPickerContainer)).check(matches(isDisplayed())) // Color picker view
@@ -219,7 +218,7 @@ class DrawingFragmentTest {
         onView(withId(R.id.button)).perform(click())
 
         // Perform a click action on the "Pick Color" button
-        onView(withId(R.id.button3)).perform(click())
+        onView(withId(R.id.colorPickerButton)).perform(click())
 
         // Perform a swipe action to select a new color
         onView(withId(R.id.colorPickerContainer)).perform(swipeUp())

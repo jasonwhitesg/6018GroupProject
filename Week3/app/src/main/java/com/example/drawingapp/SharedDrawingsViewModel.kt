@@ -5,6 +5,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import io.ktor.client.request.forms.MultiPartFormDataContent
@@ -21,27 +22,25 @@ import kotlinx.coroutines.launch
 import java.io.File
 
 class SharedDrawingsViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
 
     private val drawingsList = MutableLiveData<List<Drawing>>()
     private val url = "http://10.0.2.2:8080"
 
     suspend fun sendFileToServer(
-        serverUrl: String,
         file: File,
-        fileName: String,
-        userId: String
+        userUid: String
     ): String {
 
         return try {
-            val response: HttpResponse = client.post("$serverUrl/drawings/upload") {
+
+            val response: HttpResponse = client.post("$url/drawings/upload") {
                 body = MultiPartFormDataContent(
                     formData {
                         append("file", file.readBytes(), Headers.build {
                             append(HttpHeaders.ContentDisposition, "filename=${file.name}")
                         })
-                        append("name", fileName)
-                        append("user", userId)
+//                        append("name", fileName)
+                        append("userUid", userUid)
                     }
                 )
             }
@@ -56,17 +55,25 @@ class SharedDrawingsViewModel : ViewModel() {
         }
     }
 
-
-
-        // Expose the LiveData to observe in your UI components
-        fun getDrawingsLiveData(): LiveData<List<Drawing>> {
-            return drawingsList
+    suspend fun requestDrawing(fileName: String): ByteArray? {
+        return try {
+            client.get<ByteArray>("$url/drawings/download/$fileName")
+        } catch (e: Exception) {
+            Log.e("ServerFile", "Error receiving file from server: ${e.message}")
+            null // Return null on failure
         }
+    }
 
-        // Update the LiveData with a new List<Drawing>
-        fun setDrawings(drawings: List<Drawing>) {
-            drawingsList.value = drawings
-        }
+    // Expose the LiveData to observe in your UI components
+    fun getDrawingsLiveData(): LiveData<List<Drawing>> {
+        return drawingsList
+    }
+
+    // Update the LiveData with a new List<Drawing>
+    fun setDrawings(drawings: List<Drawing>) {
+        drawingsList.value = drawings
+
+    }
 
     // Use this function to fetch and update the list of drawings
     suspend fun updateSharedDrawingsList() {
@@ -80,4 +87,13 @@ class SharedDrawingsViewModel : ViewModel() {
         }
     }
 
+}
+class SharedDrawingViewModelFactory() : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(SharedDrawingsViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return SharedDrawingsViewModel() as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
 }

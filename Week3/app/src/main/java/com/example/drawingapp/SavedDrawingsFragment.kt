@@ -93,6 +93,7 @@ class SavedDrawingsFragment : Fragment() {
         }
         return null
     }
+
     @Composable
     fun ImageBitmapComposable(
         imageBitmap: ImageBitmap,
@@ -105,6 +106,7 @@ class SavedDrawingsFragment : Fragment() {
             contentScale = ContentScale.Crop
         )
     }
+
     @Composable
     fun SavedDrawingsScreen(
         viewModel: SavedDrawingsViewModel,
@@ -134,6 +136,12 @@ class SavedDrawingsFragment : Fragment() {
                 // Add a button at the top of the screen
                 Button(
                     onClick = {
+                        try {
+                            navController.navigate(R.id.action_to_sharedDrawingsFragment)
+                        } catch (_: Exception) {
+                            Log.d("FAILED TO OPEN SHARED DRAWINGS FRAGMENT", "FUCK")
+                        }
+
                         // Handle button click action here
                     },
                     shape = RoundedCornerShape(16.dp), // Specify the corner radius
@@ -152,7 +160,12 @@ class SavedDrawingsFragment : Fragment() {
                                 .background(
                                     color = Color.White,
                                     shape = RoundedCornerShape(16.dp) // Specify the corner radius
-                                ).border(width = 3.dp,color = Color.Black,shape = RoundedCornerShape(16.dp))
+                                )
+                                .border(
+                                    width = 3.dp,
+                                    color = Color.Black,
+                                    shape = RoundedCornerShape(16.dp)
+                                )
                                 .clickable {
                                     onDrawingClick(drawing.savedFile)
                                     val bundle = bundleOf("filePath" to drawing.savedFile)
