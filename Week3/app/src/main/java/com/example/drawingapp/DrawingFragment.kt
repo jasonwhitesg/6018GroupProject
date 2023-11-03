@@ -29,6 +29,7 @@ import android.net.Uri
 import androidx.core.content.FileProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import io.ktor.client.request.get
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.File
@@ -340,10 +341,16 @@ class DrawingFragment : Fragment() {
         val arguments = arguments
         if (arguments != null) {
             // Arguments were provided, you can access them here
-            val bundleValue = arguments.getString("filePath") // Replace "key" with the actual key you used
+            var bundleValue: String? =
+                arguments.getString("filePath") // Replace "key" with the actual key you used
             // Do something with the bundleValue or other arguments
-            Log.d(bundleValue, "<-- should navigate here")
-            if (bundleValue != null) {
+            if (bundleValue == null) {
+                bundleValue = arguments.getString("fileName")
+                if (bundleValue != null) {
+                    loadDrawingFromServer(bundleValue)
+                }
+            } else {
+                Log.d(bundleValue, "<-- should navigate here")
                 loadDrawingIntoCustomView(bundleValue)
             }
         }
@@ -352,6 +359,34 @@ class DrawingFragment : Fragment() {
         restoreColorAndSliderValues()
 
         return binding.root
+    }
+
+    fun loadDrawingFromServer(fileName: String) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            val imageByteArray = requestDrawing(fileName)
+            val bitmap = imageByteArray?.let {
+                BitmapFactory.decodeByteArray(
+                    imageByteArray,
+                    0,
+                    it.size
+                )
+            }
+            if (bitmap != null) {
+                viewModel.updateBitmap(bitmap)
+            }
+        }
+    }
+
+    suspend fun requestDrawing(fileName: String): ByteArray? {
+        return try {
+            val imageFile =
+                client.get<ByteArray>("http://10.0.2.2:8080/drawings/download/$fileName")
+            Log.d("SUCCESS", "RECEIVED IMAGE BYTE ARRAY")
+            return imageFile
+        } catch (e: Exception) {
+            Log.e("ServerFile", "Error receiving file from server: ${e.message}")
+            null // Return null on failure
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

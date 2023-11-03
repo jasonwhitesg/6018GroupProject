@@ -44,11 +44,11 @@
         <action
             android:id="@+id/action_back_to_drawingFragment"
             app:destination="@id/drawingFragment">
-<!--            <argument-->
-<!--                android:id="@+id/drawingFragmentArgs"-->
-<!--                android:name=""-->
-<!--                app:argType="string"-->
-<!--                app:nullable="true" />-->
+            <!--            <argument-->
+            <!--                android:id="@+id/drawingFragmentArgs"-->
+            <!--                android:name=""-->
+            <!--                app:argType="string"-->
+            <!--                app:nullable="true" />-->
         </action>
         <action
             android:id="@+id/pop_back_to_drawingFragment"
@@ -63,6 +63,15 @@
         <action
             android:id="@+id/action_back_to_savedDrawingsFragment"
             app:destination="@id/savedDrawingsFragment">
+            <!--            <argument-->
+            <!--                android:id="@+id/drawingFragmentArgs"-->
+            <!--                android:name=""-->
+            <!--                app:argType="string"-->
+            <!--                app:nullable="true" />-->
+        </action>
+        <action
+            android:id="@+id/action_back_to_drawingFragment"
+            app:destination="@id/drawingFragment">
             <!--            <argument-->
             <!--                android:id="@+id/drawingFragmentArgs"-->
             <!--                android:name=""-->
