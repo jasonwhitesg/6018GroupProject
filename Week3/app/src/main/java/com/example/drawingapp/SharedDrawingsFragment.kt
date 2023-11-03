@@ -220,11 +220,7 @@ class SharedDrawingsFragment : Fragment() {
                         val imageLiveData = MutableLiveData<Bitmap?>()
                         loadBitmapFromServer(imageLiveData, fileName)
                         val bitmap by imageLiveData.observeAsState(initial = null)
-                        if (imageLiveData != null) {
-                            Log.d("SUCCESS", "ImageByteArray decoded to bitmap")
-                        } else {
-                            Log.d("FAILURE", "ImageByteArray not decoded to bitmap")
-                        }
+//                        Log.d("SUCCESS", "ImageByteArray decoded to bitmap")
                         Box(
                             modifier = Modifier
                                 .padding(8.dp)
@@ -240,7 +236,7 @@ class SharedDrawingsFragment : Fragment() {
                                 )
                                 .clickable {
                                     onDrawingClick(fileName)
-                                    val bundle = bundleOf("filePath" to fileName)
+                                    val bundle = bundleOf("fileName" to fileName)
                                     Log.d(fileName, "saved file path")
                                     navController.navigate(
                                         R.id.action_back_to_drawingFragment,
@@ -256,25 +252,24 @@ class SharedDrawingsFragment : Fragment() {
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
 
-                                if (imageLiveData != null) {
-                                    Column(
-                                        modifier = Modifier
-                                            .fillMaxSize()
-                                            .padding(16.dp),
-                                        verticalArrangement = Arrangement.Center,
-                                        horizontalAlignment = Alignment.CenterHorizontally
-                                    ) {
-                                        // Display the loaded image as a thumbnail
-                                        bitmap?.let {
-                                            ImageBitmapComposable(
-                                                imageBitmap = it.asImageBitmap(),
-                                                modifier = Modifier
-                                                    .size(80.dp)
-                                                    .clip(RoundedCornerShape(8.dp))
-                                            )
-                                        }
-                                        Spacer(modifier = Modifier.height(8.dp))
-                                        // Centered text
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(16.dp),
+                                    verticalArrangement = Arrangement.Center,
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    // Display the loaded image as a thumbnail
+                                    bitmap?.let {
+                                        ImageBitmapComposable(
+                                            imageBitmap = it.asImageBitmap(),
+                                            modifier = Modifier
+                                                .size(80.dp)
+                                                .clip(RoundedCornerShape(8.dp))
+                                        )
+                                    }
+//                                    Spacer(modifier = Modifier.height(8.dp))
+                                    // Centered text
 //                                        Text(
 //                                            text = fileName,
 //                                            style = TextStyle(fontSize = 22.sp),
@@ -283,7 +278,6 @@ class SharedDrawingsFragment : Fragment() {
 //                            val fileName = drawing.savedFile.substringAfterLast("/")
 //                            Text(text = fileName, style = TextStyle(fontSize = 22.sp))
 
-                                    }
                                 }
                             }
                         }

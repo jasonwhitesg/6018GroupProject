@@ -1,14 +1,10 @@
 package com.example.drawingapp
 
 import android.util.Log
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
-import io.ktor.client.features.get
 import io.ktor.client.request.forms.MultiPartFormDataContent
 import io.ktor.client.request.forms.formData
 import io.ktor.client.request.get
@@ -18,8 +14,6 @@ import io.ktor.client.statement.readText
 import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.io.File
 
 class SharedDrawingsViewModel : ViewModel() {
@@ -58,9 +52,7 @@ class SharedDrawingsViewModel : ViewModel() {
 
     suspend fun requestDrawing(fileName: String): ByteArray? {
         return try {
-            val imageFile = client.get<ByteArray>("$url/drawings/download/$fileName")
-            Log.d("SUCCESS","RECEIVED IMAGE BYTE ARRAY")
-            return imageFile
+            return client.get<ByteArray>("$url/drawings/download/$fileName")
         } catch (e: Exception) {
             Log.e("ServerFile", "Error receiving file from server: ${e.message}")
             null // Return null on failure

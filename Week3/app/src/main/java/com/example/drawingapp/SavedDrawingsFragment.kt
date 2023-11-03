@@ -95,9 +95,9 @@ class SavedDrawingsFragment : Fragment() {
             viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
                 try {
                     val response = sharedDrawingsViewModel.sendFileToServer(file, uid) // uid is now known to be non-null
-                    Log.d("FileUploadResponse", response)
+//                    Log.d("FileUploadResponse", response)
                 } catch (e: Exception) {
-                    Log.e("FileUploadError", "Error sending file to server", e)
+//                    Log.e("FileUploadError", "Error sending file to server", e)
                 }
             }
         } else if (uid == null) {
