@@ -18,6 +18,12 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import java.util.*
 
+import java.nio.file.Paths
+
+fun getProjectPath(): String? {
+    val currentWorkingDirectory = System.getProperty("user.dir")
+    return Paths.get(currentWorkingDirectory).toAbsolutePath().toString()
+}
 
 fun Application.configureRouting() {
     install(Resources)
@@ -123,17 +129,19 @@ fun Application.configureRouting() {
                                 application.log.error("Error reading file bytes", e)
                             }
                         }
+
                         is PartData.FormItem -> {
                             // Handle form fields
                             when (part.name) {
                                 "userUid" -> {
                                     userUid = part.value
                                 }
-                                "userName" -> {
-                                    userName = part.value
-                                }
+//                                "userName" -> {
+//                                    userName = part.value
+//                                }
                             }
                         }
+
                         else -> {
                             // Received an unsupported type of the multipart
                             application.log.info("Received an unsupported part type in multipart data: ${part::class}")
@@ -145,27 +153,12 @@ fun Application.configureRouting() {
 
                 // Check if the file bytes were successfully read and required information is available
                 if (fileBytes != null && fileName != null && userUid != null) {
-                    // The folder path
-//<<<<<<< HEAD
-//                    val folderPath = "/Users/ricardo2830/CS6018_Group/6018GroupProject/DrawingWebserver/DrawingWebserver/savedPNG"
-//
-//                    // Check if folder exists or create it if it doesn't
-//                    val folder = File(folderPath)
-//                    if (!folder.exists() && !folder.mkdirs()) {
-//                        application.log.error("Failed to create directory: $folderPath")
-//                        call.respond(HttpStatusCode.InternalServerError, mapOf("error" to "Server error: Could not create directory for file upload"))
-//                        return@post
-//                    }
-//
-//                    // Generate a unique file name and define the file path help with overwriting
-////                    val fileName = UUID.randomUUID().toString() //actual name of the file
-//                    val filePath = "$folderPath/$fileName"
-//=======
-                    val folderPath = "/path/to/your/folder"
+                    val projectPath = getProjectPath()
+                    val folderPath = "$projectPath/savedPNG"
+                    application.log.info("PATH=$folderPath")
 
                     // Generating a unique file name and defining the file path
-                    val filePath = "$folderPath/$fileName.png"
-//>>>>>>> jason
+                    val filePath = "$folderPath/$fileName"
 
                     try {
                         // Saving the Drawing to Disk
@@ -180,7 +173,10 @@ fun Application.configureRouting() {
                             timestamp = System.currentTimeMillis(),
                         )
                         application.log.info("Drawing information saved to database with ID: ${drawing.id}")
-                        call.respond(HttpStatusCode.OK, mapOf("message" to "File uploaded successfully", "drawingId" to drawing.id))
+                        call.respond(
+                            HttpStatusCode.OK,
+                            mapOf("message" to "File uploaded successfully", "drawingId" to drawing.id)
+                        )
                     } catch (e: Exception) {
                         application.log.error("Error saving drawing", e)
                         call.respond(HttpStatusCode.InternalServerError, mapOf("error" to "Error saving drawing"))
@@ -196,7 +192,8 @@ fun Application.configureRouting() {
             get("/download/{fileName}") {
                 val fileName = call.parameters["fileName"]
                 if (fileName != null) {
-                    val folderPath = "/Users/ricardo2830/CS6018_Group/6018GroupProject/DrawingWebserver/DrawingWebserver/savedPNG"
+                    val folderPath =
+                        "/Users/ricardo2830/CS6018_Group/6018GroupProject/DrawingWebserver/DrawingWebserver/savedPNG"
                     val filePath = "$folderPath/$fileName"
 
                     val file = File(filePath)

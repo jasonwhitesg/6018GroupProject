@@ -36,28 +36,28 @@
                 android:src="@drawable/three_bar_icon" />
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/saveButton"
                 android:layout_width="wrap_content"
                 android:layout_height="44dp"
                 android:layout_weight="1"
                 android:text="Save" />
 
             <Button
-                android:id="@+id/button6"
+                android:id="@+id/loadButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Load" />
 
             <Button
-                android:id="@+id/button7"
+                android:id="@+id/clearButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Clear" />
 
             <Button
-                android:id="@+id/button11"
+                android:id="@+id/shareButton"
                 android:layout_width="32dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -136,7 +136,7 @@
                 android:checked="true" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/colorPickerButton"
                 android:layout_width="wrap_content"
                 android:layout_height="58dp"
                 android:layout_gravity="center"

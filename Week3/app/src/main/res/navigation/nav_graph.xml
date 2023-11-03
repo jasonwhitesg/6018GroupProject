@@ -31,6 +31,15 @@
     <fragment
         android:id="@+id/savedDrawingsFragment"
         android:name="com.example.drawingapp.SavedDrawingsFragment">
+        <action
+            android:id="@+id/action_to_sharedDrawingsFragment"
+            app:destination="@id/sharedDrawingsFragment">
+            <!--            <argument-->
+            <!--                android:id="@+id/drawingFragmentArgs"-->
+            <!--                android:name=""-->
+            <!--                app:argType="string"-->
+            <!--                app:nullable="true" />-->
+        </action>
         <!-- Action to navigate back to DrawingFragment with a drawing file argument (if needed) -->
         <action
             android:id="@+id/action_back_to_drawingFragment"
@@ -45,6 +54,25 @@
             android:id="@+id/pop_back_to_drawingFragment"
             app:destination="@id/drawingFragment"
             app:popUpTo="@id/drawingFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/sharedDrawingsFragment"
+        android:name="com.example.drawingapp.SharedDrawingsFragment">
+        <!-- Action to navigate back to DrawingFragment with a drawing file argument (if needed) -->
+        <action
+            android:id="@+id/action_back_to_savedDrawingsFragment"
+            app:destination="@id/savedDrawingsFragment">
+            <!--            <argument-->
+            <!--                android:id="@+id/drawingFragmentArgs"-->
+            <!--                android:name=""-->
+            <!--                app:argType="string"-->
+            <!--                app:nullable="true" />-->
+        </action>
+        <action
+            android:id="@+id/pop_back_to_drawingFragment"
+            app:destination="@id/savedDrawingsFragment"
+            app:popUpTo="@id/savedDrawingsFragment"
             app:popUpToInclusive="true" />
     </fragment>
 </navigation>
