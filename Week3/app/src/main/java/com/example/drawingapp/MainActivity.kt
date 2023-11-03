@@ -36,35 +36,35 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        coroutineScope.launch(Dispatchers.Main) {
-            val serverUrl = "http://10.0.2.2:8080"
-
-            // Perform multiple POST requests
-            val drawingRequest1 = DrawingRequest("path/to/file1", "userUid1", "userName1")
-            sendDrawingRequestToServer(serverUrl, drawingRequest1)
-
-            val drawingRequest2 = DrawingRequest("path/to/file2", "userUid2", "userName2")
-            sendDrawingRequestToServer(serverUrl, drawingRequest2)
-
-            // Fetch and log all drawings
-            val allDrawings = fetchAllDrawings(serverUrl)
-            Log.d("ServerResponse", "All Drawings: $allDrawings")
-
-            // Fetch and log drawing by ID (assuming ID is 1 for example)
-            val drawingById = fetchDrawingById(serverUrl, 1)
-            Log.d("ServerResponse", "Drawing by ID: $drawingById")
-            val root = applicationContext.filesDir.path
-            val filePath = "$root/jason.png"
-            // Assume you have a File instance
-            val file = File(filePath)
-
-            // Send the file to the server
-            val response = sendFileToServer(serverUrl, file)
-            Log.d("ServerResponse", "Response: $response")
-
-            // Received file from Server
+//        coroutineScope.launch(Dispatchers.Main) {
+//            val serverUrl = "http://10.0.2.2:8080"
+//
+//            // Perform multiple POST requests
+//            val drawingRequest1 = DrawingRequest("path/to/file1", "userUid1", "userName1")
+//            sendDrawingRequestToServer(serverUrl, drawingRequest1)
+//
+//            val drawingRequest2 = DrawingRequest("path/to/file2", "userUid2", "userName2")
+//            sendDrawingRequestToServer(serverUrl, drawingRequest2)
+//
+//            // Fetch and log all drawings
+//            val allDrawings = fetchAllDrawings(serverUrl)
+//            Log.d("ServerResponse", "All Drawings: $allDrawings")
+//
+//            // Fetch and log drawing by ID (assuming ID is 1 for example)
+//            val drawingById = fetchDrawingById(serverUrl, 1)
+//            Log.d("ServerResponse", "Drawing by ID: $drawingById")
+//            val root = applicationContext.filesDir.path
+//            val filePath = "$root/jason.png"
+//            // Assume you have a File instance
+//            val file = File(filePath)
+//
+//            // Send the file to the server
+//            val response = sendFileToServer(serverUrl, file)
+//            Log.d("ServerResponse", "Response: $response")
+//
+//            // Received file from Server
 //            val downloadedFile = receiveFileFromServer(serverUrl, "fromServer.png")
-        }
+//        }
     }
 
     private suspend fun sendFileToServer(serverUrl: String, file: File): String {
@@ -141,9 +141,9 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    override fun onDestroy() {
-        super.onDestroy()
-        coroutineScope.cancel()
-        client.close()
-    }
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        coroutineScope.cancel()
+//        client.close()
+//    }
 }
