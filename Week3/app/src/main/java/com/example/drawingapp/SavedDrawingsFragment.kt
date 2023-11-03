@@ -28,10 +28,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.core.os.bundleOf
@@ -63,7 +65,6 @@ import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-
 
 
 //some random comment
@@ -167,8 +168,11 @@ class SavedDrawingsFragment : Fragment() {
                                     color = Color.White,
                                     shape = RoundedCornerShape(16.dp) // Specify the corner radius
                                 )
-                                .border(width = 3.dp, color = Color.Black, shape = RoundedCornerShape(16.dp))
-
+                                .border(
+                                    width = 3.dp,
+                                    color = Color.Black,
+                                    shape = RoundedCornerShape(16.dp)
+                                )
                                 .clickable {
                                     onDrawingClick(drawing.savedFile)
                                     val bundle = bundleOf("filePath" to drawing.savedFile)
@@ -179,72 +183,50 @@ class SavedDrawingsFragment : Fragment() {
                                     )
                                 }
                         ) {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(6.dp),
-                                verticalArrangement = Arrangement.Center,
-                                horizontalAlignment = Alignment.CenterHorizontally
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center
                             ) {
                                 val fileName = drawing.savedFile.substringAfterLast("/")
                                 val imageBitmap = loadBitmapFromFile(drawing.savedFile)
                                 if (imageBitmap != null) {
-                                    Column(
+                                    // Display the loaded image as a thumbnail
+                                    ImageBitmapComposable(
+                                        imageBitmap = imageBitmap.asImageBitmap(),
                                         modifier = Modifier
-                                            .fillMaxSize()
-                                            .padding(8.dp),
-                                        verticalArrangement = Arrangement.Center,
-                                        horizontalAlignment = Alignment.CenterHorizontally
+                                            .size(100.dp)
+                                            .clip(RoundedCornerShape(8.dp))
+                                    )
+                                    Spacer(modifier = Modifier.width(8.dp))
+
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.SpaceBetween,
+                                        verticalAlignment = Alignment.CenterVertically
                                     ) {
-                                        // Display the loaded image as a thumbnail
-                                        ImageBitmapComposable(
-                                            imageBitmap = imageBitmap.asImageBitmap(),
-                                            modifier = Modifier
-                                                .size(65.dp)
-                                                .clip(RoundedCornerShape(8.dp))
-                                        )
-                                        Spacer(modifier = Modifier.height(8.dp))
                                         // Centered text
                                         Text(
                                             text = fileName,
-                                            style = TextStyle(fontSize = 22.sp),
-                                            modifier = Modifier.fillMaxWidth()
+                                            style = TextStyle(fontSize = 16.sp),
+                                            modifier = Modifier.weight(1f) // Takes up the remaining space
                                         )
 
                                         val shareIconState = remember { mutableStateOf(true) }
 
-                                        Box(
-                                            // Apply border with color depending on the shareIconState
-                                            modifier = Modifier
-                                                .border(
-                                                    width = 2.dp,
-                                                    color = if (shareIconState.value) Color.Blue else Color.Red,
-                                                    shape = RoundedCornerShape(12.dp) // Adjust the corner shape as needed
-                                                )
-                                                .size(60.dp), // This size applies to the outer Box that contains the IconButton
-                                            contentAlignment = Alignment.Center //center the IconButton within the Box
+                                        IconButton(
+                                            onClick = {
+                                                // Toggle the state
+                                                shareIconState.value = !shareIconState.value
+                                                // Implement the actions
+                                            },
+                                            modifier = Modifier.size(48.dp)
                                         ) {
-                                            IconButton(
-                                                onClick = {
-                                                    // Toggle the state
-                                                    shareIconState.value = !shareIconState.value
-                                                    // Implement the actions
-                                                },
-                                                // Set the size as desired, this will make the icon's clickable area bigger
-                                                modifier = Modifier.size(48.dp)  // Adjust as needed to give space for the border
-                                            ) {
-                                                Icon(
-                                                    painter = painterResource(id = if (shareIconState.value) R.drawable.ic_share_icon_shared_drawing else R.drawable.ic_trash_icon_shared_drawing),
-                                                    contentDescription = if (shareIconState.value) "Share" else "Delete",
-                                                    // Set the tint color based on the icon state
-                                                    tint = if (shareIconState.value) Color.Blue else Color.Red  // Trash icon will be red
-                                                    // Icon size is determined by the drawable's intrinsic size. There's no direct way to scale it here.
-                                                )
-                                            }
+                                            Icon(
+                                                painter = painterResource(id = if (shareIconState.value) R.drawable.ic_share_icon_shared_drawing else R.drawable.ic_trash_icon_shared_drawing),
+                                                contentDescription = if (shareIconState.value) "Share" else "Delete",
+                                                tint = if (shareIconState.value) Color.Blue else Color.Red
+                                            )
                                         }
-//                            val fileName = drawing.savedFile.substringAfterLast("/")
-//                            Text(text = fileName, style = TextStyle(fontSize = 22.sp))
-
                                     }
                                 }
                             }

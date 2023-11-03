@@ -15,10 +15,10 @@ data class Drawing(
 
 
 object DrawingsTable : IntIdTable() {
-    val filePath = varchar("file_path", 255).check { it neq "" }
-    val fileName = varchar("file_nqme", 255).check { it neq "" }
-    val userUid = varchar("user_uid", 28).check { it neq "" }
-    val userName = varchar("user_name", 255).nullable()
+    val filePath = varchar("filePath", 255).check { it neq "" }
+    val fileName = varchar("fileName", 255).check { it neq "" }
+    val userUid = varchar("userUid", 28).check { it neq "" }
+    val userName = varchar("userName", 255).nullable()
     val timestamp = long("timestamp")
 
     init { // Making filePath, so they can't be null and timestamp can't be zero

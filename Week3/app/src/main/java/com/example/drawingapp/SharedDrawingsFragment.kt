@@ -10,53 +10,54 @@ import android.view.ViewGroup
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ComposeView
-import androidx.fragment.app.Fragment
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.layout.padding
-import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.core.os.bundleOf
-import androidx.navigation.fragment.findNavController
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.sp
+import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
-import androidx.navigation.NavController
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.io.File
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Button
-import io.ktor.client.request.get
 
 //some random comment
 class SharedDrawingsFragment : Fragment() {
@@ -116,12 +117,31 @@ class SharedDrawingsFragment : Fragment() {
     }
 
 
-    private fun loadBitmapFromServer(fileName: String): Bitmap? {
+    private fun loadBitmapFromServer(liveData: MutableLiveData<Bitmap?>, fileName: String) {
         var imageByteArray: ByteArray? = null
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-            imageByteArray = viewModel.requestDrawing(fileName)
+            try {
+                imageByteArray = viewModel.requestDrawing(fileName)
+                val bitmap = imageByteArray?.let {
+                    BitmapFactory.decodeByteArray(
+                        imageByteArray,
+                        0,
+                        it.size
+                    )
+                }
+
+                if (imageByteArray != null) {
+                    Log.d("Bitmap Load", "Received image data for $fileName")
+                    liveData.postValue(bitmap)
+                } else {
+                    Log.e("Bitmap Load", "Image data is null for $fileName")
+                    liveData.postValue(null)
+                }
+            } catch (e: Exception) {
+                Log.e("Bitmap Load", "Error loading image data for $fileName: ${e.message}")
+                liveData.postValue(null)
+            }
         }
-        return imageByteArray?.let { BitmapFactory.decodeByteArray(it, 0, it.size) }
     }
 
     @Composable
@@ -173,7 +193,7 @@ class SharedDrawingsFragment : Fragment() {
                 ) {
                     Button(
                         onClick = {
-                                  shareDrawing()
+                            shareDrawing()
                         },
                         shape = RoundedCornerShape(16.dp), // Specify the corner radius
                         modifier = Modifier
@@ -184,7 +204,7 @@ class SharedDrawingsFragment : Fragment() {
                     }
                     Button(
                         onClick = {
-                                  getSharedDrawings()
+                            getSharedDrawings()
                         },
                         shape = RoundedCornerShape(16.dp), // Specify the corner radius
                         modifier = Modifier
@@ -196,8 +216,15 @@ class SharedDrawingsFragment : Fragment() {
                 }
                 LazyColumn {
                     items(allDrawings) { drawing ->
-                        val fileName = drawing.filePath
-                        val imageBitmap = loadBitmapFromServer(fileName)
+                        val fileName = drawing.fileName
+                        val imageLiveData = MutableLiveData<Bitmap?>()
+                        loadBitmapFromServer(imageLiveData, fileName)
+                        val bitmap by imageLiveData.observeAsState(initial = null)
+                        if (imageLiveData != null) {
+                            Log.d("SUCCESS", "ImageByteArray decoded to bitmap")
+                        } else {
+                            Log.d("FAILURE", "ImageByteArray not decoded to bitmap")
+                        }
                         Box(
                             modifier = Modifier
                                 .padding(8.dp)
@@ -229,7 +256,7 @@ class SharedDrawingsFragment : Fragment() {
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
 
-                                if (imageBitmap != null) {
+                                if (imageLiveData != null) {
                                     Column(
                                         modifier = Modifier
                                             .fillMaxSize()
@@ -238,12 +265,14 @@ class SharedDrawingsFragment : Fragment() {
                                         horizontalAlignment = Alignment.CenterHorizontally
                                     ) {
                                         // Display the loaded image as a thumbnail
-                                        ImageBitmapComposable(
-                                            imageBitmap = imageBitmap.asImageBitmap(),
-                                            modifier = Modifier
-                                                .size(80.dp)
-                                                .clip(RoundedCornerShape(8.dp))
-                                        )
+                                        bitmap?.let {
+                                            ImageBitmapComposable(
+                                                imageBitmap = it.asImageBitmap(),
+                                                modifier = Modifier
+                                                    .size(80.dp)
+                                                    .clip(RoundedCornerShape(8.dp))
+                                            )
+                                        }
                                         Spacer(modifier = Modifier.height(8.dp))
                                         // Centered text
 //                                        Text(

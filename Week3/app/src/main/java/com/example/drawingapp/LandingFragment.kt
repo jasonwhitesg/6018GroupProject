@@ -42,8 +42,8 @@ class LandingFragment : Fragment() {
         // Set up click listeners
         letsDrawLoginButton.setOnClickListener {
             Log.d(TAG, "Login button clicked")
-            val email = emailEditText.text.toString()
-            val password = passwordEditText.text.toString()
+            val email = "keegan.dohm@gmail.com"//emailEditText.text.toString()
+            val password = "password"//passwordEditText.text.toString()
             loginUser(email, password, statusTextView)
         }
 
