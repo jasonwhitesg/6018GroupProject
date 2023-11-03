@@ -60,6 +60,9 @@ import androidx.fragment.app.activityViewModels
 import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
 import java.io.File
+import androidx.compose.material.Checkbox
+import androidx.compose.material.CheckboxDefaults
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.lifecycle.LiveData
@@ -147,7 +150,7 @@ class SavedDrawingsFragment : Fragment() {
             url("http://10.0.2.2:8080/drawings/delete/$userUid")
         }
     }
-
+    
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
