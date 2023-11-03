@@ -156,8 +156,7 @@ fun Application.configureRouting() {
 
                 // Check if the file bytes were successfully read and required information is available
                 if (fileBytes != null && fileName != null && userUid != null) {
-                    val projectPath = getProjectPath()
-                    val folderPath = "$projectPath/DrawingWebserver/savedPNG"
+                    val folderPath = getProjectPath() + "/savedPNG"
                     application.log.info("PATH=$folderPath")
 
                     // Generating a unique file name and defining the file path
@@ -195,7 +194,7 @@ fun Application.configureRouting() {
             get("/download/{fileName}") {
                 val fileName = call.parameters["fileName"]
                 if (fileName != null) {
-                    val folderPath = getProjectPath() + "/DrawingWebserver/savedPNG"
+                    val folderPath = getProjectPath() + "/savedPNG"
                     val filePath = "$folderPath/$fileName"
 
                     val file = File(filePath)
