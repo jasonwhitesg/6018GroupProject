@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import io.ktor.client.features.get
 import io.ktor.client.request.forms.MultiPartFormDataContent
 import io.ktor.client.request.forms.formData
 import io.ktor.client.request.get
@@ -66,20 +67,32 @@ class SharedDrawingsViewModel : ViewModel() {
 
 
     // Update the LiveData with a new List<Drawing>
-    fun setDrawings(drawings: List<Drawing>) {
+    private fun setDrawingsLiveData(drawings: List<Drawing>) {
         drawingsList.value = drawings
-
     }
 
     // Use this function to fetch and update the list of drawings
     suspend fun updateSharedDrawingsList() {
         try {
             val downloadUrl = "$url/drawings"
-            val drawingsList: List<Drawing> = client.get(downloadUrl)
-            for(drawing:Drawing in drawingsList){
-                Log.d("DRAWING",drawing.toString())
+
+            val resultList: List<Drawing>? = client.get(downloadUrl)
+            if (resultList != null) {
+                for(drawing: Drawing in resultList){
+                    Log.d("DrawingFoundOnServer",drawing.toString())
+                }
             }
-            setDrawings(client.get(downloadUrl))
+            setDrawingsLiveData(client.get(downloadUrl))
+
+        } catch (e: Exception) {
+            // Handle the error and return null on failure
+            Log.e("ServerFile", "Error receiving file from server: ${e.message}")
+        }
+    }
+    suspend fun getDrawingsList(): List<Drawing>? {
+        return try {
+            val downloadUrl = "$url/drawings"
+            client.get(downloadUrl)
         } catch (e: Exception) {
             // Handle the error and return null on failure
             Log.e("ServerFile", "Error receiving file from server: ${e.message}")

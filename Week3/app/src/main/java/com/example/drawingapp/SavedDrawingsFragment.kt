@@ -65,11 +65,15 @@ import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshots.Snapshot.Companion.observe
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
+import io.ktor.client.request.delete
+import io.ktor.client.request.url
+import io.ktor.client.statement.HttpResponse
 import io.ktor.utils.io.concurrent.shared
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -79,6 +83,7 @@ import kotlinx.coroutines.launch
 class SavedDrawingsFragment : Fragment() {
     // Get the ViewModel using the custom factory
     private val sharedDrawingsViewModel: SharedDrawingsViewModel by viewModels { SharedDrawingViewModelFactory() }
+//    private var serverFileNames: LiveData<List<String>> = getCurrentFilenamesFromServer()
 
     // Define a function to get shared drawings
     private fun getCurrentFilenamesFromServer(): LiveData<List<String>> {
@@ -86,43 +91,49 @@ class SavedDrawingsFragment : Fragment() {
 
         val drawingsLiveData = sharedDrawingsViewModel.getDrawingsLiveData()
 
-        drawingsLiveData.observe(viewLifecycleOwner, Observer<List<Drawing>> { drawings ->
+        drawingsLiveData.observe(viewLifecycleOwner) { drawings ->
             // Create a list to store all the filenames
             val fileNames = mutableListOf<String>()
 
             // Iterate through the list of Drawing objects and extract and log only the filenames
             for (drawing in drawings) {
                 fileNames.add(drawing.fileName)
+                Log.d("FileFoundInServer", "File: ${drawing.fileName}")
             }
 
             // Set the result to the LiveData
             resultLiveData.value = fileNames
-        })
+        }
 
         return resultLiveData
     }
 
 
     private fun shareDrawing(filePath: String) {
-//        val fileName = "/jason.png"
-//        val root = context?.filesDir?.absolutePath
         val file = File(filePath)
-
         val uid = FirebaseAuth.getInstance().currentUser?.uid
 
         if (file.exists() && uid != null) { // Check that the file exists and uid is not null
             viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
                 try {
-                    val response = sharedDrawingsViewModel.sendFileToServer(file, uid) // uid is now known to be non-null
-//                    Log.d("FileUploadResponse", response)
+                    val response = sharedDrawingsViewModel.sendFileToServer(
+                        file,
+                        uid
+                    ) // uid is now known to be non-null
+                    Log.d("FileUploadResponse", response)
                 } catch (e: Exception) {
-//                    Log.e("FileUploadError", "Error sending file to server", e)
+                    Log.e("FileUploadError", "Error sending file to server", e)
                 }
             }
         } else if (uid == null) {
-//            Log.e("FileUploadError", "User ID is null, user might not be logged in.")
+            Log.e("FileUploadError", "User ID is null, user might not be logged in.")
         }
+    }
 
+    suspend fun deleteDrawingByUserUid(userUid: String, fileName: String): HttpResponse {
+        return client.delete {
+            url("http://10.0.2.2:8080/drawings/delete/$userUid/$fileName")
+        }
     }
 
     //per whitney's suggestion changed to by "activityViewModels" instead of by "viewModels"
@@ -184,6 +195,7 @@ class SavedDrawingsFragment : Fragment() {
         shareDrawing: (String) -> Unit
     ) {
         val allDrawings by viewModel.allSavedDrawings.observeAsState(emptyList())
+        var serverFileNames = getCurrentFilenamesFromServer()
         Scaffold(
             topBar = {
                 TopAppBar(
@@ -250,7 +262,6 @@ class SavedDrawingsFragment : Fragment() {
                                 contentAlignment = Alignment.Center
                             ) {
                                 val fileName = drawing.savedFile.substringAfterLast("/")
-                                val serverFileNames = getCurrentFilenamesFromServer()
                                 val isShared = doesFileExistOnServer(fileName, serverFileNames)
 
                                 val imageBitmap = loadBitmapFromFile(drawing.savedFile)
@@ -276,8 +287,7 @@ class SavedDrawingsFragment : Fragment() {
                                             modifier = Modifier.weight(1f) // Takes up the remaining space
                                         )
 
-                                        val shareIconState = remember { mutableStateOf(true) }
-
+                                        val shareIconState = observe { mutableStateOf(isShared) }
 
                                         IconButton(
                                             onClick = {
@@ -290,6 +300,7 @@ class SavedDrawingsFragment : Fragment() {
                                                     // Handle delete action
                                                     shareIconState.value = !shareIconState.value
                                                 }
+                                                serverFileNames = getCurrentFilenamesFromServer()
                                             },
                                             modifier = Modifier.size(48.dp)
                                         ) {
@@ -310,10 +321,13 @@ class SavedDrawingsFragment : Fragment() {
             }
         }
     }
+
     // Function to check if a file exists in the server file names
     fun doesFileExistOnServer(fileName: String, serverFileNames: LiveData<List<String>>): Boolean {
         val list = serverFileNames.value
-        return list?.any { it == fileName } ?: false
+        val returnVal =  list?.any { it == fileName } ?: false
+        Log.d("FileCheckResult", "File: $fileName | Result = $returnVal")
+        return returnVal
     }
 
 

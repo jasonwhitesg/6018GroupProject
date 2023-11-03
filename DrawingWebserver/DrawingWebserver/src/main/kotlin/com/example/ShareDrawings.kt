@@ -13,7 +13,7 @@ import java.io.File
 import java.io.IOException
 
 class ShareDrawings {
-    fun getAllDrawings(): List<Drawing> {
+    fun getAllDrawings() {
         return transaction {
             DrawingsTable.selectAll().map {
                 Drawing(
@@ -99,9 +99,11 @@ class ShareDrawings {
         return Drawing(id, filePath, fileName, userUid, userName, timestamp)
     }
 
-    fun deleteDrawing(id: Int): Boolean {
+    fun deleteDrawing(userUid: String, fileName: String): Boolean {
         return transaction {
-            DrawingsTable.deleteWhere { DrawingsTable.id eq id } > 0
+            DrawingsTable.deleteWhere {
+                (DrawingsTable.userUid eq userUid) and (DrawingsTable.fileName eq fileName)
+            } > 0
         }
     }
 
