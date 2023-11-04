@@ -15,8 +15,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -44,7 +46,9 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -67,38 +71,6 @@ class SharedDrawingsFragment : Fragment() {
         SharedDrawingViewModelFactory()
     }
 
-    private fun getSharedDrawings(): LiveData<List<Drawing>> {
-        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-            viewModel.updateSharedDrawingsList()
-        }
-        return viewModel.getDrawingsLiveData()
-    }
-
-    private fun shareDrawing() {
-        val fileName = "/flower.png"
-        val root = context?.filesDir?.absolutePath
-        val file = File(root + fileName)
-
-        // Check if the file exists and log the result
-        if (file.exists()) {
-            Log.d("FileCheck", "The file $fileName exists.")
-        } else {
-            Log.d("FileCheck", "The file $fileName does not exist.")
-        }
-
-        // If the file exists, proceed to upload
-        if (file.exists()) {
-            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-                try {
-                    val response = viewModel.sendFileToServer(file, "keegan")
-                    Log.d("FileUploadResponse", response)
-                } catch (e: Exception) {
-                    Log.e("FileUploadError", "Error sending file to server", e)
-                }
-            }
-        }
-    }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -117,35 +89,6 @@ class SharedDrawingsFragment : Fragment() {
             }
         }
     }
-
-
-    private fun loadBitmapFromServer(liveData: MutableLiveData<Bitmap?>, fileName: String) {
-        var imageByteArray: ByteArray? = null
-        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-            try {
-                imageByteArray = viewModel.requestDrawing(fileName)
-                val bitmap = imageByteArray?.let {
-                    BitmapFactory.decodeByteArray(
-                        imageByteArray,
-                        0,
-                        it.size
-                    )
-                }
-
-                if (imageByteArray != null) {
-                    Log.d("Bitmap Load", "Received image data for $fileName")
-                    liveData.postValue(bitmap)
-                } else {
-                    Log.e("Bitmap Load", "Image data is null for $fileName")
-                    liveData.postValue(null)
-                }
-            } catch (e: Exception) {
-                Log.e("Bitmap Load", "Error loading image data for $fileName: ${e.message}")
-                liveData.postValue(null)
-            }
-        }
-    }
-
 
     @Composable
     fun ImageBitmapComposable(
@@ -169,7 +112,7 @@ class SharedDrawingsFragment : Fragment() {
 
         val allDrawings: List<Drawing> by viewModel.getDrawingsLiveData()
             .observeAsState(emptyList())
-
+        val loadedBitmaps = remember { mutableStateOf<Map<String, Bitmap?>>(emptyMap()) }
 
         Scaffold(
             topBar = {
@@ -220,10 +163,7 @@ class SharedDrawingsFragment : Fragment() {
                 LazyColumn {
                     items(allDrawings) { drawing ->
                         val fileName = drawing.fileName
-                        val imageLiveData = MutableLiveData<Bitmap?>()
-                        loadBitmapFromServer(imageLiveData, fileName)
-                        val bitmap by imageLiveData.observeAsState(initial = null)
-//                        Log.d("SUCCESS", "ImageByteArray decoded to bitmap")
+                        val imageBitmap = loadedBitmaps.value[fileName]
                         Box(
                             modifier = Modifier
                                 .padding(8.dp)
@@ -262,8 +202,7 @@ class SharedDrawingsFragment : Fragment() {
                                     verticalArrangement = Arrangement.Center,
                                     horizontalAlignment = Alignment.CenterHorizontally
                                 ) {
-                                    // Display the loaded image as a thumbnail
-                                    bitmap?.let {
+                                    imageBitmap?.let {
                                         ImageBitmapComposable(
                                             imageBitmap = it.asImageBitmap(),
                                             modifier = Modifier
@@ -271,17 +210,24 @@ class SharedDrawingsFragment : Fragment() {
                                                 .clip(RoundedCornerShape(8.dp))
                                         )
                                     }
-//                                    Spacer(modifier = Modifier.height(8.dp))
-                                    // Centered text
-//                                        Text(
-//                                            text = fileName,
-//                                            style = TextStyle(fontSize = 22.sp),
-//                                            modifier = Modifier.fillMaxWidth()
-//                                        )
-//                            val fileName = drawing.savedFile.substringAfterLast("/")
+                                    Spacer(modifier = Modifier.height(8.dp))
+//                                     Centered text
+                                        Text(
+                                            text = fileName,
+                                            style = TextStyle(fontSize = 22.sp),
+                                            modifier = Modifier.fillMaxWidth()
+                                        )
 //                            Text(text = fileName, style = TextStyle(fontSize = 22.sp))
 
                                 }
+                            }
+                        }
+                        // Fetch and load the image bitmap only if it's not already loaded
+                        LaunchedEffect(fileName) {
+                            if (imageBitmap == null) {
+                                val loadedBitmap = loadBitmapFromServer(fileName)
+                                // Update the loaded bitmaps map
+                                loadedBitmaps.value = loadedBitmaps.value + (fileName to loadedBitmap)
                             }
                         }
                     }
@@ -289,4 +235,73 @@ class SharedDrawingsFragment : Fragment() {
             }
         }
     }
+    private fun getSharedDrawings(): LiveData<List<Drawing>> {
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+            viewModel.updateSharedDrawingsList()
+        }
+        return viewModel.getDrawingsLiveData()
+    }
+
+    private fun shareDrawing() {
+        val fileName = "/flower.png"
+        val root = context?.filesDir?.absolutePath
+        val file = File(root + fileName)
+
+        // Check if the file exists and log the result
+        if (file.exists()) {
+            Log.d("FileCheck", "The file $fileName exists.")
+        } else {
+            Log.d("FileCheck", "The file $fileName does not exist.")
+        }
+
+        // If the file exists, proceed to upload
+        if (file.exists()) {
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+                try {
+                    val response = viewModel.sendFileToServer(file, "keegan")
+                    Log.d("FileUploadResponse", response)
+                } catch (e: Exception) {
+                    Log.e("FileUploadError", "Error sending file to server", e)
+                }
+            }
+        }
+    }
+
+//    private fun loadBitmapFromServer(liveData: MutableLiveData<Bitmap?>, fileName: String) {
+//        var imageByteArray: ByteArray? = null
+//        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+//            try {
+//                imageByteArray = viewModel.requestDrawing(fileName)
+//                val bitmap = imageByteArray?.let {
+//                    BitmapFactory.decodeByteArray(
+//                        imageByteArray,
+//                        0,
+//                        it.size
+//                    )
+//                }
+//
+//                if (imageByteArray != null) {
+//                    Log.d("Bitmap Load", "Received image data for $fileName")
+//                    liveData.postValue(bitmap)
+//                } else {
+//                    Log.e("Bitmap Load", "Image data is null for $fileName")
+//                    liveData.postValue(null)
+//                }
+//            } catch (e: Exception) {
+//                Log.e("Bitmap Load", "Error loading image data for $fileName: ${e.message}")
+//                liveData.postValue(null)
+//            }
+//        }
+//    }
+private suspend fun loadBitmapFromServer(fileName: String): Bitmap? {
+    return try {
+        val imageByteArray = viewModel.requestDrawing(fileName)
+        imageByteArray?.let {
+            BitmapFactory.decodeByteArray(it, 0, it.size)
+        }
+    } catch (e: Exception) {
+        Log.e("Bitmap Load", "Error loading image data for $fileName: ${e.message}")
+        null
+    }
+}
 }

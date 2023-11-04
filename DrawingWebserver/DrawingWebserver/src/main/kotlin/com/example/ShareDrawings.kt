@@ -13,7 +13,7 @@ import java.io.File
 import java.io.IOException
 
 class ShareDrawings {
-    fun getAllDrawings() {
+    fun getAllDrawings(): List<Drawing> {
         return transaction {
             DrawingsTable.selectAll().map {
                 Drawing(
