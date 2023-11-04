@@ -78,11 +78,10 @@ fun Application.configureRouting() {
                     if (shareDrawings.deleteDrawing(userUid,fileName)) {
                         call.respond(HttpStatusCode.OK, "Drawing deleted successfully")
                     } else {
-                        call.respond(HttpStatusCode.NotFound, "No drawing(s) found for the given userUid")
+                        call.respond(HttpStatusCode.NotFound, "Drawing not found")
                     }
-                } catch (e: Exception) {
-                    application.log.error("Error deleting drawing by userUid", e)
-                    call.respond(HttpStatusCode.InternalServerError, "Error deleting drawing")
+                } else {
+                    call.respond(HttpStatusCode.BadRequest, "Invalid ID format")
                 }
             }
 
