@@ -37,144 +37,15 @@ import java.io.File
 class DrawingFragment : Fragment() {
 
     private val viewModel: SimpleView by activityViewModels()
+
     private lateinit var binding: FragmentDrawingBinding
     private lateinit var bitmap: Bitmap
+
     private lateinit var drawingRepository: DrawingRepository
     private var lastSavedFilePath: String? = null
 
     private lateinit var sensorManager: SensorManager
     private var gravitySensor: Sensor? = null
-
-    private fun combineBitmaps(bitmapOne: Bitmap, bitmapTwo: Bitmap): Bitmap {
-        val combinedBitmap =
-            Bitmap.createBitmap(bitmapOne.width, bitmapOne.height, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(combinedBitmap)
-        // Draw the first bitmap onto the canvas at (0, 0)
-        canvas.drawBitmap(bitmapOne, 0f, 0f, null)
-        // Draw the second bitmap onto the canvas at the end of the first bitmap
-        canvas.drawBitmap(bitmapTwo, 0f, 0f, null)
-        return combinedBitmap
-    }
-
-    private fun closeColorPicker() {
-        bitmap = combineBitmaps(bitmap, binding.customView.getCurrentBitmap())
-        binding.bottomMenuContainer.visibility = View.VISIBLE
-        binding.colorPickerContainer.visibility = View.GONE
-        viewModel.updateBitmap(bitmap)
-    }
-
-    private fun showDrawingNameDialog() {
-        val editText = EditText(context)
-        AlertDialog.Builder(requireContext())
-            .setTitle("Name Your Drawing")
-            .setView(editText)
-            .setPositiveButton("Save") { _, _ ->
-                val drawingName = editText.text.toString()
-
-                // Get the current bitmap
-                val currentBitmap = binding.customView.getCurrentBitmap()
-
-                // Save the bitmap to internal storage and get the file path
-                val savedFilePath =
-                    saveBitmapToInternalStorage(
-                        currentBitmap,
-                        "$drawingName.png",
-                        requireContext()
-                    )
-                lastSavedFilePath = savedFilePath // update file path
-                Log.d("DrawingFragment", "Saved file path: $savedFilePath")
-
-                // Save the file path to the repository
-                drawingRepository.saveDrawing(savedFilePath)
-            }
-            .setNegativeButton("Cancel", null)
-            .show()
-    }
-
-    private fun saveBitmapToInternalStorage(
-        bitmap: Bitmap,
-        filename: String,
-        context: Context
-    ): String {
-        val bitmapToPNG = ByteArrayOutputStream()
-
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, bitmapToPNG)
-
-        context.openFileOutput(filename, Context.MODE_PRIVATE).use {
-            it.write(bitmapToPNG.toByteArray())
-        }
-
-        bitmapToPNG.close()
-
-        return context.filesDir.toString() + "/$filename"
-    }
-
-    //do update bitmap not set bitmap
-    private fun loadDrawingIntoCustomView(filePath: String) {
-        lastSavedFilePath = filePath
-        val bitmap: Bitmap? = BitmapFactory.decodeFile(filePath)
-        if (bitmap != null) {
-            viewModel.updateBitmap(bitmap)
-        }
-    }
-
-    private fun restoreColorAndSliderValues() {
-        // Retrieve the selected color and slider value from the ViewModel
-        val selectedColor = viewModel.getSelectedColor()
-        val selectedSliderValue = viewModel.getSelectedSliderValue()
-
-        // Update the color and slider value
-        binding.customView.paint.color = selectedColor
-        binding.sizeSlider.progress = selectedSliderValue
-    }
-
-    private fun restoreBallColorAndSize() {
-        val ballColor = viewModel.getBallColor()
-        val ballSize = viewModel.getBallSize().toFloat()
-        binding.customView.setBallColor(ballColor)
-        binding.customView.setBallSize(ballSize)
-    }
-
-    private fun restoreBallPosition() {
-        // Log entry point of the function
-        Log.d("DrawingApp", "restoreBallPosition - Entering function")
-
-        // Retrieve ball position from the ViewModel
-        val (x, y) = viewModel.getBallPosition()
-        Log.d("DrawingApp", "restoreBallPosition - Retrieved ball position: x = $x, y = $y")
-
-        // Check if the ball position is not null and set it on the custom view
-        if (x != null && y != null) {
-            Log.d(
-                "DrawingApp",
-                "restoreBallPosition - Ball position is valid, setting on custom view"
-            )
-            binding.customView.setBallPosition(x, y)
-            Log.d(
-                "DrawingApp",
-                "restoreBallPosition - Ball position set successfully: x = $x, y = $y"
-            )
-        } else {
-            // Log a message if the ball position is null
-            Log.d(
-                "DrawingApp",
-                "restoreBallPosition - Ball position is null, not setting on custom view"
-            )
-        }
-
-        // Log exit point of the function
-        Log.d("DrawingApp", "restoreBallPosition - Exiting function")
-    }
-
-    private fun doesFileExist(filePath: String): Boolean {
-        val file = File(filePath)
-        return file.exists()
-    }
-
-    private fun getFileUri(context: Context, filePath: String): Uri? {
-        val file = File(filePath)
-        return FileProvider.getUriForFile(context, "com.example.drawingapp.fileprovider", file)
-    }
 
     private lateinit var auth: FirebaseAuth
     private var currentUser: FirebaseUser? = null
@@ -359,34 +230,6 @@ class DrawingFragment : Fragment() {
         return binding.root
     }
 
-    fun loadDrawingFromServer(fileName: String) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            val imageByteArray = requestDrawing(fileName)
-            val bitmap = imageByteArray?.let {
-                BitmapFactory.decodeByteArray(
-                    imageByteArray,
-                    0,
-                    it.size
-                )
-            }
-            if (bitmap != null) {
-                viewModel.updateBitmap(bitmap)
-            }
-        }
-    }
-
-    suspend fun requestDrawing(fileName: String): ByteArray? {
-        return try {
-            val imageFile =
-                client.get<ByteArray>("http://10.0.2.2:8080/drawings/download/$fileName")
-            Log.d("SUCCESS", "RECEIVED IMAGE BYTE ARRAY")
-            return imageFile
-        } catch (e: Exception) {
-            Log.e("ServerFile", "Error receiving file from server: ${e.message}")
-            null // Return null on failure
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -519,6 +362,165 @@ class DrawingFragment : Fragment() {
             bitmap = binding.customView.getCurrentBitmap()
             viewModel.updateBitmap(bitmap)
         }
+    }
+
+    //ADDITIONAL FUNCTIONS
+    private fun combineBitmaps(bitmapOne: Bitmap, bitmapTwo: Bitmap): Bitmap {
+        val combinedBitmap =
+            Bitmap.createBitmap(bitmapOne.width, bitmapOne.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(combinedBitmap)
+        // Draw the first bitmap onto the canvas at (0, 0)
+        canvas.drawBitmap(bitmapOne, 0f, 0f, null)
+        // Draw the second bitmap onto the canvas at the end of the first bitmap
+        canvas.drawBitmap(bitmapTwo, 0f, 0f, null)
+        return combinedBitmap
+    }
+
+    private fun closeColorPicker() {
+        bitmap = combineBitmaps(bitmap, binding.customView.getCurrentBitmap())
+        binding.bottomMenuContainer.visibility = View.VISIBLE
+        binding.colorPickerContainer.visibility = View.GONE
+        viewModel.updateBitmap(bitmap)
+    }
+
+    private fun showDrawingNameDialog() {
+        val editText = EditText(context)
+        AlertDialog.Builder(requireContext())
+            .setTitle("Name Your Drawing")
+            .setView(editText)
+            .setPositiveButton("Save") { _, _ ->
+                val drawingName = editText.text.toString()
+
+                // Get the current bitmap
+                val currentBitmap = binding.customView.getCurrentBitmap()
+
+                // Save the bitmap to internal storage and get the file path
+                val savedFilePath =
+                    saveBitmapToInternalStorage(
+                        currentBitmap,
+                        "$drawingName.png",
+                        requireContext()
+                    )
+                lastSavedFilePath = savedFilePath // update file path
+                Log.d("DrawingFragment", "Saved file path: $savedFilePath")
+
+                // Save the file path to the repository
+                drawingRepository.saveDrawing(savedFilePath)
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    private fun saveBitmapToInternalStorage(
+        bitmap: Bitmap,
+        filename: String,
+        context: Context
+    ): String {
+        val bitmapToPNG = ByteArrayOutputStream()
+
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, bitmapToPNG)
+
+        context.openFileOutput(filename, Context.MODE_PRIVATE).use {
+            it.write(bitmapToPNG.toByteArray())
+        }
+
+        bitmapToPNG.close()
+
+        return context.filesDir.toString() + "/$filename"
+    }
+
+    private fun loadDrawingIntoCustomView(filePath: String) {
+        lastSavedFilePath = filePath
+        val bitmap: Bitmap? = BitmapFactory.decodeFile(filePath)
+        if (bitmap != null) {
+            viewModel.updateBitmap(bitmap)
+        }
+    }
+
+    fun loadDrawingFromServer(fileName: String) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            val imageByteArray = requestDrawing(fileName)
+            val bitmap = imageByteArray?.let {
+                BitmapFactory.decodeByteArray(
+                    imageByteArray,
+                    0,
+                    it.size
+                )
+            }
+            if (bitmap != null) {
+                viewModel.updateBitmap(bitmap)
+            }
+        }
+    }
+
+    suspend fun requestDrawing(fileName: String): ByteArray? {
+        return try {
+            val imageFile =
+                client.get<ByteArray>("http://10.0.2.2:8080/drawings/download/$fileName")
+            Log.d("SUCCESS", "RECEIVED IMAGE BYTE ARRAY")
+            return imageFile
+        } catch (e: Exception) {
+            Log.e("ServerFile", "Error receiving file from server: ${e.message}")
+            null // Return null on failure
+        }
+    }
+
+    private fun doesFileExist(filePath: String): Boolean {
+        val file = File(filePath)
+        return file.exists()
+    }
+
+    private fun getFileUri(context: Context, filePath: String): Uri? {
+        val file = File(filePath)
+        return FileProvider.getUriForFile(context, "com.example.drawingapp.fileprovider", file)
+    }
+
+    private fun restoreColorAndSliderValues() {
+        // Retrieve the selected color and slider value from the ViewModel
+        val selectedColor = viewModel.getSelectedColor()
+        val selectedSliderValue = viewModel.getSelectedSliderValue()
+
+        // Update the color and slider value
+        binding.customView.paint.color = selectedColor
+        binding.sizeSlider.progress = selectedSliderValue
+    }
+
+    private fun restoreBallColorAndSize() {
+        val ballColor = viewModel.getBallColor()
+        val ballSize = viewModel.getBallSize().toFloat()
+        binding.customView.setBallColor(ballColor)
+        binding.customView.setBallSize(ballSize)
+    }
+
+    private fun restoreBallPosition() {
+        // Log entry point of the function
+        Log.d("DrawingApp", "restoreBallPosition - Entering function")
+
+        // Retrieve ball position from the ViewModel
+        val (x, y) = viewModel.getBallPosition()
+        Log.d("DrawingApp", "restoreBallPosition - Retrieved ball position: x = $x, y = $y")
+
+        // Check if the ball position is not null and set it on the custom view
+        if (x != null && y != null) {
+            Log.d(
+                "DrawingApp",
+                "restoreBallPosition - Ball position is valid, setting on custom view"
+            )
+            binding.customView.setBallPosition(x, y)
+            Log.d(
+                "DrawingApp",
+                "restoreBallPosition - Ball position set successfully: x = $x, y = $y"
+            )
+        } else {
+            // Log a message if the ball position is null
+            Log.d(
+                "DrawingApp",
+                "restoreBallPosition - Ball position is null, not setting on custom view"
+            )
+        }
+
+        // Log exit point of the function
+        Log.d("DrawingApp", "restoreBallPosition - Exiting function")
     }
 
 
