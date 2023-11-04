@@ -25,8 +25,10 @@ data class DrawingData(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
     var timestamp: Date,
-    var savedFile: String
+    var savedFile: String,
+    var isSavedOnServer: Boolean = false
 )
+
 
 
 

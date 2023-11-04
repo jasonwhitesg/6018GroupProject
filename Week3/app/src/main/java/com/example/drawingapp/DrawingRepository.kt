@@ -1,10 +1,12 @@
 package com.example.drawingapp
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import java.io.IOException
 import com.google.gson.JsonParseException
 import androidx.lifecycle.asLiveData
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.Date
@@ -16,6 +18,19 @@ class DrawingRepository(private val scope: CoroutineScope, private val dao: Draw
     val latestSavedDrawing = dao.latestDrawing().asLiveData()
     val allSavedDrawings = dao.allDrawings().asLiveData()
 
+    fun updateDrawing(drawing: DrawingData) {
+        CoroutineScope(Dispatchers.IO).launch {
+            dao.updateDrawing(drawing)
+        }
+    }
+    suspend fun updateSavedStatus(drawingId: Int, isSaved: Boolean) {
+        dao.updateSavedStatus(drawingId, isSaved)
+    }
+
+
+    fun isDrawingSavedOnServer(drawingId: Int): LiveData<Boolean> {
+        return dao.isDrawingSavedOnServer(drawingId).asLiveData()
+    }
     fun saveDrawing(savedFilePath: String) {
         scope.launch {
             try {

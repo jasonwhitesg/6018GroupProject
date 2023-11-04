@@ -8,6 +8,7 @@ import androidx.room.Query
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
 
@@ -42,12 +43,21 @@ interface DrawingDAO {
 //this is a random comment
     @Insert
     suspend fun addSavedFile(filePath: DrawingData)
+    @Query("UPDATE drawingTable SET isSavedOnServer = :isSaved WHERE id = :drawingId")
+    suspend fun updateSavedStatus(drawingId: Int, isSaved: Boolean)
+    @Update
+    suspend fun updateDrawing(drawing: DrawingData)
 
     @Query("SELECT * FROM drawingTable ORDER BY timestamp DESC LIMIT 1")
     fun latestDrawing(): Flow<DrawingData>
 
     @Query("SELECT * FROM drawingTable ORDER BY timestamp DESC")
     fun allDrawings(): Flow<List<DrawingData>>
+
+    @Query("SELECT isSavedOnServer FROM drawingTable WHERE id = :drawingId")
+    fun isDrawingSavedOnServer(drawingId: Int): Flow<Boolean>
+
+
 }
 
 

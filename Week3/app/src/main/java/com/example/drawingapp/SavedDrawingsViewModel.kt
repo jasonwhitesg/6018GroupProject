@@ -3,6 +3,7 @@ package com.example.drawingapp
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import io.ktor.client.request.forms.MultiPartFormDataContent
 import io.ktor.client.request.forms.formData
 import io.ktor.client.request.post
@@ -11,6 +12,7 @@ import io.ktor.client.statement.readText
 import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
+import kotlinx.coroutines.launch
 import java.io.File
 
 class SavedDrawingsViewModel(private val repository: DrawingRepository) : ViewModel() {
@@ -20,6 +22,18 @@ class SavedDrawingsViewModel(private val repository: DrawingRepository) : ViewMo
 
     fun saveDrawing(savedFilePath: String) {
         repository.saveDrawing(savedFilePath)
+    }
+
+
+    fun updateSavedStatus(drawingId: Int, isSaved: Boolean) {
+        viewModelScope.launch {
+            repository.updateSavedStatus(drawingId, isSaved)
+        }
+    }
+
+
+    fun isDrawingSavedOnServer(drawingId: Int): LiveData<Boolean> {
+        return repository.isDrawingSavedOnServer(drawingId)
     }
 }
 
