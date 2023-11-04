@@ -69,11 +69,12 @@ fun Application.configureRouting() {
                 }
             }
 
-            delete("/{userUid}/{fileName}") {
+            delete("/delete/{userUid}/{fileName}") {
                 application.log.info("Handling DELETE request for drawing")
                 val userUid = call.parameters["userUid"]?.toString()
                 val fileName = call.parameters["fileName"]?.toString()
                 if (userUid != null && fileName != null) {
+                    application.log.info("userUid = $userUid, fileName = $fileName")
                     if (shareDrawings.deleteDrawing(userUid,fileName)) {
                         call.respond(HttpStatusCode.OK, "Drawing deleted successfully")
                     } else {

@@ -31,7 +31,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -39,42 +38,34 @@ import androidx.compose.material.Button
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.Dp
 import androidx.navigation.NavController
 import androidx.fragment.app.activityViewModels
-import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
 import java.io.File
-import androidx.compose.material.Checkbox
-import androidx.compose.material.CheckboxDefaults
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.Snapshot.Companion.observe
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
 import io.ktor.client.request.delete
+import io.ktor.client.request.get
 import io.ktor.client.request.url
-import io.ktor.client.statement.HttpResponse
-import io.ktor.utils.io.concurrent.shared
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -83,35 +74,39 @@ import kotlinx.coroutines.launch
 class SavedDrawingsFragment : Fragment() {
     // Get the ViewModel using the custom factory
     private val sharedDrawingsViewModel: SharedDrawingsViewModel by viewModels { SharedDrawingViewModelFactory() }
-//    private var serverFileNames: LiveData<List<String>> = getCurrentFilenamesFromServer()
+//    private val serverFileNames: LiveData<List<String>> = getCurrentFilenamesFromServer()
 
     // Define a function to get shared drawings
-    private fun getCurrentFilenamesFromServer(): LiveData<List<String>> {
-        val resultLiveData = MutableLiveData<List<String>>()
+    private fun getRemoteFileList(): LiveData<List<Pair<String,String>>> {
+        Log.d("FunctionRunStatus", "getRemoteFileList() Run = True")
+
+        val resultLiveData = MutableLiveData<List<Pair<String,String>>>()
 
         val drawingsLiveData = sharedDrawingsViewModel.getDrawingsLiveData()
 
         drawingsLiveData.observe(viewLifecycleOwner) { drawings ->
             // Create a list to store all the filenames
-            val fileNames = mutableListOf<String>()
+            val drawingsList = mutableListOf<Pair<String,String>>()
 
             // Iterate through the list of Drawing objects and extract and log only the filenames
             for (drawing in drawings) {
-                fileNames.add(drawing.fileName)
-                Log.d("FileFoundInServer", "File: ${drawing.fileName}")
+                drawingsList.add(Pair(drawing.fileName,drawing.userUid))
+                Log.d("FileFoundInServer", "File: ${drawing.fileName} | User: ${drawing.userUid}")
             }
 
             // Set the result to the LiveData
-            resultLiveData.value = fileNames
+            resultLiveData.value = drawingsList
         }
 
         return resultLiveData
     }
 
-
+    private fun getUserUid(): String? {
+        return FirebaseAuth.getInstance().currentUser?.uid
+    }
     private fun shareDrawing(filePath: String) {
         val file = File(filePath)
-        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        val uid = getUserUid()
 
         if (file.exists() && uid != null) { // Check that the file exists and uid is not null
             viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
@@ -130,9 +125,11 @@ class SavedDrawingsFragment : Fragment() {
         }
     }
 
-    suspend fun deleteDrawingByUserUid(userUid: String, fileName: String): HttpResponse {
-        return client.delete {
-            url("http://10.0.2.2:8080/drawings/delete/$userUid/$fileName")
+    private fun deleteDrawing(fileName: String) {
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+            Log.d("DeleteRequest", client.delete {
+                url("http://10.0.2.2:8080/drawings/delete/${getUserUid()}/$fileName")
+            })
         }
     }
 
@@ -160,7 +157,8 @@ class SavedDrawingsFragment : Fragment() {
                     shareDrawing = { filePath ->
                         // Implement the sharing functionality here
                         shareDrawing(filePath)
-                    }
+                    },
+                    serverFileList = getRemoteFileList()
                 )
             }
         }
@@ -192,10 +190,11 @@ class SavedDrawingsFragment : Fragment() {
         viewModel: SavedDrawingsViewModel,
         onDrawingClick: (String) -> Unit,
         navController: NavController,
-        shareDrawing: (String) -> Unit
+        shareDrawing: (String) -> Unit,
+        serverFileList: LiveData<List<Pair<String, String>>>
     ) {
         val allDrawings by viewModel.allSavedDrawings.observeAsState(emptyList())
-        var serverFileNames = getCurrentFilenamesFromServer()
+        val fileList by serverFileList.observeAsState(emptyList())
         Scaffold(
             topBar = {
                 TopAppBar(
@@ -262,8 +261,7 @@ class SavedDrawingsFragment : Fragment() {
                                 contentAlignment = Alignment.Center
                             ) {
                                 val fileName = drawing.savedFile.substringAfterLast("/")
-                                val isShared = doesFileExistOnServer(fileName, serverFileNames)
-
+                                val isShared = doesFileExistOnServer(fileName, serverFileList)
                                 val imageBitmap = loadBitmapFromFile(drawing.savedFile)
                                 if (imageBitmap != null) {
                                     // Display the loaded image as a thumbnail
@@ -291,25 +289,26 @@ class SavedDrawingsFragment : Fragment() {
 
                                         IconButton(
                                             onClick = {
-                                                // If the shareIconState is true, call shareDrawing.
+                                                // If the shareIconState is false, call shareDrawing.
                                                 if (shareIconState.value) {
+                                                    // Handle delete action
+                                                    deleteDrawing(fileName)
+                                                    shareIconState.value = !shareIconState.value
+
+                                                } else {
                                                     shareDrawing(drawing.savedFile)
                                                     // Optional: Toggle the icon state if you want to change the icon after sharing
                                                     shareIconState.value = !shareIconState.value
-                                                } else {
-                                                    // Handle delete action
-                                                    shareIconState.value = !shareIconState.value
                                                 }
-                                                serverFileNames = getCurrentFilenamesFromServer()
                                             },
                                             modifier = Modifier.size(48.dp)
                                         ) {
                                             Icon(
                                                 painter = painterResource(
-                                                    id = if (isShared) R.drawable.ic_trash_icon_shared_drawing else R.drawable.ic_share_icon_shared_drawing
+                                                    id = if (shareIconState.value) R.drawable.ic_trash_icon_shared_drawing else R.drawable.ic_share_icon_shared_drawing
                                                 ),
                                                 contentDescription = if (isShared) "Delete" else "Share",
-                                                tint = if (isShared) Color.Red else Color.Blue
+                                                tint = if (shareIconState.value) Color.Red else Color.Blue
                                             )
                                         }
                                     }
@@ -323,9 +322,9 @@ class SavedDrawingsFragment : Fragment() {
     }
 
     // Function to check if a file exists in the server file names
-    fun doesFileExistOnServer(fileName: String, serverFileNames: LiveData<List<String>>): Boolean {
+    fun doesFileExistOnServer(fileName: String, serverFileNames: LiveData<List<Pair<String,String>>>): Boolean {
         val list = serverFileNames.value
-        val returnVal =  list?.any { it == fileName } ?: false
+        val returnVal = list?.any { (it.first == fileName) and (it.second == getUserUid())} ?: false
         Log.d("FileCheckResult", "File: $fileName | Result = $returnVal")
         return returnVal
     }

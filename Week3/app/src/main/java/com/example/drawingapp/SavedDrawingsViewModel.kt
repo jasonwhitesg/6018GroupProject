@@ -17,7 +17,6 @@ class SavedDrawingsViewModel(private val repository: DrawingRepository) : ViewMo
 
     val latestSavedDrawing: LiveData<DrawingData> get() = repository.latestSavedDrawing
     val allSavedDrawings: LiveData<List<DrawingData>> get() = repository.allSavedDrawings
-
     fun saveDrawing(savedFilePath: String) {
         repository.saveDrawing(savedFilePath)
     }
