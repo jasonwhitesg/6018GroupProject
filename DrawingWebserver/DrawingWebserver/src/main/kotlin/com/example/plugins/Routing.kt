@@ -84,21 +84,7 @@ fun Application.configureRouting() {
                     call.respond(HttpStatusCode.BadRequest, "Invalid ID format")
                 }
             }
-//            delete("/delete/{userUid}") {
-//                val userUid = call.parameters["userUid"] ?: return@delete call.respond(HttpStatusCode.BadRequest, "Missing userUid")
-//
-//                try {
-//                    val success = shareDrawings.deleteDrawingByUserUid(userUid)
-//                    if (success) {
-//                        call.respond(HttpStatusCode.OK, "Drawing(s) deleted successfully for userUid: $userUid")
-//                    } else {
-//                        call.respond(HttpStatusCode.NotFound, "No drawing(s) found for the given userUid")
-//                    }
-//                } catch (e: Exception) {
-//                    application.log.error("Error deleting drawing by userUid", e)
-//                    call.respond(HttpStatusCode.InternalServerError, "Error deleting drawing")
-//                }
-//            }
+
 
             get("/ordered") {
                 val order = call.request.queryParameters["order"] ?: "desc"
