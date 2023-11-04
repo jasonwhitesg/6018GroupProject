@@ -299,44 +299,60 @@ class SavedDrawingsFragment : Fragment() {
 
                                         val shareIconState = remember { mutableStateOf(true) }
 
+                                        val isShared =
+                                            remember { mutableStateOf(false) } // This state is now observable
 
                                         IconButton(
                                             onClick = {
                                                 if (shareIconState.value) {
                                                     // Handle the sharing action
                                                     shareDrawing(drawing.savedFile)
+                                                    isShared.value = true // Update observable state
                                                 } else {
                                                     // If we are not in share state, it means delete icon is visible
                                                     // Trigger the delete action
-                                                    val uid = FirebaseAuth.getInstance().currentUser?.uid
+                                                    val uid =
+                                                        FirebaseAuth.getInstance().currentUser?.uid
                                                     uid?.let {
                                                         // Start a coroutine to call the delete function
                                                         viewLifecycleOwner.lifecycleScope.launch {
                                                             try {
-                                                                val response = deleteDrawingByUserUid(uid) // pass the user's UID
+                                                                val response =
+                                                                    deleteDrawingByUserUid(uid) // pass the user's UID
                                                                 if (response.status == HttpStatusCode.OK) {
-                                                                    Log.d("DeleteSuccess", "Drawing deleted successfully.")
-                                                                    // Optionally, update the UI or list of drawings here if needed
+                                                                    Log.d(
+                                                                        "DeleteSuccess",
+                                                                        "Drawing deleted successfully."
+                                                                    )
+                                                                    // Update UI or list of drawings here if needed
                                                                 } else {
-                                                                    Log.e("DeleteFailed", "Failed to delete drawing: ${response.status}")
+                                                                    Log.e(
+                                                                        "DeleteFailed",
+                                                                        "Failed to delete drawing: ${response.status}"
+                                                                    )
                                                                 }
-
                                                             } catch (e: Exception) {
-                                                                Log.e("DeleteError", "Error deleting drawing", e)
+                                                                Log.e(
+                                                                    "DeleteError",
+                                                                    "Error deleting drawing",
+                                                                    e
+                                                                )
                                                             }
                                                         }
+                                                        isShared.value =
+                                                            false // Update observable state
                                                     }
                                                 }
                                                 shareIconState.value = !shareIconState.value
                                             },
-                                       modifier = Modifier.size(48.dp)
+                                            modifier = Modifier.size(48.dp)
                                         ) {
                                             Icon(
                                                 painter = painterResource(
-                                                    id = if (isShared) R.drawable.ic_trash_icon_shared_drawing else R.drawable.ic_share_icon_shared_drawing
+                                                    id = if (isShared.value) R.drawable.ic_trash_icon_shared_drawing else R.drawable.ic_share_icon_shared_drawing
                                                 ),
-                                                contentDescription = if (isShared) "Delete" else "Share",
-                                                tint = if (isShared) Color.Red else Color.Blue
+                                                contentDescription = if (isShared.value) "Delete" else "Share",
+                                                tint = if (isShared.value) Color.Red else Color.Blue
                                             )
                                         }
                                     }

@@ -44,6 +44,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.os.bundleOf
@@ -268,15 +269,16 @@ class SharedDrawingsFragment : Fragment() {
                                                 .clip(RoundedCornerShape(8.dp))
                                         )
                                     }
-//                                    Spacer(modifier = Modifier.height(8.dp))
-                                    // Centered text
-//                                        Text(
-//                                            text = fileName,
-//                                            style = TextStyle(fontSize = 22.sp),
-//                                            modifier = Modifier.fillMaxWidth()
-//                                        )
-//                            val fileName = drawing.savedFile.substringAfterLast("/")
-//                            Text(text = fileName, style = TextStyle(fontSize = 22.sp))
+                                    Spacer(modifier = Modifier.height(8.dp)) // Adds space between the image and the text
+                                    Text(
+                                        text = drawing.fileName.substringAfterLast("/"), // Gets the filename after the last '/'
+                                        style = TextStyle(fontSize = 18.sp),
+                                        textAlign = TextAlign.Center,
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(horizontal = 8.dp)
+                                    )
+
 
                                 }
                             }
