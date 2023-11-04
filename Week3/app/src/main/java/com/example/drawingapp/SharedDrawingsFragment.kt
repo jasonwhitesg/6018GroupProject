@@ -47,22 +47,18 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import io.ktor.client.HttpClient
-import io.ktor.client.features.get
-import io.ktor.client.request.get
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.File
 
 //some random comment
@@ -210,15 +206,15 @@ class SharedDrawingsFragment : Fragment() {
                                                 .clip(RoundedCornerShape(8.dp))
                                         )
                                     }
-                                    Spacer(modifier = Modifier.height(8.dp))
-//                                     Centered text
-                                        Text(
-                                            text = fileName,
-                                            style = TextStyle(fontSize = 22.sp),
-                                            modifier = Modifier.fillMaxWidth()
-                                        )
-//                            Text(text = fileName, style = TextStyle(fontSize = 22.sp))
-
+                                    Spacer(modifier = Modifier.height(8.dp)) // Adds space between the image and the text
+                                    Text(
+                                        text = drawing.fileName.substringAfterLast("/"), // Gets the filename after the last '/'
+                                        style = TextStyle(fontSize = 18.sp),
+                                        textAlign = TextAlign.Center,
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(horizontal = 8.dp)
+                                    )
                                 }
                             }
                         }
@@ -227,7 +223,8 @@ class SharedDrawingsFragment : Fragment() {
                             if (imageBitmap == null) {
                                 val loadedBitmap = loadBitmapFromServer(fileName)
                                 // Update the loaded bitmaps map
-                                loadedBitmaps.value = loadedBitmaps.value + (fileName to loadedBitmap)
+                                loadedBitmaps.value =
+                                    loadedBitmaps.value + (fileName to loadedBitmap)
                             }
                         }
                     }
@@ -235,6 +232,7 @@ class SharedDrawingsFragment : Fragment() {
             }
         }
     }
+
     private fun getSharedDrawings(): LiveData<List<Drawing>> {
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
             viewModel.updateSharedDrawingsList()
@@ -267,41 +265,15 @@ class SharedDrawingsFragment : Fragment() {
         }
     }
 
-//    private fun loadBitmapFromServer(liveData: MutableLiveData<Bitmap?>, fileName: String) {
-//        var imageByteArray: ByteArray? = null
-//        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-//            try {
-//                imageByteArray = viewModel.requestDrawing(fileName)
-//                val bitmap = imageByteArray?.let {
-//                    BitmapFactory.decodeByteArray(
-//                        imageByteArray,
-//                        0,
-//                        it.size
-//                    )
-//                }
-//
-//                if (imageByteArray != null) {
-//                    Log.d("Bitmap Load", "Received image data for $fileName")
-//                    liveData.postValue(bitmap)
-//                } else {
-//                    Log.e("Bitmap Load", "Image data is null for $fileName")
-//                    liveData.postValue(null)
-//                }
-//            } catch (e: Exception) {
-//                Log.e("Bitmap Load", "Error loading image data for $fileName: ${e.message}")
-//                liveData.postValue(null)
-//            }
-//        }
-//    }
-private suspend fun loadBitmapFromServer(fileName: String): Bitmap? {
-    return try {
-        val imageByteArray = viewModel.requestDrawing(fileName)
-        imageByteArray?.let {
-            BitmapFactory.decodeByteArray(it, 0, it.size)
+    private suspend fun loadBitmapFromServer(fileName: String): Bitmap? {
+        return try {
+            val imageByteArray = viewModel.requestDrawing(fileName)
+            imageByteArray?.let {
+                BitmapFactory.decodeByteArray(it, 0, it.size)
+            }
+        } catch (e: Exception) {
+            Log.e("Bitmap Load", "Error loading image data for $fileName: ${e.message}")
+            null
         }
-    } catch (e: Exception) {
-        Log.e("Bitmap Load", "Error loading image data for $fileName: ${e.message}")
-        null
     }
-}
 }

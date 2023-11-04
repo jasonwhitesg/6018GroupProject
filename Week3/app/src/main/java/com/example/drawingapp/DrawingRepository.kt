@@ -1,20 +1,23 @@
 package com.example.drawingapp
 
 import android.util.Log
-import java.io.IOException
-import com.google.gson.JsonParseException
 import androidx.lifecycle.asLiveData
+import com.google.gson.JsonParseException
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.io.IOException
 import java.util.Date
-
 
 
 class DrawingRepository(private val scope: CoroutineScope, private val dao: DrawingDAO) {
 
     val latestSavedDrawing = dao.latestDrawing().asLiveData()
     val allSavedDrawings = dao.allDrawings().asLiveData()
+
+    suspend fun updateSavedStatus(drawingId: Int, isSaved: Boolean) {
+        dao.updateSavedStatus(drawingId, isSaved)
+    }
+
 
     fun saveDrawing(savedFilePath: String) {
         scope.launch {

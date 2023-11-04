@@ -10,130 +10,78 @@ import android.view.ViewGroup
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ComposeView
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.foundation.layout.padding
-import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
-import androidx.core.os.bundleOf
-import androidx.navigation.fragment.findNavController
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.sp
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
-import androidx.navigation.NavController
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import java.io.File
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshots.Snapshot.Companion.observe
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.android.Android
+import io.ktor.client.features.json.JsonFeature
+import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.request.delete
-import io.ktor.client.request.get
 import io.ktor.client.request.url
+import io.ktor.client.statement.HttpResponse
+import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.File
 
 
 //some random comment
 class SavedDrawingsFragment : Fragment() {
     // Get the ViewModel using the custom factory
     private val sharedDrawingsViewModel: SharedDrawingsViewModel by viewModels { SharedDrawingViewModelFactory() }
-//    private val serverFileNames: LiveData<List<String>> = getCurrentFilenamesFromServer()
 
     // Define a function to get shared drawings
-    private fun getRemoteFileList(): LiveData<List<Pair<String,String>>> {
-        Log.d("FunctionRunStatus", "getRemoteFileList() Run = True")
-
-        val resultLiveData = MutableLiveData<List<Pair<String,String>>>()
-
-        val drawingsLiveData = sharedDrawingsViewModel.getDrawingsLiveData()
-
-        drawingsLiveData.observe(viewLifecycleOwner) { drawings ->
-            // Create a list to store all the filenames
-            val drawingsList = mutableListOf<Pair<String,String>>()
-
-            // Iterate through the list of Drawing objects and extract and log only the filenames
-            for (drawing in drawings) {
-                drawingsList.add(Pair(drawing.fileName,drawing.userUid))
-                Log.d("FileFoundInServer", "File: ${drawing.fileName} | User: ${drawing.userUid}")
-            }
-
-            // Set the result to the LiveData
-            resultLiveData.value = drawingsList
-        }
-
-        return resultLiveData
-    }
-
-    private fun getUserUid(): String? {
-        return FirebaseAuth.getInstance().currentUser?.uid
-    }
-    private fun shareDrawing(filePath: String) {
-        val file = File(filePath)
-        val uid = getUserUid()
-
-        if (file.exists() && uid != null) { // Check that the file exists and uid is not null
-            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-                try {
-                    val response = sharedDrawingsViewModel.sendFileToServer(
-                        file,
-                        uid
-                    ) // uid is now known to be non-null
-                    Log.d("FileUploadResponse", response)
-                } catch (e: Exception) {
-                    Log.e("FileUploadError", "Error sending file to server", e)
-                }
-            }
-        } else if (uid == null) {
-            Log.e("FileUploadError", "User ID is null, user might not be logged in.")
+    private val client = HttpClient(Android) {
+        install(JsonFeature) {
+            serializer = KotlinxSerializer()
         }
     }
 
-    private fun deleteDrawing(fileName: String) {
-        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-            Log.d("DeleteRequest", client.delete {
-                url("http://10.0.2.2:8080/drawings/delete/${getUserUid()}/$fileName")
-            })
-        }
-    }
-
-    //per whitney's suggestion changed to by "activityViewModels" instead of by "viewModels"
     private val viewModel: SavedDrawingsViewModel by activityViewModels {
         DrawingViewModelFactory((requireActivity().application as DrawingApplication).drawingRepository)
     }
@@ -142,7 +90,7 @@ class SavedDrawingsFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         val navController = findNavController() // Fetch NavController
         return ComposeView(requireContext()).apply {
@@ -164,27 +112,7 @@ class SavedDrawingsFragment : Fragment() {
         }
     }
 
-    private fun loadBitmapFromFile(filePath: String): Bitmap? {
-        val file = File(filePath)
-        if (file.exists()) {
-            return BitmapFactory.decodeFile(file.absolutePath)
-        }
-        return null
-    }
-
-    @Composable
-    fun ImageBitmapComposable(
-        imageBitmap: ImageBitmap,
-        modifier: Modifier = Modifier
-    ) {
-        Image(
-            bitmap = imageBitmap,
-            contentDescription = null,
-            modifier = modifier,
-            contentScale = ContentScale.Crop
-        )
-    }
-
+    //COMPOSABLE ELEMENTS
     @Composable
     fun SavedDrawingsScreen(
         viewModel: SavedDrawingsViewModel,
@@ -284,31 +212,60 @@ class SavedDrawingsFragment : Fragment() {
                                             style = TextStyle(fontSize = 16.sp),
                                             modifier = Modifier.weight(1f) // Takes up the remaining space
                                         )
-
-                                        val shareIconState = observe { mutableStateOf(isShared) }
-
                                         IconButton(
                                             onClick = {
-                                                // If the shareIconState is false, call shareDrawing.
-                                                if (shareIconState.value) {
-                                                    // Handle delete action
-                                                    deleteDrawing(fileName)
-                                                    shareIconState.value = !shareIconState.value
-
-                                                } else {
+                                                if (!drawing.isSavedOnServer) {
+                                                    // Handle the sharing action
                                                     shareDrawing(drawing.savedFile)
-                                                    // Optional: Toggle the icon state if you want to change the icon after sharing
-                                                    shareIconState.value = !shareIconState.value
+                                                    viewModel.updateSavedStatus(
+                                                        drawing.id,
+                                                        isSaved = true
+                                                    )
+                                                } else {
+                                                    // Trigger the delete action and update status
+                                                    val uid =
+                                                        FirebaseAuth.getInstance().currentUser?.uid
+                                                    uid?.let { userId ->
+                                                        // Start a coroutine to call the delete function
+                                                        viewLifecycleOwner.lifecycleScope.launch {
+                                                            try {
+                                                                val response =
+                                                                    deleteDrawing(fileName)
+                                                                if (response.status == HttpStatusCode.OK) {
+                                                                    Log.d(
+                                                                        "DeleteSuccess",
+                                                                        "Drawing deleted successfully."
+                                                                    )
+                                                                    // Set isSavedOnServer to false after deletion
+                                                                    viewModel.updateSavedStatus(
+                                                                        drawing.id,
+                                                                        isSaved = false
+                                                                    )
+                                                                } else {
+                                                                    Log.e(
+                                                                        "DeleteFailed",
+                                                                        "Failed to delete drawing: ${response.status}"
+                                                                    )
+                                                                }
+                                                            } catch (e: Exception) {
+                                                                Log.e(
+                                                                    "DeleteError",
+                                                                    "Error deleting drawing",
+                                                                    e
+                                                                )
+                                                            }
+                                                        }
+                                                    }
                                                 }
                                             },
                                             modifier = Modifier.size(48.dp)
                                         ) {
                                             Icon(
                                                 painter = painterResource(
-                                                    id = if (shareIconState.value) R.drawable.ic_trash_icon_shared_drawing else R.drawable.ic_share_icon_shared_drawing
+                                                    id = if (drawing.isSavedOnServer) R.drawable.ic_trash_icon_shared_drawing else R.drawable.ic_share_icon_shared_drawing
                                                 ),
-                                                contentDescription = if (isShared) "Delete" else "Share",
-                                                tint = if (shareIconState.value) Color.Red else Color.Blue
+                                                contentDescription = if (drawing.isSavedOnServer) "Delete" else "Share",
+                                                tint = if (drawing.isSavedOnServer) Color.Red else Color.Blue
                                             )
                                         }
                                     }
@@ -321,12 +278,93 @@ class SavedDrawingsFragment : Fragment() {
         }
     }
 
+    @Composable
+    fun ImageBitmapComposable(
+        imageBitmap: ImageBitmap,
+        modifier: Modifier = Modifier
+    ) {
+        Image(
+            bitmap = imageBitmap,
+            contentDescription = null,
+            modifier = modifier,
+            contentScale = ContentScale.Crop
+        )
+    }
+
+    //ADDITIONAL FUNCTIONS
     // Function to check if a file exists in the server file names
-    fun doesFileExistOnServer(fileName: String, serverFileNames: LiveData<List<Pair<String,String>>>): Boolean {
+    private fun doesFileExistOnServer(
+        fileName: String,
+        serverFileNames: LiveData<List<Pair<String, String>>>
+    ): Boolean {
         val list = serverFileNames.value
-        val returnVal = list?.any { (it.first == fileName) and (it.second == getUserUid())} ?: false
+        val returnVal =
+            list?.any { (it.first == fileName) and (it.second == getUserUid()) } ?: false
         Log.d("FileCheckResult", "File: $fileName | Result = $returnVal")
         return returnVal
+    }
+
+    private fun loadBitmapFromFile(filePath: String): Bitmap? {
+        val file = File(filePath)
+        if (file.exists()) {
+            return BitmapFactory.decodeFile(file.absolutePath)
+        }
+        return null
+    }
+
+    private fun getRemoteFileList(): LiveData<List<Pair<String, String>>> {
+        Log.d("FunctionRunStatus", "getRemoteFileList() Run = True")
+
+        val resultLiveData = MutableLiveData<List<Pair<String, String>>>()
+
+        val drawingsLiveData = sharedDrawingsViewModel.getDrawingsLiveData()
+
+        drawingsLiveData.observe(viewLifecycleOwner) { drawings ->
+            // Create a list to store all the filenames
+            val drawingsList = mutableListOf<Pair<String, String>>()
+
+            // Iterate through the list of Drawing objects and extract and log only the filenames
+            for (drawing in drawings) {
+                drawingsList.add(Pair(drawing.fileName, drawing.userUid))
+                Log.d("FileFoundInServer", "File: ${drawing.fileName} | User: ${drawing.userUid}")
+            }
+
+            // Set the result to the LiveData
+            resultLiveData.value = drawingsList
+        }
+
+        return resultLiveData
+    }
+
+    private fun getUserUid(): String? {
+        return FirebaseAuth.getInstance().currentUser?.uid
+    }
+
+    private fun shareDrawing(filePath: String) {
+        val file = File(filePath)
+        val uid = getUserUid()
+
+        if (file.exists() && uid != null) { // Check that the file exists and uid is not null
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+                try {
+                    val response = sharedDrawingsViewModel.sendFileToServer(
+                        file,
+                        uid
+                    ) // uid is now known to be non-null
+                    Log.d("FileUploadResponse", response)
+                } catch (e: Exception) {
+                    Log.e("FileUploadError", "Error sending file to server", e)
+                }
+            }
+        } else if (uid == null) {
+            Log.e("FileUploadError", "User ID is null, user might not be logged in.")
+        }
+    }
+
+    private suspend fun deleteDrawing(fileName: String): HttpResponse {
+        return client.delete {
+            url("http://10.0.2.2:8080/drawings/delete/${getUserUid()}/$fileName")
+        }
     }
 
 

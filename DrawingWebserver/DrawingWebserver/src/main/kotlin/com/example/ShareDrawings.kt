@@ -71,6 +71,14 @@ class ShareDrawings {
         }
     }
 
+    fun doesDrawingExist(userUid: String, fileName: String): Boolean {
+        return transaction {
+            // Query the database to check if there's a drawing with the specified userUid and fileName
+            DrawingsTable.select { (DrawingsTable.userUid eq userUid) and (DrawingsTable.fileName eq fileName) }
+                .count() > 0 // Returns true if the count is more than 0
+        }
+    }
+
     fun getDrawingById(id: Int): Drawing? {
         return transaction {
             DrawingsTable.select { DrawingsTable.id eq id }.singleOrNull()?.let {

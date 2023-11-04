@@ -1,12 +1,11 @@
 package com.example.drawingapp
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import android.util.Log
 
 
 class SimpleView : ViewModel() {

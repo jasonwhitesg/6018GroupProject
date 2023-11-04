@@ -11,15 +11,6 @@ val client = HttpClient {
     }
 }
 
-
-
-@Serializable
-data class DrawingRequest(
-    val filePath: String,
-    val userUid: String,
-    val userName: String
-)
-
 @Serializable
 data class Drawing(
     val id: Int,

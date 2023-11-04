@@ -5,17 +5,16 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.util.AttributeSet
-import android.view.MotionEvent
-import android.view.View
-import android.os.Handler
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import kotlin.math.min
+import android.os.Handler
+import android.util.AttributeSet
+import android.view.MotionEvent
+import android.view.View
 import kotlin.math.max
-import android.util.Log
+import kotlin.math.min
 
 
 class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs), SensorEventListener {

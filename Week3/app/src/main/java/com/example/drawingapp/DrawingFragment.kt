@@ -1,37 +1,36 @@
 package com.example.drawingapp
 
-import android.graphics.Bitmap
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.SeekBar
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import com.example.drawingapp.databinding.FragmentDrawingBinding
-import com.madrapps.pikolo.listeners.SimpleColorSelectionListener
-import android.graphics.Canvas
-import androidx.activity.OnBackPressedCallback
-import androidx.navigation.fragment.findNavController
-import android.widget.EditText
-import androidx.appcompat.app.AlertDialog
 import android.content.Context
 import android.content.Intent
-import java.io.ByteArrayOutputStream
-import androidx.lifecycle.lifecycleScope
-import android.util.Log
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.net.Uri
+import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.SeekBar
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.example.drawingapp.databinding.FragmentDrawingBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.madrapps.pikolo.listeners.SimpleColorSelectionListener
 import io.ktor.client.request.get
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
 import java.io.File
 
 
@@ -42,7 +41,6 @@ class DrawingFragment : Fragment() {
     private lateinit var bitmap: Bitmap
     private lateinit var drawingRepository: DrawingRepository
     private var lastSavedFilePath: String? = null
-    private var tempFilePath: String? = null
 
     private lateinit var sensorManager: SensorManager
     private var gravitySensor: Sensor? = null

@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import io.ktor.client.features.get
 import io.ktor.client.request.forms.MultiPartFormDataContent
 import io.ktor.client.request.forms.formData
 import io.ktor.client.request.get
@@ -36,7 +35,7 @@ class SharedDrawingsViewModel : ViewModel() {
                             append(HttpHeaders.ContentDisposition, "filename=${file.name}")
                         })
 //                        append("name", fileName)
-                        append("userUid", userUid)
+                        append("userUid", userUid,)
                     }
                 )
             }
@@ -89,18 +88,6 @@ class SharedDrawingsViewModel : ViewModel() {
             Log.e("ServerFile", "Error receiving file from server: ${e.message}")
         }
     }
-    suspend fun getDrawingsList(): List<Drawing>? {
-        return try {
-            val downloadUrl = "$url/drawings"
-            client.get(downloadUrl)
-        } catch (e: Exception) {
-            // Handle the error and return null on failure
-            Log.e("ServerFile", "Error receiving file from server: ${e.message}")
-            null
-        }
-    }
-
-
 
 
 }
